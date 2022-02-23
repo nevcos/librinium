@@ -1,0 +1,14 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "simple-import-sort"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:compat/recommended",
+    "plugin:import/typescript",
+    "prettier"
+  ]
+}
