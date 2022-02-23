@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {DiagramId} from "../types";
-import {Diagram} from "../model/Diagram";
+import { DiagramId } from "../types";
+import { Diagram } from "../model/Diagram";
 
 const ListUl = styled.ul`
   list-style: none;
@@ -76,19 +76,14 @@ export function DiagramsList({
           <NewButton onClick={onCreateDiagram}>+ Create new</NewButton>
         </OptionLi>,
         ...diagrams.map((diagram) => (
-          <OptionLi
-            key={diagram.id}
-            className={diagram.id === selectedId ? "--selected" : ""}
-          >
+          <OptionLi key={diagram.id} className={diagram.id === selectedId ? "--selected" : ""}>
             <OptionButton
               onClick={() => onSelectedId?.(diagram.id)}
               onDoubleClick={() => onRenameDiagram?.(diagram.id)}
             >
               {diagram.name}
             </OptionButton>
-            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)}>
-              X
-            </DeleteButton>
+            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)}>X</DeleteButton>
           </OptionLi>
         ))
       ]}

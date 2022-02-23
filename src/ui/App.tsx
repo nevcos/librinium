@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import {useDiagramStore} from "../store/diagramStore";
-import {CodeEditor} from "./CodeEditor";
-import {DiagramsList} from "./DiagramsList";
-import {PlantUmlPreview} from "./PlantUmlPreview";
-import {DiagramCode, DiagramId} from "../types";
+import { useDiagramStore } from "../store/diagramStore";
+import { CodeEditor } from "./CodeEditor";
+import { DiagramsList } from "./DiagramsList";
+import { PlantUmlPreview } from "./PlantUmlPreview";
+import { DiagramCode, DiagramId } from "../types";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -61,10 +61,7 @@ export function App() {
         />
       </ContentDiv>
       <PreviewDiv>
-        <PlantUmlPreview
-          key={store.getSelectedDiagram()?.id}
-          code={store.getSelectedDiagram()?.code}
-        />
+        <PlantUmlPreview key={store.getSelectedDiagram()?.id} code={store.getSelectedDiagram()?.code} />
       </PreviewDiv>
     </AppGridDiv>
   );

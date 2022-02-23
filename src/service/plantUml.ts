@@ -28,11 +28,7 @@ function encode64(data: string): string {
     } else if (i + 1 === data.length) {
       r += append3bytes(data.charCodeAt(i), 0, 0);
     } else {
-      r += append3bytes(
-        data.charCodeAt(i),
-        data.charCodeAt(i + 1),
-        data.charCodeAt(i + 2)
-      );
+      r += append3bytes(data.charCodeAt(i), data.charCodeAt(i + 1), data.charCodeAt(i + 2));
     }
   }
   return r;

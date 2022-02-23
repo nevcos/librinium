@@ -1,10 +1,10 @@
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
-import {useLayoutEffect, useRef} from "react";
+import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
-import {DiagramCode} from "../types";
+import { DiagramCode } from "../types";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -20,8 +20,8 @@ const CodeEditorDiv = styled.div`
 `;
 
 interface CodeEditorProps {
-  code: DiagramCode,
-  onChange?: (code: DiagramCode) => void
+  code: DiagramCode;
+  onChange?: (code: DiagramCode) => void;
 }
 
 export function CodeEditor({ code, onChange }: CodeEditorProps): JSX.Element {
