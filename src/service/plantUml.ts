@@ -2,15 +2,17 @@ import { deflate } from "pako";
 
 const PLANT_UML_PNG_URL = "//www.plantuml.com/plantuml/png/";
 
-export function buildPlantUmlUrl(code = "") {
+export function buildPlantUmlUrl(code: string = "") {
   code = code.trim();
   code = unescape(encodeURIComponent(code));
-  code = deflate(code, { level: 9 });
-  code = binaryToString(code);
-  return PLANT_UML_PNG_URL + "~1" + encode64(code);
+
+  const binary = deflate(code, { level: 9 });
+  const encodedBinary = encode64(binaryToString(binary));
+
+  return PLANT_UML_PNG_URL + "~1" + encodedBinary;
 }
 
-function binaryToString(binary) {
+function binaryToString(binary: Uint8Array): string {
   const str = new Array(binary.length);
   for (let i = 0; i < binary.length; i++) {
     str[i] = String.fromCharCode(binary[i]);
@@ -18,7 +20,7 @@ function binaryToString(binary) {
   return str.join("");
 }
 
-function encode64(data) {
+function encode64(data: string): string {
   let r = "";
   for (let i = 0; i < data.length; i += 3) {
     if (i + 2 === data.length) {
@@ -36,7 +38,7 @@ function encode64(data) {
   return r;
 }
 
-function append3bytes(b1, b2, b3) {
+function append3bytes(b1: number, b2: number, b3: number): string {
   const c1 = b1 >> 2;
   const c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
   const c3 = ((b2 & 0xf) << 2) | (b3 >> 6);
@@ -49,7 +51,7 @@ function append3bytes(b1, b2, b3) {
   return r;
 }
 
-function encode6bit(b) {
+function encode6bit(b: number): string {
   if (b < 10) {
     return String.fromCharCode(48 + b);
   }

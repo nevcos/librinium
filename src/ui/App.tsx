@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useDiagramStore } from "../store/diagramStore";
-import { CodeEditor } from "./CodeEditor";
-import { DiagramsList } from "./DiagramsList";
-import { PlantUmlPreview } from "./PlantUmlPreview";
+import {useDiagramStore} from "../store/diagramStore";
+import {CodeEditor} from "./CodeEditor";
+import {DiagramsList} from "./DiagramsList";
+import {PlantUmlPreview} from "./PlantUmlPreview";
+import {DiagramCode, DiagramId} from "../types";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -47,16 +48,16 @@ export function App() {
         <DiagramsList
           selectedId={store.selectedDiagramId}
           diagrams={store.diagrams}
-          onSelectedId={(id) => store.setSelectedDiagramId(id)}
+          onSelectedId={(id: DiagramId) => store.setSelectedDiagramId(id)}
           onCreateDiagram={() => store.createNewDiagram()}
-          onDeleteDiagram={(id) => store.deleteDiagram(id)}
+          onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}
         />
       </SideBarDiv>
       <ContentDiv>
         <CodeEditor
           key={store.getSelectedDiagram()?.id}
           code={store.getSelectedDiagram()?.code}
-          onChange={(code) => store.setSelectedDiagramCode(code)}
+          onChange={(code: DiagramCode) => store.setSelectedDiagramCode(code)}
         />
       </ContentDiv>
       <PreviewDiv>

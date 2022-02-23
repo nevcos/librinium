@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {DiagramId} from "../types";
+import {Diagram} from "../model/Diagram";
 
 const ListUl = styled.ul`
   list-style: none;
@@ -50,17 +52,23 @@ const DeleteButton = styled.button`
   }
 `;
 
+interface DiagramListProps {
+  selectedId: DiagramId | null;
+  diagrams: Diagram[];
+  onSelectedId?: (id: DiagramId) => void;
+  onCreateDiagram?: () => void;
+  onDeleteDiagram?: (id: DiagramId) => void;
+  onRenameDiagram?: (id: DiagramId) => void;
+}
+
 export function DiagramsList({
   selectedId,
   diagrams,
   onSelectedId,
   onCreateDiagram,
-  onDeleteDiagram
-}) {
-  function onRename() {
-    console.log("Renaming...");
-  }
-
+  onDeleteDiagram,
+  onRenameDiagram
+}: DiagramListProps): JSX.Element {
   return (
     <ListUl>
       {[
@@ -73,12 +81,12 @@ export function DiagramsList({
             className={diagram.id === selectedId ? "--selected" : ""}
           >
             <OptionButton
-              onClick={() => onSelectedId(diagram.id)}
-              onDoubleClick={() => onRename(diagram.id)}
+              onClick={() => onSelectedId?.(diagram.id)}
+              onDoubleClick={() => onRenameDiagram?.(diagram.id)}
             >
               {diagram.name}
             </OptionButton>
-            <DeleteButton onClick={() => onDeleteDiagram(diagram.id)}>
+            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)}>
               X
             </DeleteButton>
           </OptionLi>
