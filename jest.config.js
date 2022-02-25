@@ -6,15 +6,12 @@ module.exports = {
   // Jest transformations -- this adds support for TypeScript
   // using ts-jest
   transform: {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.tsx?$": "esbuild-runner/jest"
   },
 
-  // Runs special logic, such as cleaning up components
-  // when using React Testing Library and adds special
-  // extended assertions to Jest
+  // Additional Jest setup
   setupFilesAfterEnv: [
-    // "@testing-library/react/cleanup-after-each",
-    // "@testing-library/jest-dom/extend-expect"
+    "./src/jest-setup.ts"
   ],
 
   // Test spec file resolution pattern
@@ -25,5 +22,8 @@ module.exports = {
   // Module file extensions for importing
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
 
+  // The test environment that will be used for testing.
+  // The default environment in Jest is a Node.js environment. If you are building a web app,
+  // you can use a browser-like environment through jsdom instead.
   testEnvironment: "jsdom"
 };
