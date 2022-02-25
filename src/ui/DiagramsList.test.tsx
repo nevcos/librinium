@@ -3,6 +3,7 @@ import {findByTestId, fireEvent, render, waitFor} from "@testing-library/react";
 import {screen} from '@testing-library/dom'
 import {DiagramsList} from "./DiagramsList";
 import {DiagramCode, DiagramId, DiagramName} from "../types";
+import Mock = jest.Mock;
 
 const diagram0 = {
   id: 0 as DiagramId,
@@ -29,7 +30,7 @@ describe("<DiagramsList />", () => {
     const btn = await screen.findByTestId<HTMLButtonElement>("create");
     fireEvent.click(btn);
 
-    await waitFor(() => expect(props.onCreateDiagram).toBeCalledTimes(1));
+    await waitForCallbackToBeCalledOnce(props.onCreateDiagram);
   });
 
   test("should callback onSelectDiagram when clicking on select button for diagram 0", async () => {
@@ -44,7 +45,7 @@ describe("<DiagramsList />", () => {
     fireEvent.click(createBtns[diagramIndex]);
     const triggeredDiagramId = diagrams[diagramIndex].id;
 
-    await waitFor(() => expect(props.onSelectDiagram).toBeCalledTimes(1));
+    await waitForCallbackToBeCalledOnce(props.onSelectDiagram);
     expect(props.onSelectDiagram.mock.results[0].value).toBe(triggeredDiagramId);
   });
 
@@ -60,6 +61,7 @@ describe("<DiagramsList />", () => {
     fireEvent.doubleClick(btns[diagramIndex]);
     const triggeredDiagramId = diagrams[diagramIndex].id;
 
+    await waitForCallbackToBeCalledOnce(props.onRenameDiagram);
     await waitFor(() => expect(props.onRenameDiagram).toBeCalledTimes(1));
     expect(props.onRenameDiagram.mock.results[0].value).toBe(triggeredDiagramId);
   });
@@ -76,7 +78,11 @@ describe("<DiagramsList />", () => {
     fireEvent.click(btns[diagramIndex]);
     const triggeredDiagramId = diagrams[diagramIndex].id;
 
-    await waitFor(() => expect(props.onDeleteDiagram).toBeCalledTimes(1));
+    await waitForCallbackToBeCalledOnce(props.onDeleteDiagram);
     expect(props.onDeleteDiagram.mock.results[0].value).toBe(triggeredDiagramId);
   });
 });
+
+function waitForCallbackToBeCalledOnce(callback: Mock) {
+  return waitFor(() => expect(callback).toBeCalledTimes(1));
+}

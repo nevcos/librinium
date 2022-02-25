@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn test && tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch"
