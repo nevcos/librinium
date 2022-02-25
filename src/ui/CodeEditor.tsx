@@ -19,12 +19,12 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
-interface CodeEditorProps {
+interface Props {
   code: DiagramCode;
   onChange?: (code: DiagramCode) => void;
 }
 
-export function CodeEditor({ code, onChange }: CodeEditorProps): JSX.Element {
+export function CodeEditor({ code, onChange }: Props): JSX.Element {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 

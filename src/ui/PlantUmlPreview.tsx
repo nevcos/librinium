@@ -6,11 +6,11 @@ const PlantUmlPreviewDiv = styled.div`
   text-align: center;
 `;
 
-interface PlantUmlPreviewProps {
+interface Props {
   code: DiagramCode;
 }
 
-export function PlantUmlPreview({ code }: PlantUmlPreviewProps): JSX.Element {
+export function PlantUmlPreview({ code }: Props): JSX.Element {
   const src = buildPlantUmlUrl(code);
 
   return (

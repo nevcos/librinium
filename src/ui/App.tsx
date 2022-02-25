@@ -48,7 +48,7 @@ export function App() {
         <DiagramsList
           selectedId={store.selectedDiagramId}
           diagrams={store.diagrams}
-          onSelectedId={(id: DiagramId) => store.setSelectedDiagramId(id)}
+          onSelectDiagram={(id: DiagramId) => store.setSelectedDiagramId(id)}
           onCreateDiagram={() => store.createNewDiagram()}
           onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}
         />

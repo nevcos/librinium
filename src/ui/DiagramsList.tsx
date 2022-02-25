@@ -52,38 +52,39 @@ const DeleteButton = styled.button`
   }
 `;
 
-interface DiagramListProps {
-  selectedId: DiagramId | null;
+interface Props {
   diagrams: Diagram[];
-  onSelectedId?: (id: DiagramId) => void;
+  selectedId?: DiagramId | null;
+  onSelectDiagram?: (id: DiagramId) => void;
   onCreateDiagram?: () => void;
   onDeleteDiagram?: (id: DiagramId) => void;
   onRenameDiagram?: (id: DiagramId) => void;
 }
 
 export function DiagramsList({
-  selectedId,
   diagrams,
-  onSelectedId,
+  selectedId,
+  onSelectDiagram,
   onCreateDiagram,
   onDeleteDiagram,
   onRenameDiagram
-}: DiagramListProps): JSX.Element {
+}: Props): JSX.Element {
   return (
     <ListUl>
       {[
         <OptionLi key="create">
-          <NewButton onClick={onCreateDiagram}>+ Create new</NewButton>
+          <NewButton onClick={onCreateDiagram} data-testid="create">+ Create new</NewButton>
         </OptionLi>,
         ...diagrams.map((diagram) => (
           <OptionLi key={diagram.id} className={diagram.id === selectedId ? "--selected" : ""}>
             <OptionButton
-              onClick={() => onSelectedId?.(diagram.id)}
+              onClick={() => onSelectDiagram?.(diagram.id)}
               onDoubleClick={() => onRenameDiagram?.(diagram.id)}
+              data-testid="select"
             >
               {diagram.name}
             </OptionButton>
-            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)}>X</DeleteButton>
+            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)} data-testid="delete">X</DeleteButton>
           </OptionLi>
         ))
       ]}
