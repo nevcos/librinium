@@ -7,7 +7,7 @@ const PlantUmlPreviewDiv = styled.div`
 `;
 
 interface Props {
-  code: DiagramCode;
+  code: DiagramCode | undefined;
 }
 
 export function PlantUmlPreview({ code }: Props): JSX.Element {

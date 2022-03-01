@@ -20,7 +20,7 @@ const CodeEditorDiv = styled.div`
 `;
 
 interface Props {
-  code: DiagramCode;
+  code: DiagramCode | undefined;
   onChange?: (code: DiagramCode) => void;
 }
 
