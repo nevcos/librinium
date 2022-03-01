@@ -2,7 +2,7 @@ import { deflate } from "pako";
 
 const PLANT_UML_PNG_URL = "//www.plantuml.com/plantuml/png/";
 
-export function buildPlantUmlUrl(code: string = "") {
+export function buildPlantUmlUrl(code = "") {
   code = code.trim();
   code = unescape(encodeURIComponent(code));
 
