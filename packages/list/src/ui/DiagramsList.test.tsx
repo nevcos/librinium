@@ -1,11 +1,11 @@
 import React from "react";
-import {findByTestId, fireEvent, render, waitFor} from "@testing-library/react";
+import {fireEvent, render, waitFor} from "@testing-library/react";
 import {screen} from '@testing-library/dom'
 import {DiagramsList} from "./DiagramsList";
 import Mock = jest.Mock;
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramId";
-import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramName";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramCode";
+import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
 const diagram0 = {
   id: 0 as DiagramId,

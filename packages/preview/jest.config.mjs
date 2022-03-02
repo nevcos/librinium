@@ -1,4 +1,4 @@
-import {getDefaultJestConfig} from "../shared/config/jest/defaultConfig.mjs";
+import {getDefaultJestConfig} from "../shared/config/jest/defaultJestConfig.mjs";
 
 // noinspection JSUnusedGlobalSymbols
 export default {

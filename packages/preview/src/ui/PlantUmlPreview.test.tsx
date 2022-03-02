@@ -10,7 +10,6 @@ describe("<PlantUmlPreview />", () => {
     const result = render(<PlantUmlPreview code={code} />);
     const img = result.container.querySelector("img");
 
-    expect(img).toBeDefined();
     expect(img?.src).toBe("http://www.plantuml.com/plantuml/png/~1UDeBIIqkqRKBBarEJYqk1W0X4GJb");
   });
 });
