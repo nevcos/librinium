@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/types";
-import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
+import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
+import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
 
 const ListUl = styled.ul`
   list-style: none;

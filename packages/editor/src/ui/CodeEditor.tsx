@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
-import { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/types";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramCode";
 
 const CHANGE_DEBOUNCE_MS = 600;
 

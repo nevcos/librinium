@@ -1,9 +1,12 @@
-import {lazy, useRef, Suspense, useLayoutEffect} from "react";
+import {useLayoutEffect, useRef} from "react";
 import styled from "styled-components";
-import { useDiagramStore } from "../store/diagramStore";
-// import { CodeEditor } from "../../../editor/src/ui/CodeEditor";
-// import { DiagramsList } from "../../../list/src/ui/DiagramsList";
-// import { DiagramCode, DiagramId } from "@nevcos/react-plantuml-ide-shared/src/types";
+import {useDiagramStore} from "../store/diagramStore";
+import {
+  mountMFModule,
+  enableMicroFrontendShellMode
+} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
+
+enableMicroFrontendShellMode();
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -51,17 +54,17 @@ export function App() {
 
     // @ts-ignore
     import("http://localhost:3001/src/index.tsx").then(module => {
-      module.mount(listContainer.current);
+      mountMFModule(listContainer.current as HTMLElement, "mf-diagrams-list", module.default);
     });
 
     // @ts-ignore
     import("http://localhost:3002/src/index.tsx").then(module => {
-      module.mount(editorContainer.current);
+      mountMFModule(editorContainer.current as HTMLElement, "mf-code-editor", module.default);
     });
 
     // @ts-ignore
     import("http://localhost:3003/src/index.tsx").then(module => {
-      module.mount(previewContainer.current);
+      mountMFModule(previewContainer.current as HTMLElement, "mf-preview", module.default);
     });
   }, []);
 

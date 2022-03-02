@@ -1,24 +1,30 @@
 import ReactDOM from "react-dom";
 
-import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
+import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
 
 import {DiagramsList} from "./ui/DiagramsList";
+import {
+  isMFShellModeEnabled,
+  mountMFModule
+} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
+import {MFModule} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
+import {MFEvent} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFEvent";
 
 const sampleDiagramsList = [] as Diagram[];
 
-export function mount(container: HTMLElement): () => void {
-  ReactDOM.render(<DiagramsList diagrams={sampleDiagramsList} />, container);
-  return () => unmount(container);
+export default class DiagramsListModule extends HTMLElement implements MFModule {
+  connectedCallback(): void {
+    ReactDOM.render(<DiagramsList diagrams={sampleDiagramsList} />, this);
+  }
+  disconnectedCallback(): void {
+    ReactDOM.unmountComponentAtNode(this);
+  }
+  onEvent?(event: MFEvent<unknown>): void {
+
+  }
 }
 
-export function unmount(element: HTMLElement): void {
-  ReactDOM.unmountComponentAtNode(element);
-}
-
-function isStandaloneMode(): boolean {
-  return "isStandaloneMode" in window;
-}
-
-if (isStandaloneMode()) {
-  mount(document.getElementById("root") as HTMLElement);
+if (!isMFShellModeEnabled()) {
+  const container = document.getElementById("root") as HTMLElement;
+  mountMFModule(container, "test-diagrams-list", DiagramsListModule);
 }

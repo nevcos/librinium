@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { buildPlantUmlUrl } from "../service/plantUml";
-import { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/types";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
 const PlantUmlPreviewDiv = styled.div`
   text-align: center;

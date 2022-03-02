@@ -1,7 +1,9 @@
 import {act, renderHook} from "@testing-library/react-hooks";
 import {useDiagramStore} from "./diagramStore";
-import {DiagramCode, DiagramId, DiagramName} from "@nevcos/react-plantuml-ide-shared/src/types";
 import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
+import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramId";
+import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramName";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramCode";
 
 const diagram0 = {
   id: 0 as DiagramId,
