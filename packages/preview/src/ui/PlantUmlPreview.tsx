@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { buildPlantUmlUrl } from "../service/plantUml";
-import { DiagramCode } from "../types";
+import { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/types";
 
 const PlantUmlPreviewDiv = styled.div`
   text-align: center;
@@ -19,3 +19,5 @@ export function PlantUmlPreview({ code }: Props): JSX.Element {
     </PlantUmlPreviewDiv>
   );
 }
+
+export default PlantUmlPreview;

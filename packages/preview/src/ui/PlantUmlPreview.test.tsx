@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "@testing-library/react";
 import {PlantUmlPreview} from "./PlantUmlPreview";
-import {DiagramCode} from "../types";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/types";
 
 describe("<PlantUmlPreview />", () => {
   test("should display an image with the correct diagram", async () => {

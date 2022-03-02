@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { useState } from "react";
-import { Diagram } from "../model/Diagram";
-import { DiagramCode, DiagramId, DiagramName } from "../types";
+import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
+import { DiagramCode, DiagramId, DiagramName } from "@nevcos/react-plantuml-ide-shared/src/types";
 
 export const defaultDiagrams = [
   { id: 1 as DiagramId, name: "Diagram 1" as DiagramName, code: "class Bob" as DiagramCode },

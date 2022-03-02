@@ -2,7 +2,7 @@ import React from "react";
 import {findByTestId, fireEvent, render, waitFor} from "@testing-library/react";
 import {screen} from '@testing-library/dom'
 import {DiagramsList} from "./DiagramsList";
-import {DiagramCode, DiagramId, DiagramName} from "../types";
+import {DiagramCode, DiagramId, DiagramName} from "@nevcos/react-plantuml-ide-shared/src/types";
 import Mock = jest.Mock;
 
 const diagram0 = {

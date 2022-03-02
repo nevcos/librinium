@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { DiagramId } from "../types";
-import { Diagram } from "../model/Diagram";
+import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/types";
+import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
 
 const ListUl = styled.ul`
   list-style: none;
@@ -32,7 +32,7 @@ const OptionButton = styled.button`
 `;
 
 const NewButton = styled(OptionButton)`
-  background-color: lightskyblue;
+  background-color: orange;
 
   &:not(:disabled) {
     cursor: pointer;
