@@ -1,9 +1,9 @@
 import { produce } from "immer";
 import { useState } from "react";
-import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/model/Diagram";
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramId";
-import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramName";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/model/DiagramCode";
+import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
+import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
 export const defaultDiagrams = [
   { id: 1 as DiagramId, name: "Diagram 1" as DiagramName, code: "class Bob" as DiagramCode },

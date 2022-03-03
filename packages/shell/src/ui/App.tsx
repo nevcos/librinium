@@ -53,17 +53,17 @@ export function App() {
     if (!listContainer.current || !editorContainer.current || !previewContainer.current) return;
 
     // @ts-ignore
-    import("http://localhost:3001/src/index.tsx").then(module => {
+    import("@nevcos/react-plantuml-ide-list/src/index.tsx").then(module => {
       mountMFModule(listContainer.current as HTMLElement, "mf-diagrams-list", module.default);
     });
 
     // @ts-ignore
-    import("http://localhost:3002/src/index.tsx").then(module => {
+    import("@nevcos/react-plantuml-ide-editor/src/index.tsx").then(module => {
       mountMFModule(editorContainer.current as HTMLElement, "mf-code-editor", module.default);
     });
 
     // @ts-ignore
-    import("http://localhost:3003/src/index.tsx").then(module => {
+    import("@nevcos/react-plantuml-ide-preview/src/index.tsx").then(module => {
       mountMFModule(previewContainer.current as HTMLElement, "mf-preview", module.default);
     });
   }, []);
