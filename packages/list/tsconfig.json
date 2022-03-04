@@ -2,6 +2,6 @@
   "extends": "../../tsconfig.json",
   "include": [
     "src",
-    "../shared/src/typings/*.d.ts"
+    "../shared-dev/src/typings/*.d.ts"
   ],
 }
