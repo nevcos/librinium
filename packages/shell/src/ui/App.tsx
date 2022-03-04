@@ -1,12 +1,10 @@
-import {useLayoutEffect, useRef} from "react";
 import styled from "styled-components";
 import {useDiagramStore} from "../store/diagramStore";
-import {
-  mountMFModule,
-  enableMicroFrontendShellMode
-} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
-
-enableMicroFrontendShellMode();
+import {CodeEditor} from "../../../editor/src/ui/CodeEditor";
+import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import {DiagramsList} from "../../../list/src/ui/DiagramsList";
+import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import PlantUmlPreview from "../../../preview/src/ui/PlantUmlPreview";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -45,51 +43,26 @@ const PreviewDiv = styled.div`
 export function App() {
   const store = useDiagramStore();
 
-  const listContainer = useRef<HTMLDivElement | null>(null);
-  const editorContainer = useRef<HTMLDivElement | null>(null);
-  const previewContainer = useRef<HTMLDivElement | null>(null);
-
-  useLayoutEffect(() => {
-    if (!listContainer.current || !editorContainer.current || !previewContainer.current) return;
-
-    // @ts-ignore
-    import("@nevcos/react-plantuml-ide-list/src/index.tsx").then(module => {
-      mountMFModule(listContainer.current as HTMLElement, "mf-diagrams-list", module.default);
-    });
-
-    // @ts-ignore
-    import("@nevcos/react-plantuml-ide-editor/src/index.tsx").then(module => {
-      mountMFModule(editorContainer.current as HTMLElement, "mf-code-editor", module.default);
-    });
-
-    // @ts-ignore
-    import("@nevcos/react-plantuml-ide-preview/src/index.tsx").then(module => {
-      mountMFModule(previewContainer.current as HTMLElement, "mf-preview", module.default);
-    });
-  }, []);
-
   return (
     <AppGridDiv>
-      <SideBarDiv ref={listContainer}>
-        {/*<DiagramsList*/}
-        {/*  selectedId={store.selectedDiagramId}*/}
-        {/*  diagrams={store.diagrams}*/}
-        {/*  onSelectDiagram={(id: DiagramId) => store.setSelectedDiagramId(id)}*/}
-        {/*  onCreateDiagram={() => store.createNewDiagram()}*/}
-        {/*  onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}*/}
-        {/*/>*/}
+      <SideBarDiv>
+        <DiagramsList
+          selectedId={store.selectedDiagramId}
+          diagrams={store.diagrams}
+          onSelectDiagram={(id: DiagramId) => store.setSelectedDiagramId(id)}
+          onCreateDiagram={() => store.createNewDiagram()}
+          onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}
+        />
       </SideBarDiv>
-      <ContentDiv ref={editorContainer}>
-        {/*<CodeEditor*/}
-        {/*  key={store.getSelectedDiagram()?.id}*/}
-        {/*  code={store.getSelectedDiagram()?.code}*/}
-        {/*  onChange={(code: DiagramCode) => store.setSelectedDiagramCode(code)}*/}
-        {/*/>*/}
+      <ContentDiv>
+        <CodeEditor
+          key={store.getSelectedDiagram()?.id}
+          code={store.getSelectedDiagram()?.code}
+          onChange={(code: DiagramCode) => store.setSelectedDiagramCode(code)}
+        />
       </ContentDiv>
-      <PreviewDiv ref={previewContainer}>
-        {/*<Suspense fallback={<div>Loading...</div>}>*/}
-        {/*  /!*<LazyPlantUmlPreview key={store.getSelectedDiagram()?.id} code={store.getSelectedDiagram()?.code} />*!/*/}
-        {/*</Suspense>*/}
+      <PreviewDiv>
+        <PlantUmlPreview key={store.getSelectedDiagram()?.id} code={store.getSelectedDiagram()?.code} />
       </PreviewDiv>
     </AppGridDiv>
   );
