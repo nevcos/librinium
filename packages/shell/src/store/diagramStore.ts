@@ -46,7 +46,7 @@ export function useDiagramStore() {
     const newDiagram = {
       id,
       name: `New Diagram ${id}` as DiagramName,
-      code: `Hello->World` as DiagramCode
+      code: `New->Diagram ${id}` as DiagramCode
     }
     setDiagrams(
       produce(diagrams, (diagrams) => {

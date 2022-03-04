@@ -6,12 +6,12 @@ import {
   isMFShellModeEnabled,
   mountMFModule
 } from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
-import {MFModule} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
+import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
 import {MFEvent} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFEvent";
 
 const samplePlantUmlCode = "Hello -> World" as DiagramCode;
 
-export default class PlantUmlPreviewModule extends HTMLElement implements MFModule {
+export default class PlantUmlPreviewModule extends HTMLElement implements MFFragment {
   connectedCallback(): void {
     ReactDOM.render(<PlantUmlPreview code={samplePlantUmlCode} />, this);
   }

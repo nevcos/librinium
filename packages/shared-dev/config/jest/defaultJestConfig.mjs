@@ -5,7 +5,7 @@ export function getDefaultJestConfig() {
 
     // ignore some imports
     moduleNameMapper: {
-      "\\.(css|scss)$": "<rootDir>/../../shared/config/jest/emptyModuleMock.ts"
+      "\\.(css|scss)$": "<rootDir>/../../shared-dev/config/jest/emptyModuleMock.ts"
     },
 
     // use esbuild for faster tests
@@ -15,8 +15,8 @@ export function getDefaultJestConfig() {
 
     // setup files
     setupFilesAfterEnv: [
-      "<rootDir>/../../shared/config/jest/documentCreateRangeMock.ts",
-      "<rootDir>/../../shared/config/jest/setupJestGlobalReact.ts"
+      "<rootDir>/../../shared-dev/config/jest/documentCreateRangeMock.ts",
+      "<rootDir>/../../shared-dev/config/jest/setupJestGlobalReact.ts"
     ],
 
     // jsdom is required to test webapp code

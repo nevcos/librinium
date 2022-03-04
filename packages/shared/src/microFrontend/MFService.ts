@@ -1,4 +1,4 @@
-import {MFModule} from "./model/MFModule";
+import {MFFragment} from "./model/MFModule";
 
 const microFrontendShellModeEnabled = "___microFrontendShellModeEnabled";
 
@@ -12,7 +12,7 @@ export function enableMicroFrontendShellMode(): void {
   window[microFrontendShellModeEnabled] = true;
 }
 
-export function mountMFModule(container: HTMLElement, name: string, MFModuleType: Type<MFModule>): void {
+export function mountMFModule(container: HTMLElement, name: string, MFModuleType: Type<MFFragment>): void {
   customElements.define(name, MFModuleType);
   const instance = new MFModuleType();
   container.append(instance);

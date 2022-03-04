@@ -1,6 +1,6 @@
 import {MFEvent} from "./MFEvent";
 
-export interface MFModule extends HTMLElement {
+export interface MFFragment extends HTMLElement {
   connectedCallback(): void;
   disconnectedCallback(): void;
   dispatchEvent(event: MFEvent<unknown>): boolean;

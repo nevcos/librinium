@@ -7,12 +7,12 @@ import {
   isMFShellModeEnabled,
   mountMFModule
 } from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
-import {MFModule} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
+import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
 import {MFEvent} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFEvent";
 
 const sampleDiagramsList = [] as Diagram[];
 
-export default class DiagramsListModule extends HTMLElement implements MFModule {
+export default class DiagramsListModule extends HTMLElement implements MFFragment {
   connectedCallback(): void {
     ReactDOM.render(<DiagramsList diagrams={sampleDiagramsList} />, this);
   }

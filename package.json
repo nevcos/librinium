@@ -6,6 +6,8 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "test": "yarn workspaces run test",
+    "build": "yarn test && yarn workspace @nevcos/react-plantuml-ide-shell build && shx mv packages/shell/dist .",
     "clear": "shx rm -rf node_modules packages/*/node_modules",
     "eslint": "eslint packages/**/*.ts"
   },

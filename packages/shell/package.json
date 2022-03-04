@@ -5,18 +5,17 @@
   "main": "src/index.jsx",
   "scripts": {
     "start": "vite --port 3000 --strictPort",
-    "dev": "vite",
     "build": "yarn test && tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "immer": "9.0.12",
-    "@nevcos/react-plantuml-ide-shared": "*",
-    "@nevcos/react-plantuml-ide-list": "*",
     "@nevcos/react-plantuml-ide-editor": "*",
-    "@nevcos/react-plantuml-ide-preview": "*"
+    "@nevcos/react-plantuml-ide-list": "*",
+    "@nevcos/react-plantuml-ide-preview": "*",
+    "@nevcos/react-plantuml-ide-shared": "*",
+    "immer": "9.0.12"
   },
   "devDependencies": {
     "@nevcos/react-plantuml-ide-shared-dev": "*"
