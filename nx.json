@@ -1,0 +1,18 @@
+{
+  "extends": "@nrwl/workspace/presets/npm.json",
+  "npmScope": "nevcos",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "package",
+          "prepare"
+        ]
+      }
+    }
+  }
+}

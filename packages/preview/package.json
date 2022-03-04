@@ -5,7 +5,7 @@
   "main": "src/index.jsx",
   "scripts": {
     "start": "vite --port 3003 --strictPort",
-    "build": "yarn test && tsc && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch"

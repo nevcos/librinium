@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 
 import {CodeEditor} from "./ui/CodeEditor";
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
-import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
+import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFFragment";
 import {MFEvent} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFEvent";
 import {
   isMFShellModeEnabled,

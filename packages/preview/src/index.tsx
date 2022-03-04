@@ -6,7 +6,7 @@ import {
   isMFShellModeEnabled,
   mountMFModule
 } from "@nevcos/react-plantuml-ide-shared/src/microFrontend/MFService";
-import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFModule";
+import {MFFragment} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFFragment";
 import {MFEvent} from "@nevcos/react-plantuml-ide-shared/src/microFrontend/model/MFEvent";
 
 const samplePlantUmlCode = "Hello -> World" as DiagramCode;

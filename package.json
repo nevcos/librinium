@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "test": "yarn workspaces run test",
+    "test": "nx run-many --target=test --all --parallel",
     "build": "yarn test && yarn workspace @nevcos/react-plantuml-ide-shell build && shx mv packages/shell/dist .",
     "clear": "shx rm -rf node_modules packages/*/node_modules",
     "eslint": "eslint packages/**/*.ts"
@@ -24,6 +24,9 @@
     "eslint-plugin-simple-import-sort": "~7.0.0",
     "prettier": "~2.5.1",
     "shx ": "~0.3.4",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "@nrwl/workspace": "~13.8.4",
+    "@nrwl/cli": "~13.8.4",
+    "@nrwl/tao": "~13.8.4"
   }
 }

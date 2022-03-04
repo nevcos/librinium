@@ -1,4 +1,4 @@
-import {MFFragment} from "./model/MFModule";
+import {MFFragment} from "./model/MFFragment";
 
 const microFrontendShellModeEnabled = "___microFrontendShellModeEnabled";
 
