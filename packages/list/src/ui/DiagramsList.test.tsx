@@ -64,7 +64,6 @@ describe("<DiagramsList />", () => {
     const triggeredDiagramId = diagrams[diagramIndex].id;
 
     await waitForCallbackToBeCalledOnce(props.onRenameDiagram);
-    await waitFor(() => expect(props.onRenameDiagram).toBeCalledTimes(1));
     expect(props.onRenameDiagram.mock.results[0].value).toBe(triggeredDiagramId);
   });
 
