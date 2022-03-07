@@ -38,7 +38,7 @@ describe("diagramStore", () => {
 
     act(() => {
       result.current.setDiagrams(diagrams);
-      result.current.setSelectedDiagramId(diagram1.id);
+      result.current.selectDiagram(diagram1.id);
     });
 
     expect(result.current.getSelectedDiagram()).toEqual(diagram1);
@@ -49,7 +49,7 @@ describe("diagramStore", () => {
 
     act(() => {
       result.current.setDiagrams(diagrams);
-      result.current.setSelectedDiagramId(diagram1.id);
+      result.current.selectDiagram(diagram1.id);
     });
 
     expect(result.current.getSelectedDiagram()).toEqual(diagram1);
@@ -60,7 +60,7 @@ describe("diagramStore", () => {
 
     act(() => {
       result.current.setDiagrams(diagrams);
-      result.current.setSelectedDiagramId(diagram1.id);
+      result.current.selectDiagram(diagram1.id);
     });
 
     expect(result.current.getSelectedDiagram()).toEqual(diagram1);
@@ -72,8 +72,8 @@ describe("diagramStore", () => {
 
     act(() => {
       result.current.setDiagrams(diagrams);
-      result.current.setSelectedDiagramId(diagram1.id);
-      result.current.setSelectedDiagramCode(newDiagramCode)
+      result.current.selectDiagram(diagram1.id);
+      result.current.updateDiagramCode(newDiagramCode)
     });
 
     expect(result.current.getSelectedDiagram()?.code).toEqual(newDiagramCode);

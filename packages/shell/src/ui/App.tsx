@@ -1,3 +1,4 @@
+import {useCallback} from "react";
 import styled from "styled-components";
 import {useDiagramStore} from "../store/diagramStore";
 import {CodeEditor} from "@nevcos/react-plantuml-ide-editor/src/ui/CodeEditor";
@@ -43,22 +44,27 @@ const PreviewDiv = styled.div`
 export function App() {
   const store = useDiagramStore();
 
+  const onSelectDiagram = useCallback((id: DiagramId) => store.selectDiagram(id), []);
+  const onCreateDiagram = useCallback(() => store.createNewDiagram(), []);
+  const onDeleteDiagram = useCallback((id: DiagramId) => store.deleteDiagram(id), []);
+  const onCodeChange = useCallback((code: DiagramCode) => store.updateDiagramCode(code), []);
+
   return (
     <AppGridDiv>
       <SideBarDiv>
         <DiagramsList
           selectedId={store.selectedDiagramId}
           diagrams={store.diagrams}
-          onSelectDiagram={(id: DiagramId) => store.selectDiagram(id)}
-          onCreateDiagram={() => store.createNewDiagram()}
-          onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}
+          onSelectDiagram={onSelectDiagram}
+          onCreateDiagram={onCreateDiagram}
+          onDeleteDiagram={onDeleteDiagram}
         />
       </SideBarDiv>
       <ContentDiv>
         <CodeEditor
           key={store.getSelectedDiagram()?.id}
           code={store.getSelectedDiagram()?.code}
-          onChange={(code: DiagramCode) => store.updateDiagramCode(code)}
+          onChange={onCodeChange}
         />
       </ContentDiv>
       <PreviewDiv>
