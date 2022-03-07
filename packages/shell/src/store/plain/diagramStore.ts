@@ -6,7 +6,6 @@ import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
 let nextId = 1;
-
 function getNextId(): DiagramId {
   return nextId ++ as DiagramId;
 }
