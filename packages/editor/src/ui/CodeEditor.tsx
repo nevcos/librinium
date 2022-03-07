@@ -1,3 +1,4 @@
+import { memo } from "react";
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
@@ -5,6 +6,7 @@ import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import {RenderingCounter} from "@nevcos/react-plantuml-ide-shared/src/ui/renderingCounter/RenderingCounter";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -24,7 +26,7 @@ interface Props {
   onChange?: (code: DiagramCode) => void;
 }
 
-export function CodeEditor({ code, onChange }: Props): JSX.Element {
+export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
@@ -51,5 +53,8 @@ export function CodeEditor({ code, onChange }: Props): JSX.Element {
     }
   }, [code]);
 
-  return <CodeEditorDiv ref={elementRef} />;
-}
+  return <>
+    <RenderingCounter />
+    <CodeEditorDiv ref={elementRef} />
+  </>;
+});

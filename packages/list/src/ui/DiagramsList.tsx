@@ -1,6 +1,8 @@
+import { memo } from "react";
 import styled from "styled-components";
 import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import { RenderingCounter } from "@nevcos/react-plantuml-ide-shared/src/ui/renderingCounter/RenderingCounter";
 
 const ListUl = styled.ul`
   list-style: none;
@@ -61,7 +63,7 @@ interface Props {
   onRenameDiagram?: (id: DiagramId) => void;
 }
 
-export function DiagramsList({
+export const DiagramsList = memo(function ({
   diagrams,
   selectedId,
   onSelectDiagram,
@@ -70,24 +72,31 @@ export function DiagramsList({
   onRenameDiagram
 }: Props): JSX.Element {
   return (
-    <ListUl>
-      {[
-        <OptionLi key="create">
-          <NewButton onClick={onCreateDiagram} data-testid="create">+ Create new</NewButton>
-        </OptionLi>,
-        ...diagrams.map((diagram) => (
-          <OptionLi key={diagram.id} className={diagram.id === selectedId ? "--selected" : ""}>
-            <OptionButton
-              onClick={() => onSelectDiagram?.(diagram.id)}
-              onDoubleClick={() => onRenameDiagram?.(diagram.id)}
-              data-testid="select"
-            >
-              {diagram.name}
-            </OptionButton>
-            <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)} data-testid="delete">X</DeleteButton>
-          </OptionLi>
-        ))
-      ]}
-    </ListUl>
+    <>
+      <RenderingCounter />
+      <ListUl>
+        {[
+          <OptionLi key="create">
+            <NewButton onClick={onCreateDiagram} data-testid="create">
+              + Create new
+            </NewButton>
+          </OptionLi>,
+          ...diagrams.map((diagram) => (
+            <OptionLi key={diagram.id} className={diagram.id === selectedId ? "--selected" : ""}>
+              <OptionButton
+                onClick={() => onSelectDiagram?.(diagram.id)}
+                onDoubleClick={() => onRenameDiagram?.(diagram.id)}
+                data-testid="select"
+              >
+                {diagram.name}
+              </OptionButton>
+              <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)} data-testid="delete">
+                X
+              </DeleteButton>
+            </OptionLi>
+          ))
+        ]}
+      </ListUl>
+    </>
   );
-}
+});

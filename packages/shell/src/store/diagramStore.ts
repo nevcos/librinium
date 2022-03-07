@@ -29,7 +29,11 @@ export function useDiagramStore() {
     return diagrams.filter((d) => d.id === selectedDiagramId)[0];
   }
 
-  function setSelectedDiagramCode(code: DiagramCode): void {
+  function selectDiagram(id: DiagramId): void {
+    setSelectedDiagramId(id);
+  }
+
+  function updateDiagramCode(code: DiagramCode): void {
     setDiagrams(
       produce(diagrams, (diagrams) => {
         for (const diagram of diagrams) {
@@ -57,7 +61,7 @@ export function useDiagramStore() {
     return newDiagram;
   }
 
-  function deleteDiagram(id: number): void {
+  function deleteDiagram(id: DiagramId): void {
     setDiagrams(diagrams.filter((diagram) => diagram.id !== id));
     if (selectedDiagramId === id) {
       setSelectedDiagramId(null);
@@ -66,12 +70,11 @@ export function useDiagramStore() {
 
   return {
     diagrams,
-    setDiagrams,
     getDiagramNames,
     selectedDiagramId,
-    setSelectedDiagramId,
+    selectDiagram,
     getSelectedDiagram,
-    setSelectedDiagramCode,
+    updateDiagramCode,
     createNewDiagram,
     deleteDiagram
   };

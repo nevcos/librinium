@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import {useDiagramStore} from "../store/diagramStore";
-import {CodeEditor} from "../../../editor/src/ui/CodeEditor";
+import {CodeEditor} from "@nevcos/react-plantuml-ide-editor/src/ui/CodeEditor";
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
-import {DiagramsList} from "../../../list/src/ui/DiagramsList";
+import {DiagramsList} from "@nevcos/react-plantuml-ide-list/src/ui/DiagramsList";
 import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import PlantUmlPreview from "../../../preview/src/ui/PlantUmlPreview";
+import PlantUmlPreview from "@nevcos/react-plantuml-ide-preview/src/ui/PlantUmlPreview";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -49,7 +49,7 @@ export function App() {
         <DiagramsList
           selectedId={store.selectedDiagramId}
           diagrams={store.diagrams}
-          onSelectDiagram={(id: DiagramId) => store.setSelectedDiagramId(id)}
+          onSelectDiagram={(id: DiagramId) => store.selectDiagram(id)}
           onCreateDiagram={() => store.createNewDiagram()}
           onDeleteDiagram={(id: DiagramId) => store.deleteDiagram(id)}
         />
@@ -58,7 +58,7 @@ export function App() {
         <CodeEditor
           key={store.getSelectedDiagram()?.id}
           code={store.getSelectedDiagram()?.code}
-          onChange={(code: DiagramCode) => store.setSelectedDiagramCode(code)}
+          onChange={(code: DiagramCode) => store.updateDiagramCode(code)}
         />
       </ContentDiv>
       <PreviewDiv>
