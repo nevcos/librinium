@@ -10,7 +10,7 @@ import {
   createNewDiagram,
   deleteDiagram,
   selectDiagram,
-  updateDiagramCode,
+  updateSelectedDiagramCode,
   selectedDiagramSelector,
   diagramsSelector
 } from "../store/rtk/diagramStore";
@@ -58,7 +58,7 @@ export function App() {
   const onSelectDiagram = useCallback((id: DiagramId) => dispatch(selectDiagram(id)), []);
   const onCreateDiagram = useCallback(() => dispatch(createNewDiagram()), []);
   const onDeleteDiagram = useCallback((id: DiagramId) => dispatch(deleteDiagram(id)), []);
-  const onCodeChange = useCallback((code: DiagramCode) => dispatch(updateDiagramCode(code)), []);
+  const onCodeChange = useCallback((code: DiagramCode) => dispatch(updateSelectedDiagramCode(code)), []);
 
   return (
     <AppGridDiv>

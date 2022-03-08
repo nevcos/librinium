@@ -4,7 +4,7 @@ import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
 import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
-let nextId = 1;
+let nextId = 1 as DiagramId;
 function getNextId(): DiagramId {
   return nextId ++ as DiagramId;
 }
@@ -15,7 +15,7 @@ export interface DiagramStoreState {
 }
 
 const initialState: DiagramStoreState = {
-  selectedDiagramId: null,
+  selectedDiagramId: nextId,
   diagrams: [
     { id: nextId ++ as DiagramId, name: "Diagram 1" as DiagramName, code: "class Bob" as DiagramCode },
     { id: nextId ++ as DiagramId, name: "Diagram 2" as DiagramName, code: "class Jane" as DiagramCode }
@@ -33,7 +33,7 @@ export const diagramStore = createSlice({
       state.selectedDiagramId = id;
     },
 
-    updateDiagramCode(state: DiagramStoreState, action: PayloadAction<DiagramCode>): void {
+    updateSelectedDiagramCode(state: DiagramStoreState, action: PayloadAction<DiagramCode>): void {
       const code = action.payload;
       for (const diagram of state.diagrams) {
         if (diagram.id === state.selectedDiagramId && diagram.code !== code) {
@@ -66,16 +66,16 @@ export const diagramStore = createSlice({
 
 export const {
   selectDiagram,
-  updateDiagramCode,
+  updateSelectedDiagramCode,
   createNewDiagram,
   deleteDiagram
 } = diagramStore.actions;
 
-export function selectedDiagramSelector(state: DiagramStoreState) {
-  return state.diagrams.find((diagram) => diagram.id === state.selectedDiagramId)
+export function selectedDiagramSelector(state: DiagramStoreState): Diagram | null {
+  return state.diagrams.find((diagram) => diagram.id === state.selectedDiagramId) || null
 }
 
-export function diagramsSelector(state: DiagramStoreState) {
+export function diagramsSelector(state: DiagramStoreState): Diagram[] {
   return state.diagrams;
 }
 
