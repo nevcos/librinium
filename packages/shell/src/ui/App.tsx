@@ -7,11 +7,12 @@ import { DiagramsList } from "@nevcos/react-plantuml-ide-list/src/ui/DiagramsLis
 import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
 import PlantUmlPreview from "@nevcos/react-plantuml-ide-preview/src/ui/PlantUmlPreview";
 import {
-  DiagramStoreState,
   createNewDiagram,
   deleteDiagram,
   selectDiagram,
-  updateDiagramCode
+  updateDiagramCode,
+  selectedDiagramSelector,
+  diagramsSelector
 } from "../store/rtk/diagramStore";
 
 const AppGridDiv = styled.div`
@@ -51,11 +52,8 @@ const PreviewDiv = styled.div`
 export function App() {
   const dispatch = useDispatch();
 
-  const selectedDiagramId = useSelector((state: DiagramStoreState) => state.selectedDiagramId);
-  const diagrams = useSelector((state: DiagramStoreState) => state.diagrams);
-  const selectedDiagram = useSelector((state: DiagramStoreState) =>
-    state.diagrams.find((diagram) => diagram.id === state.selectedDiagramId)
-  );
+  const diagrams = useSelector(diagramsSelector);
+  const selectedDiagram = useSelector(selectedDiagramSelector);
 
   const onSelectDiagram = useCallback((id: DiagramId) => dispatch(selectDiagram(id)), []);
   const onCreateDiagram = useCallback(() => dispatch(createNewDiagram()), []);
@@ -66,7 +64,7 @@ export function App() {
     <AppGridDiv>
       <SideBarDiv>
         <DiagramsList
-          selectedId={selectedDiagramId}
+          selectedId={selectedDiagram?.id}
           diagrams={diagrams}
           onSelectDiagram={onSelectDiagram}
           onCreateDiagram={onCreateDiagram}

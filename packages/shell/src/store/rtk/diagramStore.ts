@@ -22,7 +22,7 @@ const initialState: DiagramStoreState = {
   ]
 };
 
-export const diagramSlice = createSlice({
+export const diagramStore = createSlice({
   name: 'diagram',
   initialState,
   reducers: {
@@ -64,7 +64,19 @@ export const diagramSlice = createSlice({
   }
 })
 
-// Action creators are generated for each case reducer function
-export const { selectDiagram, updateDiagramCode, createNewDiagram, deleteDiagram } = diagramSlice.actions
+export const {
+  selectDiagram,
+  updateDiagramCode,
+  createNewDiagram,
+  deleteDiagram
+} = diagramStore.actions;
 
-export default diagramSlice.reducer
+export function selectedDiagramSelector(state: DiagramStoreState) {
+  return state.diagrams.find((diagram) => diagram.id === state.selectedDiagramId)
+}
+
+export function diagramsSelector(state: DiagramStoreState) {
+  return state.diagrams;
+}
+
+export const diagramStoreReducer = diagramStore.reducer;

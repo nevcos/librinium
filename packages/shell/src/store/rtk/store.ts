@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import diagramsReducer from './diagramStore'
+import { diagramStoreReducer } from './diagramStore'
 
 export const store = configureStore({
-  reducer: diagramsReducer,
+  reducer: diagramStoreReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
