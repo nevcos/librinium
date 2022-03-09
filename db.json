@@ -1,0 +1,6 @@
+{
+  "diagrams": [
+    { "id": 1, "name": "Diagram 1", "code": "class Bob"},
+    { "id": 2, "name": "Diagram 2", "code": "class Jane"}
+  ]
+}
