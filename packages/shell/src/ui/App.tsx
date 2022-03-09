@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { CodeEditor } from "@nevcos/react-plantuml-ide-editor/src/ui/CodeEditor";
@@ -7,13 +7,15 @@ import { DiagramsList } from "@nevcos/react-plantuml-ide-list/src/ui/DiagramsLis
 import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
 import PlantUmlPreview from "@nevcos/react-plantuml-ide-preview/src/ui/PlantUmlPreview";
 import {
+  fetchDiagramsThunk,
   createNewDiagram,
   deleteDiagram,
   selectDiagram,
   updateSelectedDiagramCode,
   selectedDiagramSelector,
-  diagramsSelector
+  diagramsSelector, isLoadingSelector
 } from "../store/rtk/diagramStore";
+import {Spinner} from "./Spinner";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -52,6 +54,7 @@ const PreviewDiv = styled.div`
 export function App() {
   const dispatch = useDispatch();
 
+  const isLoading = useSelector(isLoadingSelector);
   const diagrams = useSelector(diagramsSelector);
   const selectedDiagram = useSelector(selectedDiagramSelector);
 
@@ -60,16 +63,24 @@ export function App() {
   const onDeleteDiagram = useCallback((id: DiagramId) => dispatch(deleteDiagram(id)), []);
   const onCodeChange = useCallback((code: DiagramCode) => dispatch(updateSelectedDiagramCode(code)), []);
 
+  useEffect(() => {
+    dispatch(fetchDiagramsThunk())
+  }, []);
+
   return (
     <AppGridDiv>
       <SideBarDiv>
-        <DiagramsList
-          selectedId={selectedDiagram?.id}
-          diagrams={diagrams}
-          onSelectDiagram={onSelectDiagram}
-          onCreateDiagram={onCreateDiagram}
-          onDeleteDiagram={onDeleteDiagram}
-        />
+        {
+          isLoading ?
+            <Spinner/> :
+            <DiagramsList
+              selectedId={selectedDiagram?.id}
+              diagrams={diagrams}
+              onSelectDiagram={onSelectDiagram}
+              onCreateDiagram={onCreateDiagram}
+              onDeleteDiagram={onDeleteDiagram}
+            />
+        }
       </SideBarDiv>
       <ContentDiv>
         <CodeEditor key={selectedDiagram?.id} code={selectedDiagram?.code} onChange={onCodeChange} />
