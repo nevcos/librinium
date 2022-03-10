@@ -6,13 +6,13 @@ import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
 const diagram0 = {
-  id: 0 as DiagramId,
+  id: "0" as DiagramId,
   name: "diagram0" as DiagramName,
   code: "code0" as DiagramCode
 };
 
 const diagram1 = {
-  id: 1 as DiagramId,
+  id: "1" as DiagramId,
   name: "diagram1" as DiagramName,
   code: "code1" as DiagramCode
 };

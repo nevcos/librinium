@@ -17,7 +17,7 @@ const OptionLi = styled.li`
     background-color: white;
   }
 
-  &:hover {
+  &:hover, &:focus {
     background-color: lightgray;
   }
 `;
@@ -49,7 +49,7 @@ const DeleteButton = styled.button`
     cursor: pointer;
   }
 
-  &:hover {
+  &:hover, &:focus {
     background-color: rosybrown;
   }
 `;
@@ -90,7 +90,7 @@ export const DiagramsList = memo(function ({
               >
                 {diagram.name}
               </OptionButton>
-              <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)} data-testid="delete">
+              <DeleteButton onClick={() => onDeleteDiagram?.(diagram.id)} data-testid="delete" title="Delete">
                 X
               </DeleteButton>
             </OptionLi>

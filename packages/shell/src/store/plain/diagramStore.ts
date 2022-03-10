@@ -1,23 +1,18 @@
 import { produce } from "immer";
 import {useState, useMemo, useCallback} from "react";
 import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
+import {DiagramId, getNextDiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
 import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
 import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
 
-let nextId = 1;
-function getNextId(): DiagramId {
-  return nextId ++ as DiagramId;
-}
-
 export const defaultDiagrams = [
-  { id: nextId ++ as DiagramId, name: "Diagram 1" as DiagramName, code: "class Bob" as DiagramCode },
-  { id: nextId ++ as DiagramId, name: "Diagram 2" as DiagramName, code: "class Jane" as DiagramCode }
+  { id: getNextDiagramId(), name: "Diagram 1" as DiagramName, code: "class Bob" as DiagramCode },
+  { id: getNextDiagramId(), name: "Diagram 2" as DiagramName, code: "class Jane" as DiagramCode }
 ];
 
 export function useDiagramStore() {
   const [diagrams, setDiagrams] = useState<Diagram[]>(defaultDiagrams);
-  const [selectedDiagramId, setSelectedDiagramId] = useState<DiagramId | null>(1 as DiagramId);
+  const [selectedDiagramId, setSelectedDiagramId] = useState<DiagramId | null>(defaultDiagrams[1].id);
 
   const getDiagramNames = useCallback(function () : DiagramName[] {
     return diagrams.map((d) => d.name);
@@ -44,7 +39,7 @@ export function useDiagramStore() {
   }, [diagrams, selectedDiagramId])
 
   const createNewDiagram = useCallback(function(): Diagram {
-    const id = getNextId();
+    const id = getNextDiagramId();
     const newDiagram = {
       id,
       name: `New Diagram ${id}` as DiagramName,

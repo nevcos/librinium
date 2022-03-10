@@ -1,105 +1,70 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import { DiagramName } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
-import { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import type { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
 import * as DiagramsApi from "../../remoteApi/diagramsApi";
+import { initialState } from "../domain/diagramStoreState/DiagramStoreState";
+import * as reducers from "../domain/diagramStoreState/diagramStoreStateReducers";
+import * as selectors from "../domain/diagramStoreState/diagramStoreStateSelectors";
 
-let nextId = 1 as DiagramId;
-function getNextId(): DiagramId {
-  return nextId++ as DiagramId;
-}
+const storeName = "diagram";
 
-export interface DiagramStoreState {
-  isLoading: boolean;
-  error: string | null;
-  selectedDiagramId: DiagramId | null;
-  diagrams: Diagram[];
-}
-
-const initialState: DiagramStoreState = {
-  isLoading: false,
-  error: null,
-  selectedDiagramId: nextId,
-  diagrams: []
-};
-
-// First, create the thunk
-export const fetchDiagramsThunk = createAsyncThunk("diagram/fetchDiagrams", DiagramsApi.fetchDiagrams);
-
-function setDiagrams(state: DiagramStoreState, action: PayloadAction<Diagram[]>): void {
-  state.diagrams = action.payload;
-  state.selectedDiagramId = state.diagrams[0]?.id;
-}
+//#region Slice
 
 export const diagramStore = createSlice({
-  name: "diagram",
+  name: storeName,
   initialState,
-  reducers: {
-    setDiagrams,
+  reducers
+});
 
-    selectDiagram(state: DiagramStoreState, action: PayloadAction<DiagramId>): void {
-      // noinspection UnnecessaryLocalVariableJS
-      const id = action.payload;
-      state.selectedDiagramId = id;
-    },
+//#endregion
+//#region Thunks
 
-    updateSelectedDiagramCode(state: DiagramStoreState, action: PayloadAction<DiagramCode>): void {
-      const code = action.payload;
-      for (const diagram of state.diagrams) {
-        if (diagram.id === state.selectedDiagramId && diagram.code !== code) {
-          diagram.code = code;
-        }
-      }
-    },
-
-    createNewDiagram(state: DiagramStoreState): void {
-      const id = getNextId();
-      const newDiagram = {
-        id,
-        name: `New Diagram ${id}` as DiagramName,
-        code: `New->Diagram ${id}` as DiagramCode
-      };
-      state.diagrams.push(newDiagram);
-      state.selectedDiagramId = id;
-    },
-
-    deleteDiagram(state: DiagramStoreState, action: PayloadAction<DiagramId>): void {
-      const id = action.payload;
-      state.diagrams = state.diagrams.filter((diagram) => diagram.id !== id);
-      if (state.selectedDiagramId === id) {
-        state.selectedDiagramId = null;
-      }
-    }
-  },
-
-  extraReducers: (builder) => {
-    builder.addCase(fetchDiagramsThunk.pending, (state, action) => {
-      state.isLoading = true;
-    }),
-      builder.addCase(fetchDiagramsThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = "Error fetching...";
-      }),
-      builder.addCase(fetchDiagramsThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
-        setDiagrams(state, action);
-      });
+const fetchDiagrams = createAsyncThunk(`${storeName}/fetchDiagrams`, async (_, thunkAPI) => {
+  diagramStore.actions.setIsLoading(true);
+  try {
+    const diagrams = await DiagramsApi.getDiagrams();
+    thunkAPI.dispatch(diagramStore.actions.setDiagrams(diagrams));
+  } catch (error) {
+    // TBD
+  } finally {
+    diagramStore.actions.setIsLoading(false);
   }
 });
 
-export const { selectDiagram, updateSelectedDiagramCode, createNewDiagram, deleteDiagram } = diagramStore.actions;
+const createNewDiagram = createAsyncThunk(`${storeName}/postDiagram`, async (_, thunkAPI) => {
+  diagramStore.actions.setIsLoading(true);
+  const newDiagram = selectors.createNewDiagram();
+  try {
+    await DiagramsApi.postDiagram(newDiagram);
+    thunkAPI.dispatch(diagramStore.actions.addDiagram(newDiagram));
+  } catch (error) {
+    // TBD
+  } finally {
+    diagramStore.actions.setIsLoading(false);
+  }
+});
 
-export function isLoadingSelector(state: DiagramStoreState): boolean {
-  return state.isLoading;
-}
+export const putDiagramThunk = createAsyncThunk(`${storeName}/putDiagram`, async (diagram: Diagram, thunkAPI) => {
+  diagramStore.actions.setIsLoading(true);
+  const newDiagram = selectors.createNewDiagram();
+  try {
+    await DiagramsApi.putDiagram(diagram.id, diagram);
+    thunkAPI.dispatch(diagramStore.actions.addDiagram(newDiagram));
+  } catch (error) {
+    // TBD
+  } finally {
+    diagramStore.actions.setIsLoading(false);
+  }
+});
 
-export function selectedDiagramSelector(state: DiagramStoreState): Diagram | null {
-  return state.diagrams.find((diagram) => diagram.id === state.selectedDiagramId) || null;
-}
+//#endregion
+//#region Export
 
-export function diagramsSelector(state: DiagramStoreState): Diagram[] {
-  return state.diagrams;
-}
-
+export const diagramStoreSelectors = selectors;
 export const diagramStoreReducer = diagramStore.reducer;
+export const diagramStoreActions = {
+  ...diagramStore.actions,
+  fetchDiagrams,
+  createNewDiagram
+};
+
+//#endregion
