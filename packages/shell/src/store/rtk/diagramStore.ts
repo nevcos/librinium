@@ -19,19 +19,19 @@ export const diagramStore = createSlice({
 //#region Thunks
 
 const fetchDiagrams = createAsyncThunk(`${storeName}/fetchDiagrams`, async (_, thunkAPI) => {
-  diagramStore.actions.setIsLoading(true);
+  thunkAPI.dispatch(diagramStore.actions.setIsLoading(true));
   try {
     const diagrams = await DiagramsApi.getDiagrams();
     thunkAPI.dispatch(diagramStore.actions.setDiagrams(diagrams));
   } catch (error) {
     // TBD
   } finally {
-    diagramStore.actions.setIsLoading(false);
+    thunkAPI.dispatch(diagramStore.actions.setIsLoading(false));
   }
 });
 
 const createNewDiagram = createAsyncThunk(`${storeName}/postDiagram`, async (_, thunkAPI) => {
-  diagramStore.actions.setIsLoading(true);
+  thunkAPI.dispatch(diagramStore.actions.setIsLoading(true));
   const newDiagram = selectors.createNewDiagram();
   try {
     await DiagramsApi.postDiagram(newDiagram);
@@ -39,12 +39,12 @@ const createNewDiagram = createAsyncThunk(`${storeName}/postDiagram`, async (_, 
   } catch (error) {
     // TBD
   } finally {
-    diagramStore.actions.setIsLoading(false);
+    thunkAPI.dispatch(diagramStore.actions.setIsLoading(false));
   }
 });
 
 export const putDiagramThunk = createAsyncThunk(`${storeName}/putDiagram`, async (diagram: Diagram, thunkAPI) => {
-  diagramStore.actions.setIsLoading(true);
+  thunkAPI.dispatch(diagramStore.actions.setIsLoading(true));
   const newDiagram = selectors.createNewDiagram();
   try {
     await DiagramsApi.putDiagram(diagram.id, diagram);
@@ -52,7 +52,7 @@ export const putDiagramThunk = createAsyncThunk(`${storeName}/putDiagram`, async
   } catch (error) {
     // TBD
   } finally {
-    diagramStore.actions.setIsLoading(false);
+    thunkAPI.dispatch(diagramStore.actions.setIsLoading(false));
   }
 });
 
