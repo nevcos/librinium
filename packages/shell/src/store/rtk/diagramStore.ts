@@ -44,16 +44,7 @@ const createNewDiagram = createAsyncThunk(`${storeName}/postDiagram`, async (_, 
 });
 
 export const putDiagramThunk = createAsyncThunk(`${storeName}/putDiagram`, async (diagram: Diagram, thunkAPI) => {
-  thunkAPI.dispatch(diagramStore.actions.setIsLoading(true));
-  const newDiagram = selectors.createNewDiagram();
-  try {
-    await DiagramsApi.putDiagram(diagram.id, diagram);
-    thunkAPI.dispatch(diagramStore.actions.addDiagram(newDiagram));
-  } catch (error) {
-    // TBD
-  } finally {
-    thunkAPI.dispatch(diagramStore.actions.setIsLoading(false));
-  }
+  await DiagramsApi.putDiagram(diagram.id, diagram);
 });
 
 //#endregion
