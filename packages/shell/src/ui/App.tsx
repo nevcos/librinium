@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CodeEditor } from "@nevcos/react-plantuml-ide-editor/src/ui/CodeEditor";
 import { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
@@ -7,9 +7,8 @@ import { DiagramsList } from "@nevcos/react-plantuml-ide-list/src/ui/DiagramsLis
 import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
 import PlantUmlPreview from "@nevcos/react-plantuml-ide-preview/src/ui/PlantUmlPreview";
 import { Spinner } from "./Spinner";
-import { useStore } from "../store/zustand/store";
-import * as storeActions from "../store/zustand/storeActions";
 import * as storeSelectors from "../store/domain/diagramStoreState/diagramStoreStateSelectors";
+import { diagramStoreActions } from "../store/rtk/diagramStore";
 
 const AppGridDiv = styled.div`
   height: 100%;
@@ -48,18 +47,18 @@ const PreviewDiv = styled.div`
 export function App() {
   const dispatch = useDispatch();
 
-  const isLoading = useStore(storeSelectors.isLoading);
-  const diagrams = useStore(storeSelectors.getDiagrams);
-  const selectedDiagram = useStore(storeSelectors.getSelectedDiagram);
+  const isLoading = useSelector(storeSelectors.isLoading);
+  const diagrams = useSelector(storeSelectors.getDiagrams);
+  const selectedDiagram = useSelector(storeSelectors.getSelectedDiagram);
 
   useEffect(() => {
-    storeActions.fetchDiagrams();
+    dispatch(diagramStoreActions.fetchDiagrams())
   }, []);
 
-  const onSelectDiagram = useCallback((id: DiagramId) => storeActions.selectDiagram(id), []);
-  const onCreateDiagram = useCallback(() => storeActions.createNewDiagram(), []);
-  const onDeleteDiagram = useCallback((id: DiagramId) => storeActions.deleteDiagram(id), []);
-  const onCodeChange = useCallback((code: DiagramCode) => storeActions.updateSelectedDiagramCode(code), []);
+  const onSelectDiagram = useCallback((id: DiagramId) => dispatch(diagramStoreActions.selectDiagram(id)), []);
+  const onCreateDiagram = useCallback(() => dispatch(diagramStoreActions.createNewDiagram()), []);
+  const onDeleteDiagram = useCallback((id: DiagramId) => dispatch(diagramStoreActions.deleteDiagram(id)), []);
+  const onCodeChange = useCallback((code: DiagramCode) => dispatch(diagramStoreActions.updateSelectedDiagramCode(code)), []);
 
   return (
     <AppGridDiv>

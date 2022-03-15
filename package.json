@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "start": "yarn workspace @nevcos/react-plantuml-ide-shell start",
     "test": "jest",
     "build": "yarn test && yarn workspace @nevcos/react-plantuml-ide-shell build && shx mv packages/shell/dist .",
     "clear": "shx rm -rf node_modules packages/*/node_modules",
