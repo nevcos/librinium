@@ -29,7 +29,6 @@ export function useDiagramStore() {
   const updateDiagramCode = useCallback(function (code: DiagramCode): void {
     setDiagrams(diagrams =>
       produce(diagrams, (diagrams) => {
-        debugger;
         for (const diagram of diagrams) {
           if (diagram.id === selectedDiagramId && diagram.code !== code) {
             diagram.code = code;
