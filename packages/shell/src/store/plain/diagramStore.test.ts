@@ -73,6 +73,8 @@ describe("diagramStore", () => {
     act(() => {
       result.current.setDiagrams(diagrams);
       result.current.selectDiagram(diagram1.id);
+    });
+    act(() => {
       result.current.updateDiagramCode(newDiagramCode)
     });
 

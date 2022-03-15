@@ -29,6 +29,7 @@ export function useDiagramStore() {
   const updateDiagramCode = useCallback(function (code: DiagramCode): void {
     setDiagrams(diagrams =>
       produce(diagrams, (diagrams) => {
+        debugger;
         for (const diagram of diagrams) {
           if (diagram.id === selectedDiagramId && diagram.code !== code) {
             diagram.code = code;
@@ -36,7 +37,7 @@ export function useDiagramStore() {
         }
       })
     );
-  }, [diagrams, selectedDiagramId])
+  }, [selectedDiagramId])
 
   const createNewDiagram = useCallback(function(): Diagram {
     const id = getNextDiagramId();
@@ -52,14 +53,14 @@ export function useDiagramStore() {
     );
     setSelectedDiagramId(id);
     return newDiagram;
-  }, [diagrams]);
+  }, []);
 
   const deleteDiagram = useCallback(function(id: DiagramId): void {
     setDiagrams(diagrams => diagrams.filter((diagram) => diagram.id !== id));
     setSelectedDiagramId(selectedDiagramId => {
       return selectedDiagramId === id ? null : selectedDiagramId
     })
-  }, [diagrams, selectedDiagramId]);
+  }, []);
 
   return {
     diagrams,
