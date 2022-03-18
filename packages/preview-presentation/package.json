@@ -1,5 +1,5 @@
 {
-  "name": "@nevcos/react-plantuml-ide-preview",
+  "name": "@nevcos/preview-presentation",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "main": "src/index.jsx",
@@ -11,9 +11,9 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@nevcos/react-plantuml-ide-shared": "*"
+    "@nevcos/shared": "*"
   },
   "devDependencies": {
-    "@nevcos/react-plantuml-ide-shared-dev": "*"
+    "@nevcos/shared-dev": "*"
   }
 }

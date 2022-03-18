@@ -1,15 +1,17 @@
-import {DiagramId, getNextDiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
-import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import {DiagramStoreState} from "./DiagramStoreState";
+import { DiagramId, getNextDiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { DiagramName } from "@nevcos/shared/src/diagram/DiagramName";
+import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { Diagram } from "@nevcos/shared/src/diagram/Diagram";
+import { DiagramStoreState } from "./DiagramStoreState";
+import { DiagramType } from "@nevcos/shared/src/diagram/DiagramType";
 
-export function createNewDiagram() {
+export function createNewDiagram(): Diagram {
   const id = getNextDiagramId();
   return {
     id,
     name: `New Diagram` as DiagramName,
-    code: `New->Diagram` as DiagramCode
+    code: `New->Diagram` as DiagramCode,
+    type: DiagramType.PLANT_UML
   };
 }
 

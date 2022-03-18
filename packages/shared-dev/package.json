@@ -1,5 +1,5 @@
 {
-  "name": "@nevcos/react-plantuml-ide-shared-dev",
+  "name": "@nevcos/shared-dev",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "dependencies": {

@@ -1,7 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src",
-    "../shared-dev/src/typings/*.d.ts"
-  ],
+  "include": ["src", "../shared-dev/src/typings/*.d.ts"]
 }

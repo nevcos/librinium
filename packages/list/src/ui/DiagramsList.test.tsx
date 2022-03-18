@@ -1,22 +1,26 @@
 import React from "react";
-import {fireEvent, render, waitFor} from "@testing-library/react";
-import {screen} from '@testing-library/dom'
-import {DiagramsList} from "./DiagramsList";
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/dom";
+import { DiagramsList } from "./DiagramsList";
 import Mock = jest.Mock;
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { DiagramName } from "@nevcos/shared/src/diagram/DiagramName";
+import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DiagramType } from "@nevcos/shared/src/diagram/DiagramType";
+import { Diagram } from "@nevcos/shared/src/diagram/Diagram";
 
-const diagram0 = {
+const diagram0: Diagram = {
   id: "0" as DiagramId,
   name: "diagram0" as DiagramName,
-  code: "code0" as DiagramCode
+  code: "code0" as DiagramCode,
+  type: DiagramType.PLANT_UML
 };
 
-const diagram1 = {
+const diagram1: Diagram = {
   id: "1" as DiagramId,
   name: "diagram1" as DiagramName,
-  code: "code1" as DiagramCode
+  code: "code1" as DiagramCode,
+  type: DiagramType.PLANT_UML
 };
 
 const diagrams = [diagram0, diagram1];
@@ -25,7 +29,7 @@ describe("<DiagramsList />", () => {
   test("should call onCreateDiagram when clicking on create button", async () => {
     const props = {
       diagrams: [],
-      onCreateDiagram: jest.fn(),
+      onCreateDiagram: jest.fn()
     };
     render(<DiagramsList {...props} />);
 
@@ -38,7 +42,7 @@ describe("<DiagramsList />", () => {
   test("should callback onSelectDiagram when clicking on select button for diagram 0", async () => {
     const props = {
       diagrams,
-      onSelectDiagram: jest.fn(id => id),
+      onSelectDiagram: jest.fn((id) => id)
     };
     render(<DiagramsList {...props} />);
 
@@ -54,7 +58,7 @@ describe("<DiagramsList />", () => {
   test("should callback onRenameDiagram when double clicking on select button for diagram 0", async () => {
     const props = {
       diagrams,
-      onRenameDiagram: jest.fn(id => id),
+      onRenameDiagram: jest.fn((id) => id)
     };
     render(<DiagramsList {...props} />);
 
@@ -70,7 +74,7 @@ describe("<DiagramsList />", () => {
   test("should callback onDeleteDiagram when clicking on delete button for diagram 1", async () => {
     const props = {
       diagrams: [diagram0, diagram1],
-      onDeleteDiagram: jest.fn(id => id),
+      onDeleteDiagram: jest.fn((id) => id)
     };
     render(<DiagramsList {...props} />);
 

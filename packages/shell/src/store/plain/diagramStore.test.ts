@@ -1,28 +1,30 @@
-import {act, renderHook} from "@testing-library/react-hooks";
-import {useDiagramStore} from "./diagramStore";
-import {Diagram} from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import {DiagramId} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import {DiagramName} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramName";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import { act, renderHook } from "@testing-library/react-hooks";
+import { useDiagramStore } from "./diagramStore";
+import { Diagram } from "@nevcos/shared/src/diagram/Diagram";
+import { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { DiagramName } from "@nevcos/shared/src/diagram/DiagramName";
+import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DiagramType } from "@nevcos/shared/src/diagram/DiagramType";
 
 const diagram0 = {
   id: "0" as DiagramId,
   name: "diagram0" as DiagramName,
-  code: "code0" as DiagramCode
+  code: "code0" as DiagramCode,
+  type: DiagramType.PLANT_UML
 };
 
 const diagram1 = {
   id: "1" as DiagramId,
   name: "diagram1" as DiagramName,
-  code: "code1" as DiagramCode
+  code: "code1" as DiagramCode,
+  type: DiagramType.PLANT_UML
 };
 
 const diagrams = [diagram0, diagram1];
 
 describe("diagramStore", () => {
-
   it("Should store and return the same diagrams", () => {
-    const diagramNames = diagrams.map(diagram => diagram.name);
+    const diagramNames = diagrams.map((diagram) => diagram.name);
     const { result } = renderHook(useDiagramStore);
 
     act(() => {
@@ -75,7 +77,7 @@ describe("diagramStore", () => {
       result.current.selectDiagram(diagram1.id);
     });
     act(() => {
-      result.current.updateDiagramCode(newDiagramCode)
+      result.current.updateDiagramCode(newDiagramCode);
     });
 
     expect(result.current.getSelectedDiagram()?.code).toEqual(newDiagramCode);
@@ -106,7 +108,6 @@ describe("diagramStore", () => {
   //   expect(newDiagram).toBeDefined();
   //   expect(result.current.diagrams.includes(newDiagram)).toBeTruthy();
   // });
-
 });
 
 //

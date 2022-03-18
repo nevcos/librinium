@@ -1,5 +1,6 @@
-import { DiagramId, getNextDiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import { DiagramMap } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramMap";
+import { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { DiagramMap } from "@nevcos/shared/src/diagram/DiagramMap";
+import { diagramsMapMock } from "@nevcos/shared/src/mock/diagrams";
 
 export interface DiagramStoreState {
   isLoading: boolean;

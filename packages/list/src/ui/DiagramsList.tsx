@@ -1,8 +1,8 @@
 import { memo } from "react";
 import styled from "styled-components";
-import { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import { RenderingCounter } from "@nevcos/react-plantuml-ide-shared/src/ui/renderingCounter/RenderingCounter";
+import { Diagram } from "@nevcos/shared/src/diagram/Diagram";
+import { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/RenderingCounter";
 
 const ListUl = styled.ul`
   list-style: none;
@@ -17,7 +17,8 @@ const OptionLi = styled.li`
     background-color: white;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: lightgray;
   }
 `;
@@ -49,7 +50,8 @@ const DeleteButton = styled.button`
     cursor: pointer;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: rosybrown;
   }
 `;

@@ -1,5 +1,5 @@
 {
-  "name": "@nevcos/react-plantuml-ide-editor",
+  "name": "@nevcos/code-editor",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "main": "src/index.jsx",
@@ -11,7 +11,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@nevcos/react-plantuml-ide-shared": "*",
+    "@nevcos/shared": "*",
     "@types/codemirror": "~5.60.5",
     "@types/lodash.debounce": "~4.0.6",
     "@types/pako": "~1.0.3",
@@ -20,6 +20,6 @@
     "pako": "2.0.4"
   },
   "devDependencies": {
-    "@nevcos/react-plantuml-ide-shared-dev": "*"
+    "@nevcos/shared-dev": "*"
   }
 }

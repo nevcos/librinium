@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
+import type { Diagram } from "@nevcos/shared/src/diagram/Diagram";
 import * as DiagramsApi from "../../remoteApi/diagramsApi";
 import { initialState } from "../domain/diagramStoreState/DiagramStoreState";
 import * as reducers from "../domain/diagramStoreState/diagramStoreStateReducers";

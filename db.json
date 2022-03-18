@@ -1,6 +1,12 @@
 {
   "diagrams": {
-    "1": { "id": "1", "name": "Diagram 1", "code": "class Bob"},
-    "2": { "id": "2", "name": "Diagram 2", "code": "class Jane"}
+    "1": { "id": "1", "name": "Diagram 1", "code": "class Bob", "type": "PLANT_UML" },
+    "2": { "id": "2", "name": "Diagram 2", "code": "class Jane", "type": "PLANT_UML" },
+    "3": {
+      "id": "3",
+      "name": "Presentation 3",
+      "code": "# Slide 1\n\n1. Introduction\n2. Deep-dive\n3. ...\n\n```\nconst someVar = 'Hello World!'\n```\n---\n# Slide 2\n",
+      "type": "REMARK"
+    }
   }
 }

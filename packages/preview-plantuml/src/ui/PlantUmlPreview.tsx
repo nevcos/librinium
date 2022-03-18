@@ -1,8 +1,8 @@
-import {memo} from "react";
+import { memo } from "react";
 import styled from "styled-components";
 import { buildPlantUmlUrl } from "../service/plantUml";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
-import {RenderingCounter} from "@nevcos/react-plantuml-ide-shared//src/ui/renderingCounter/RenderingCounter";
+import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { RenderingCounter } from "@nevcos/shared//src/ui/renderingCounter/RenderingCounter";
 
 const PlantUmlPreviewDiv = styled.div`
   text-align: center;

@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
-import {DiagramCode} from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
-import {RenderingCounter} from "@nevcos/react-plantuml-ide-shared/src/ui/renderingCounter/RenderingCounter";
+import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/RenderingCounter";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -53,8 +53,10 @@ export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element
     }
   }, [code]);
 
-  return <>
-    <RenderingCounter />
-    <CodeEditorDiv ref={elementRef} />
-  </>;
+  return (
+    <>
+      <RenderingCounter />
+      <CodeEditorDiv ref={elementRef} />
+    </>
+  );
 });

@@ -1,8 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { DiagramMap } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramMap";
-import type { Diagram } from "@nevcos/react-plantuml-ide-shared/src/diagram/Diagram";
-import type { DiagramId } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramId";
-import type { DiagramCode } from "@nevcos/react-plantuml-ide-shared/src/diagram/DiagramCode";
+import type { DiagramMap } from "@nevcos/shared/src/diagram/DiagramMap";
+import type { Diagram } from "@nevcos/shared/src/diagram/Diagram";
+import type { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import type { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
 import type { DiagramStoreState } from "./DiagramStoreState";
 import { getSelectedDiagram } from "./diagramStoreStateSelectors";
 
