@@ -1,17 +1,17 @@
 import ReactDOM from "react-dom";
 
-import { Diagram } from "@nevcos/shared/src/diagram/Diagram";
+import { Document } from "@nevcos/shared/src/document/Document";
 
-import { DiagramsList } from "./ui/DiagramsList";
+import { DocumentsList } from "./ui/DocumentsList";
 import { isMFShellModeEnabled, mountMFModule } from "@nevcos/shared/src/microFrontend/MFService";
 import { MFFragment } from "@nevcos/shared/src/microFrontend/model/MFFragment";
 import { MFEvent } from "@nevcos/shared/src/microFrontend/model/MFEvent";
 
-const sampleDiagramsList = [] as Diagram[];
+const sampleDocumentsList = [] as Document[];
 
-export default class DiagramsListModule extends HTMLElement implements MFFragment {
+export default class DocumentsListModule extends HTMLElement implements MFFragment {
   connectedCallback(): void {
-    ReactDOM.render(<DiagramsList diagrams={sampleDiagramsList} />, this);
+    ReactDOM.render(<DocumentsList documents={sampleDocumentsList} />, this);
   }
   disconnectedCallback(): void {
     ReactDOM.unmountComponentAtNode(this);
@@ -21,5 +21,5 @@ export default class DiagramsListModule extends HTMLElement implements MFFragmen
 
 if (!isMFShellModeEnabled()) {
   const container = document.getElementById("root") as HTMLElement;
-  mountMFModule(container, "test-diagrams-list", DiagramsListModule);
+  mountMFModule(container, "test-documents-list", DocumentsListModule);
 }

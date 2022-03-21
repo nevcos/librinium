@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
-import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/RenderingCounter";
 
 const CHANGE_DEBOUNCE_MS = 600;
@@ -22,8 +22,8 @@ const CodeEditorDiv = styled.div`
 `;
 
 interface Props {
-  code: DiagramCode | undefined;
-  onChange?: (code: DiagramCode) => void;
+  code: DocumentContent | undefined;
+  onChange?: (code: DocumentContent) => void;
 }
 
 export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element {
@@ -40,7 +40,7 @@ export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element
     codeMirror.current.on(
       "change",
       debounce(() => {
-        onChange?.(codeMirror.current?.getValue() as DiagramCode);
+        onChange?.(codeMirror.current?.getValue() as DocumentContent);
       }, CHANGE_DEBOUNCE_MS)
     );
   }, []);

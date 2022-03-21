@@ -1,4 +1,4 @@
-export enum DiagramType {
+export enum DocumentContentType {
   PLANT_UML = "PLANT_UML",
   REMARK = "REMARK"
 }

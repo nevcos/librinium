@@ -2,14 +2,14 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CodeEditor } from "@nevcos/code-editor/src/ui/CodeEditor";
-import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
-import { DiagramsList } from "@nevcos/list/src/ui/DiagramsList";
-import { DiagramId } from "@nevcos/shared/src/diagram/DiagramId";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
+import { DocumentsList } from "@nevcos/list/src/ui/DocumentsList";
+import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
 import PlantUmlPreview from "@nevcos/preview-plantuml/src/ui/PlantUmlPreview";
 import { Spinner } from "./Spinner";
-import * as storeSelectors from "../store/domain/diagramStoreState/diagramStoreStateSelectors";
-import { diagramStoreActions } from "../store/rtk/diagramStore";
-import { DiagramType } from "../../../shared/src/diagram/DiagramType";
+import * as storeSelectors from "../store/domain/documentStoreState/documentStoreStateSelectors";
+import { documentStoreActions } from "../store/rtk/documentStore";
+import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 import { PreviewPresentation } from "../../../preview-presentation/src/ui/PreviewPresentation";
 
 const AppGridDiv = styled.div`
@@ -50,18 +50,21 @@ export function App() {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(storeSelectors.isLoading);
-  const diagrams = useSelector(storeSelectors.getDiagrams);
-  const selectedDiagram = useSelector(storeSelectors.getSelectedDiagram);
+  const documents = useSelector(storeSelectors.getDocuments);
+  const selectedDocument = useSelector(storeSelectors.getSelectedDocument);
 
   useEffect(() => {
-    dispatch(diagramStoreActions.fetchDiagrams());
+    dispatch(documentStoreActions.fetchDocuments());
   }, []);
 
-  const onSelectDiagram = useCallback((id: DiagramId) => dispatch(diagramStoreActions.selectDiagram(id)), []);
-  const onCreateDiagram = useCallback(() => dispatch(diagramStoreActions.createNewDiagram()), []);
-  const onDeleteDiagram = useCallback((id: DiagramId) => dispatch(diagramStoreActions.deleteDiagram(id)), []);
+  const onSelectDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.selectDocument(id)), []);
+  const onCreateDocument = useCallback(
+    (type: DocumentContentType) => dispatch(documentStoreActions.createNewDocument(type)),
+    []
+  );
+  const onDeleteDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.deleteDocument(id)), []);
   const onCodeChange = useCallback(
-    (code: DiagramCode) => dispatch(diagramStoreActions.updateSelectedDiagramCode(code)),
+    (code: DocumentContent) => dispatch(documentStoreActions.updateSelectedDocumentContent(code)),
     []
   );
 
@@ -71,25 +74,25 @@ export function App() {
         {isLoading ? (
           <Spinner />
         ) : (
-          <DiagramsList
-            selectedId={selectedDiagram?.id}
-            diagrams={diagrams}
-            onSelectDiagram={onSelectDiagram}
-            onCreateDiagram={onCreateDiagram}
-            onDeleteDiagram={onDeleteDiagram}
+          <DocumentsList
+            selectedId={selectedDocument?.id}
+            documents={documents}
+            onSelectDocument={onSelectDocument}
+            onCreateDocument={onCreateDocument}
+            onDeleteDocument={onDeleteDocument}
           />
         )}
       </SideBarDiv>
-      {selectedDiagram ? (
+      {selectedDocument ? (
         <>
           <ContentDiv>
-            <CodeEditor key={selectedDiagram?.id} code={selectedDiagram?.code} onChange={onCodeChange} />
+            <CodeEditor key={selectedDocument?.id} code={selectedDocument?.code} onChange={onCodeChange} />
           </ContentDiv>
           <PreviewDiv>
-            {selectedDiagram?.type === DiagramType.REMARK ? (
-              <PreviewPresentation key={selectedDiagram?.id} code={selectedDiagram?.code} />
+            {selectedDocument?.type === DocumentContentType.REMARK ? (
+              <PreviewPresentation key={selectedDocument?.id} code={selectedDocument?.code} />
             ) : (
-              <PlantUmlPreview key={selectedDiagram?.id} code={selectedDiagram?.code} />
+              <PlantUmlPreview key={selectedDocument?.id} code={selectedDocument?.code} />
             )}
           </PreviewDiv>
         </>

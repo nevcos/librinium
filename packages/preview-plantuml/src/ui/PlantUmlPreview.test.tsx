@@ -1,11 +1,11 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { PlantUmlPreview } from "./PlantUmlPreview";
-import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 
 describe("<PlantUmlPreview />", () => {
-  test("should display an image with the correct diagram", async () => {
-    const code = "Test->Success" as DiagramCode;
+  test("should display an image with the correct document", async () => {
+    const code = "Test->Success" as DocumentContent;
 
     const result = render(<PlantUmlPreview code={code} />);
     const img = result.container.querySelector("img");

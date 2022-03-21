@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom";
 
 import { CodeEditor } from "./ui/CodeEditor";
-import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 import { MFFragment } from "@nevcos/shared/src/microFrontend/model/MFFragment";
 import { MFEvent } from "@nevcos/shared/src/microFrontend/model/MFEvent";
 import { isMFShellModeEnabled, mountMFModule } from "@nevcos/shared/src/microFrontend/MFService";
 
-const samplePlantUmlCode = "Hello -> World" as DiagramCode;
+const samplePlantUmlCode = "Hello -> World" as DocumentContent;
 
 export default class CodeEditorModule extends HTMLElement implements MFFragment {
   connectedCallback(): void {

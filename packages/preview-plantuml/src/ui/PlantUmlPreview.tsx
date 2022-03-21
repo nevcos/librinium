@@ -1,7 +1,7 @@
 import { memo } from "react";
 import styled from "styled-components";
 import { buildPlantUmlUrl } from "../service/plantUml";
-import { DiagramCode } from "@nevcos/shared/src/diagram/DiagramCode";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 import { RenderingCounter } from "@nevcos/shared//src/ui/renderingCounter/RenderingCounter";
 
 const PlantUmlPreviewDiv = styled.div`
@@ -9,7 +9,7 @@ const PlantUmlPreviewDiv = styled.div`
 `;
 
 interface Props {
-  code: DiagramCode | undefined;
+  code: DocumentContent | undefined;
 }
 
 export const PlantUmlPreview = memo(function ({ code }: Props): JSX.Element {
@@ -19,7 +19,7 @@ export const PlantUmlPreview = memo(function ({ code }: Props): JSX.Element {
     <>
       <RenderingCounter />
       <PlantUmlPreviewDiv>
-        <img src={src} alt="PlantUML diagram" />
+        <img src={src} alt="PlantUML document" />
       </PlantUmlPreviewDiv>
     </>
   );

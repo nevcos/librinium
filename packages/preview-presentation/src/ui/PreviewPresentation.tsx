@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import styled from "styled-components";
-import { DiagramCode } from "../../../shared/src/diagram/DiagramCode";
+import { DocumentContent } from "@nevcos/shared/src/document/DocumentCode";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 interface Props {
-  code: DiagramCode;
+  code: DocumentContent;
 }
 
 export function PreviewPresentation({ code }: Props) {

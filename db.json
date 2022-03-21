@@ -1,7 +1,7 @@
 {
-  "diagrams": {
-    "1": { "id": "1", "name": "Diagram 1", "code": "class Bob", "type": "PLANT_UML" },
-    "2": { "id": "2", "name": "Diagram 2", "code": "class Jane", "type": "PLANT_UML" },
+  "documents": {
+    "1": { "id": "1", "name": "Document 1", "code": "class Bob", "type": "PLANT_UML" },
+    "2": { "id": "2", "name": "Document 2", "code": "class Jane", "type": "PLANT_UML" },
     "3": {
       "id": "3",
       "name": "Presentation 3",
