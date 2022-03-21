@@ -1,2 +1,3 @@
-# react-plantuml-ide
-Created with CodeSandbox
+# librinium
+
+Markdown + PlantUML + Remark editor
