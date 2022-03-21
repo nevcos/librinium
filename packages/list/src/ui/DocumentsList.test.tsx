@@ -25,17 +25,30 @@ const document1: Document = {
 const documents = [document0, document1];
 
 describe("<DocumentsList />", () => {
-  test("should call onCreateDocument when clicking on create button", async () => {
+  test("should call onCreateDocument with proper type when clicking on create PlantUml button", async () => {
     const props = {
       documents: [],
       onCreateDocument: jest.fn()
     };
     render(<DocumentsList {...props} />);
 
-    const btn = await screen.findByTestId<HTMLButtonElement>("create");
-    fireEvent.click(btn);
+    await clickButton("create-plantuml");
 
     await waitForCallbackToBeCalledOnce(props.onCreateDocument);
+    expect(props.onCreateDocument.mock.calls[0][0]).toBe(DocumentContentType.PLANT_UML);
+  });
+
+  test("should call onCreateDocument with proper type when clicking on create Remark button", async () => {
+    const props = {
+      documents: [],
+      onCreateDocument: jest.fn()
+    };
+    render(<DocumentsList {...props} />);
+
+    await clickButton("create-remark");
+
+    await waitForCallbackToBeCalledOnce(props.onCreateDocument);
+    expect(props.onCreateDocument.mock.calls[0][0]).toBe(DocumentContentType.REMARK);
   });
 
   test("should callback onSelectDocument when clicking on select button for document 0", async () => {
@@ -51,7 +64,7 @@ describe("<DocumentsList />", () => {
     const triggeredDocumentId = documents[documentIndex].id;
 
     await waitForCallbackToBeCalledOnce(props.onSelectDocument);
-    expect(props.onSelectDocument.mock.results[0].value).toBe(triggeredDocumentId);
+    expect(props.onSelectDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
   });
 
   test("should callback onRenameDocument when double clicking on select button for document 0", async () => {
@@ -61,13 +74,12 @@ describe("<DocumentsList />", () => {
     };
     render(<DocumentsList {...props} />);
 
-    const btns = await screen.findAllByTestId<HTMLButtonElement>("select");
     const index = 0;
-    fireEvent.doubleClick(btns[index]);
+    await doubleClickNthButton("select", index);
     const triggeredDocumentId = documents[index].id;
 
     await waitForCallbackToBeCalledOnce(props.onRenameDocument);
-    expect(props.onRenameDocument.mock.results[0].value).toBe(triggeredDocumentId);
+    expect(props.onRenameDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
   });
 
   test("should callback onDeleteDocument when clicking on delete button for document 1", async () => {
@@ -77,16 +89,30 @@ describe("<DocumentsList />", () => {
     };
     render(<DocumentsList {...props} />);
 
-    const btns = await screen.findAllByTestId<HTMLButtonElement>("delete");
     const index = 0;
-    fireEvent.click(btns[index]);
+    await clickNthButton("delete", index);
     const triggeredDocumentId = documents[index].id;
 
     await waitForCallbackToBeCalledOnce(props.onDeleteDocument);
-    expect(props.onDeleteDocument.mock.results[0].value).toBe(triggeredDocumentId);
+    expect(props.onDeleteDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
   });
 });
 
-function waitForCallbackToBeCalledOnce(callback: Mock) {
+async function clickButton(testId: string): Promise<void> {
+  const btn = await screen.findByTestId<HTMLButtonElement>(testId);
+  fireEvent.click(btn);
+}
+
+async function clickNthButton(testId: string, index: number): Promise<void> {
+  const btns = await screen.findAllByTestId<HTMLButtonElement>(testId);
+  fireEvent.click(btns[index]);
+}
+
+async function doubleClickNthButton(testId: string, index: number): Promise<void> {
+  const btns = await screen.findAllByTestId<HTMLButtonElement>(testId);
+  fireEvent.doubleClick(btns[index]);
+}
+
+function waitForCallbackToBeCalledOnce(callback: Mock): Promise<void> {
   return waitFor(() => expect(callback).toBeCalledTimes(1));
 }

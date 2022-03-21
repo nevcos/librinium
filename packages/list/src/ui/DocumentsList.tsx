@@ -83,11 +83,11 @@ export const DocumentsList = memo(function ({
       <ListUl>
         {[
           <OptionLi key="create">
-            <NewButton onClick={onCreatePlantUml} data-testid="create">
+            <NewButton onClick={onCreatePlantUml} data-testid="create-plantuml">
               + Create new PlantUML diagram
             </NewButton>
-            <NewButton onClick={onCreateRemark} data-testid="create">
-              + Create new Remark Presentation
+            <NewButton onClick={onCreateRemark} data-testid="create-remark">
+              + Create new Remark presentation
             </NewButton>
           </OptionLi>,
           ...documents.map((document) => (
