@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 
 const RenderingCounterContainer = styled.div`
@@ -11,6 +11,7 @@ const RenderingCounterDiv = styled.div`
 
   font-size: 10px;
   background-color: lightyellow;
+  color: black;
   top: 2px;
   right: 2px;
   border: 1px solid black;
@@ -19,8 +20,10 @@ const RenderingCounterDiv = styled.div`
 
 export function RenderingCounter(): JSX.Element {
   const counter = useRef(0);
-  counter.current ++;
-  return <RenderingCounterContainer>
-    <RenderingCounterDiv>{counter.current}</RenderingCounterDiv>
-  </RenderingCounterContainer>
+  counter.current++;
+  return (
+    <RenderingCounterContainer>
+      <RenderingCounterDiv>{counter.current}</RenderingCounterDiv>
+    </RenderingCounterContainer>
+  );
 }

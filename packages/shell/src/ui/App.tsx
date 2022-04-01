@@ -13,6 +13,7 @@ import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContent
 import { PreviewPresentation } from "../../../preview-presentation/src/ui/PreviewPresentation";
 
 const AppGridDiv = styled.div`
+  background-color: white;
   height: 100%;
   display: grid;
   grid-template-columns: 200px auto;
@@ -26,8 +27,7 @@ const AppGridDiv = styled.div`
 const SideBarDiv = styled.div`
   grid-area: sidebar;
   overflow: auto;
-
-  background-color: #eee;
+  display: grid;
 `;
 
 const ContentDiv = styled.div`
