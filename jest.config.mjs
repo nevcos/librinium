@@ -16,8 +16,7 @@ export default {
   // setup files
   setupFilesAfterEnv: [
     "<rootDir>/../config/jest/documentCreateRangeMock.ts",
-    "<rootDir>/../config/jest/setupJestGlobalReact.ts",
-    "<rootDir>/../config/jest/windowProptMock.ts"
+    "<rootDir>/../config/jest/setupJestGlobalReact.ts"
   ],
 
   // jsdom is required to test webapp code

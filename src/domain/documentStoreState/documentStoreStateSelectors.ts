@@ -4,7 +4,7 @@ import type { DocumentName } from "../document/DocumentName";
 import type { DocumentContent } from "../document/DocumentContent";
 import type { Document } from "../document/Document";
 import type { DocumentStoreState } from "./DocumentStoreState";
-import type { DocumentContentType } from "../document/DocumentContentType";
+import { DocumentContentType } from "../document/DocumentContentType";
 
 export function createNewDocument(type: DocumentContentType): Document {
   const id = getNextDocumentId();

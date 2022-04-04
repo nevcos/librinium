@@ -73,6 +73,9 @@ describe("<DocumentsList />", () => {
   });
 
   test("should callback onRenameDocument when double clicking on select button for document 0", async () => {
+    const newName = "New Name";
+    jest.spyOn(global, "prompt").mockReturnValueOnce(newName);
+    
     const props = {
       isLoading: false,
       documents,
@@ -85,8 +88,7 @@ describe("<DocumentsList />", () => {
     const triggeredDocumentId = documents[index].id;
 
     await waitForCallbackToBeCalledOnce(props.onRenameDocument);
-    expect(props.onRenameDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
-    expect(props.onRenameDocument.mock.calls[0][1]).toBeDefined();
+    expect(props.onRenameDocument.mock.calls[0]).toEqual([triggeredDocumentId, newName]);
   });
 
   test("should callback onDeleteDocument when clicking on delete button for document 1", async () => {
