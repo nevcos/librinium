@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from 'react';
 import styled from "styled-components";
 
 import { Document } from "@nevcos/shared/src/document/Document";
@@ -10,6 +10,7 @@ import logoPath from "./assets/logo.svg";
 import { BreadCrumb } from "./BreadCrumb";
 import { Spinner } from "./Spinner";
 import { DocumentIcon } from './DocumentIcon';
+import { DocumentName } from '../../../shared/src/document/DocumentName';
 
 const Styled_Container = styled.div`
   background-color: #275063;
@@ -95,7 +96,7 @@ interface Props {
   onSelectDocument?: (id: DocumentId) => void;
   onCreateDocument?: (type: DocumentContentType) => void;
   onDeleteDocument?: (id: DocumentId) => void;
-  onRenameDocument?: (id: DocumentId) => void;
+  onRenameDocument?: (id: DocumentId, newName: DocumentName) => void;
 }
 
 export const DocumentsList = memo(function ({
@@ -109,6 +110,13 @@ export const DocumentsList = memo(function ({
 }: Props): JSX.Element {
   const onCreatePlantUml = useCallback(() => onCreateDocument?.(DocumentContentType.PLANT_UML), []);
   const onCreateRemark = useCallback(() => onCreateDocument?.(DocumentContentType.REMARK), []);
+  const onDoubleClickRename = useCallback((document) => {
+    if (!onRenameDocument) return;
+    const newName = prompt("Rename", document.name);
+    if (newName) {
+      onRenameDocument(document.id, newName as DocumentName);
+    }
+  }, []);
 
   return (
     <Styled_Container>
@@ -129,7 +137,7 @@ export const DocumentsList = memo(function ({
             <Styled_OptionLi key={document.id} className={document.id === selectedId ? "--selected" : ""}>
               <Styled_DocumentButton
                 onClick={() => onSelectDocument?.(document.id)}
-                onDoubleClick={() => onRenameDocument?.(document.id)}
+                onDoubleClick={() => onDoubleClickRename(document)}
                 data-testid="select"
               >
                 <DocumentIcon type={document.type}></DocumentIcon>

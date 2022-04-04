@@ -4,7 +4,7 @@ import type { Document } from "@nevcos/shared/src/document/Document";
 import type { DocumentId } from "@nevcos/shared/src/document/DocumentId";
 import type { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
-import { getSelectedDocument } from "./documentStoreStateSelectors";
+import { getSelectedDocument, getDocument } from './documentStoreStateSelectors';
 
 export function setDocuments(state: DocumentStoreState, action: PayloadAction<DocumentMap>): void {
   state.documents = action.payload;
@@ -41,4 +41,11 @@ export function deleteDocument(state: DocumentStoreState, action: PayloadAction<
 
 export function setIsLoading(state: DocumentStoreState, action: PayloadAction<boolean>): void {
   state.isLoading = action.payload;
+}
+
+export function updateDocumentName(state: DocumentStoreState, action: PayloadAction<{id: DocumentId, name: DocumentName}>): void {
+  const {id, name} = action.payload;
+  const document = getDocument(state, id);
+  if (!document) throw new Error("Document not found");
+  document.name = name;
 }

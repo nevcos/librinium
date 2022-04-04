@@ -12,6 +12,7 @@ import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContent
 
 import { documentStoreActions } from "../store/rtk/documentStore";
 import * as storeSelectors from "../store/domain/documentStoreState/documentStoreStateSelectors";
+import { DocumentName } from "../../../shared/src/document/DocumentName";
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -22,14 +23,14 @@ const Styled_Grid = styled.div`
     "sidebar preview";
   grid-template-columns: fit-content(100%) auto;
   grid-template-rows: fit-content(80%);
-  grid-gap: .6rem;
+  grid-gap: 0.6rem;
 `;
 
 const Styled_Sidebar = styled.aside`
   grid-area: sidebar;
   overflow: auto;
   display: grid;
-  
+
   min-width: 200px;
   max-width: 500px;
   resize: horizontal;
@@ -48,7 +49,7 @@ const Styled_Preview = styled.section`
 
   background-color: white;
   border-top: 1px solid #ccc;
-  padding-top: .6rem;
+  padding-top: 0.6rem;
 `;
 
 export function App() {
@@ -72,6 +73,10 @@ export function App() {
     (code: DocumentContent) => dispatch(documentStoreActions.updateSelectedDocumentContent(code)),
     []
   );
+  const onRenameDocument = useCallback(
+    (id: DocumentId, name: DocumentName) => dispatch(documentStoreActions.updateDocumentName({id, name})),
+    []
+  );
 
   return (
     <Styled_Grid>
@@ -83,6 +88,7 @@ export function App() {
           onSelectDocument={onSelectDocument}
           onCreateDocument={onCreateDocument}
           onDeleteDocument={onDeleteDocument}
+          onRenameDocument={onRenameDocument}
         />
       </Styled_Sidebar>
       {selectedDocument ? (

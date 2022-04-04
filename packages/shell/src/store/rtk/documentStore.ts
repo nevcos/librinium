@@ -35,7 +35,7 @@ const createNewDocument = createAsyncThunk(`${storeName}/postDocument`, async (t
   thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
   const newDocument = selectors.createNewDocument(type);
   try {
-    await DocumentsApi.postDocument(newDocument);
+    // await DocumentsApi.postDocument(newDocument);
     thunkAPI.dispatch(documentStore.actions.addDocument(newDocument));
   } catch (error) {
     // TBD
