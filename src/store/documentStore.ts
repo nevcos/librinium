@@ -7,14 +7,14 @@ import { initialState } from "../domain/documentStoreState/DocumentStoreState";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
 
-const storeName = "document";
+export const storeName = "document";
 
 //#region Slice
 
 export const documentStore = createSlice({
   name: storeName,
-  initialState,
-  reducers
+  initialState: initialState,
+  reducers: reducers
 });
 
 //#endregion
