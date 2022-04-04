@@ -1,18 +1,19 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
 import { CodeEditor } from "@nevcos/code-editor/src/ui/CodeEditor";
 import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
 import { DocumentsList } from "@nevcos/list/src/ui/DocumentsList";
 import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import PlantUmlPreview from "@nevcos/preview-plantuml/src/ui/PlantUmlPreview";
-import { Spinner } from "./Spinner";
-import * as storeSelectors from "../store/domain/documentStoreState/documentStoreStateSelectors";
-import { documentStoreActions } from "../store/rtk/documentStore";
+import { PlantUmlPreview } from "@nevcos/preview-plantuml/src/ui/PlantUmlPreview";
+import { PreviewPresentation } from "@nevcos/preview-presentation/src/ui/PreviewPresentation";
 import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
-import { PreviewPresentation } from "../../../preview-presentation/src/ui/PreviewPresentation";
 
-const AppGridDiv = styled.div`
+import { documentStoreActions } from "../store/rtk/documentStore";
+import * as storeSelectors from "../store/domain/documentStoreState/documentStoreStateSelectors";
+
+const Styled_Grid = styled.div`
   background-color: white;
   height: 100%;
   display: grid;
@@ -24,20 +25,20 @@ const AppGridDiv = styled.div`
     "sidebar preview";
 `;
 
-const SideBarDiv = styled.div`
+const Styled_Sidebar = styled.aside`
   grid-area: sidebar;
   overflow: auto;
   display: grid;
 `;
 
-const ContentDiv = styled.div`
+const Styled_Editor = styled.section`
   grid-area: content;
   overflow: auto;
 
   background-color: white;
 `;
 
-const PreviewDiv = styled.div`
+const Styled_Preview = styled.section`
   grid-area: preview;
   overflow: auto;
 
@@ -69,36 +70,33 @@ export function App() {
   );
 
   return (
-    <AppGridDiv>
-      <SideBarDiv>
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <DocumentsList
-            selectedId={selectedDocument?.id}
-            documents={documents}
-            onSelectDocument={onSelectDocument}
-            onCreateDocument={onCreateDocument}
-            onDeleteDocument={onDeleteDocument}
-          />
-        )}
-      </SideBarDiv>
+    <Styled_Grid>
+      <Styled_Sidebar>
+        <DocumentsList
+          isLoading={isLoading}
+          selectedId={selectedDocument?.id}
+          documents={documents}
+          onSelectDocument={onSelectDocument}
+          onCreateDocument={onCreateDocument}
+          onDeleteDocument={onDeleteDocument}
+        />
+      </Styled_Sidebar>
       {selectedDocument ? (
         <>
-          <ContentDiv>
+          <Styled_Editor>
             <CodeEditor key={selectedDocument?.id} code={selectedDocument?.code} onChange={onCodeChange} />
-          </ContentDiv>
-          <PreviewDiv>
+          </Styled_Editor>
+          <Styled_Preview>
             {selectedDocument?.type === DocumentContentType.REMARK ? (
               <PreviewPresentation key={selectedDocument?.id} code={selectedDocument?.code} />
             ) : (
               <PlantUmlPreview key={selectedDocument?.id} code={selectedDocument?.code} />
             )}
-          </PreviewDiv>
+          </Styled_Preview>
         </>
       ) : (
         <div>Nothing to show 🤷‍♂️</div>
       )}
-    </AppGridDiv>
+    </Styled_Grid>
   );
 }

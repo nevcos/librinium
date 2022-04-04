@@ -24,5 +24,3 @@ export const PlantUmlPreview = memo(function ({ code }: Props): JSX.Element {
     </>
   );
 });
-
-export default PlantUmlPreview;
