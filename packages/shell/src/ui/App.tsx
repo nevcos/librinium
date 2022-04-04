@@ -19,7 +19,7 @@ const Styled_Grid = styled.div`
   display: grid;
   grid-template-columns: 200px auto;
   grid-template-rows: fit-content(80%);
-  grid-gap: 10px;
+  grid-gap: .6rem;
   grid-template-areas:
     "sidebar content"
     "sidebar preview";
@@ -44,7 +44,7 @@ const Styled_Preview = styled.section`
 
   background-color: white;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding-top: .6rem;
 `;
 
 export function App() {

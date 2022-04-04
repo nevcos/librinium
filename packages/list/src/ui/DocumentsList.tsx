@@ -9,16 +9,17 @@ import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContent
 import logoPath from "./assets/logo.svg";
 import { BreadCrumb } from "./BreadCrumb";
 import { Spinner } from "./Spinner";
+import { DocumentIcon } from './DocumentIcon';
 
 const Styled_Container = styled.div`
   background-color: #275063;
   color: white;
-  padding: 10px;
+  padding: .6rem;
 `;
 
 const Styled_Title = styled.div`
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.1rem;
 `;
 
 const Styled_Logo = styled.img``;
@@ -29,12 +30,12 @@ const Styled_ListUl = styled.ul`
   margin: 0;
 
   display: grid;
-  grid-gap: 3px;
+  grid-gap: .2rem;
 `;
 
 const Styled_OptionLi = styled.li`
   display: flex;
-  border-radius: 3px;
+  border-radius: .2rem;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -49,25 +50,29 @@ const Styled_OptionLi = styled.li`
   }
 `;
 
-const Styled_ListButton = styled.button`
+const Styled_AbstractButton = styled.button`
   border: none;
-  border-radius: 2px;
+  border-radius: .2rem;
   background-color: transparent;
   text-align: left;
-  padding: 10px 12px;
+  padding: .6rem .8rem;
   color: inherit;
 
   &:not(:disabled) {
     cursor: pointer;
   }
+
+  > :nth-child(2) {
+    margin-left: .6rem;
+  }
 `;
 
-const Styled_DocumentButton = styled(Styled_ListButton)`
-  padding: 10px;
+const Styled_DocumentButton = styled(Styled_AbstractButton)`
+  padding: .6rem;
   width: 100%;
 `;
 
-const Styled_DeleteButton = styled(Styled_ListButton)`
+const Styled_DeleteButton = styled(Styled_AbstractButton)`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
@@ -127,7 +132,8 @@ export const DocumentsList = memo(function ({
                 onDoubleClick={() => onRenameDocument?.(document.id)}
                 data-testid="select"
               >
-                {document.name}
+                <DocumentIcon type={document.type}></DocumentIcon>
+                <span>{document.name}</span>
               </Styled_DocumentButton>
               <Styled_DeleteButton onClick={() => onDeleteDocument?.(document.id)} data-testid="delete" title="Delete">
                 <i className="fa-solid fa-xmark"></i>
@@ -136,12 +142,14 @@ export const DocumentsList = memo(function ({
           ))}
           <Styled_OptionLi>
             <Styled_NewButton onClick={onCreatePlantUml} data-testid="create-plantuml">
-              new Diagram ...
+              <DocumentIcon type={DocumentContentType.PLANT_UML}></DocumentIcon>
+              <span>new Diagram ...</span>
             </Styled_NewButton>
           </Styled_OptionLi>
           <Styled_OptionLi>
             <Styled_NewButton onClick={onCreateRemark} data-testid="create-remark">
-              new Presentation ...
+              <DocumentIcon type={DocumentContentType.REMARK}></DocumentIcon>
+              <span>new Presentation ...</span>
             </Styled_NewButton>
           </Styled_OptionLi>
         </Styled_ListUl>
