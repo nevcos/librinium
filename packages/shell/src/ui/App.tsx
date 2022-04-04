@@ -17,18 +17,22 @@ const Styled_Grid = styled.div`
   background-color: white;
   height: 100%;
   display: grid;
-  grid-template-columns: 200px auto;
-  grid-template-rows: fit-content(80%);
-  grid-gap: .6rem;
   grid-template-areas:
     "sidebar content"
     "sidebar preview";
+  grid-template-columns: fit-content(100%) auto;
+  grid-template-rows: fit-content(80%);
+  grid-gap: .6rem;
 `;
 
 const Styled_Sidebar = styled.aside`
   grid-area: sidebar;
   overflow: auto;
   display: grid;
+  
+  min-width: 200px;
+  max-width: 500px;
+  resize: horizontal;
 `;
 
 const Styled_Editor = styled.section`

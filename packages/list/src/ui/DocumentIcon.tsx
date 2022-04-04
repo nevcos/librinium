@@ -3,13 +3,13 @@ import { memo } from "react";
 import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 import styled from 'styled-components';
 
-const iconClassNameByType = {
-  [DocumentContentType.PLANT_UML]: "fa-solid fa-diagram-project",
-  [DocumentContentType.REMARK]: "fa-solid fa-chalkboard",
-  [DocumentContentType.MARKDOWN]: "fa-solid fa-file-lines"
+const iconByType = {
+  [DocumentContentType.PLANT_UML]: {title: "PlantUML diagram", className: "fa-solid fa-diagram-project"},
+  [DocumentContentType.REMARK]: {title: "Remark presentation", className: "fa-solid fa-chalkboard"},
+  [DocumentContentType.MARKDOWN]: {title: "Markdown document", className: "fa-solid fa-file-lines"}, 
 };
 
-const defaultIcon = "fa-solid fa-file";
+const defaultIcon = {title: "Document", className: "fa-solid fa-file"};
 
 interface Props {
   type: DocumentContentType;
@@ -20,6 +20,6 @@ const Styled_Icon = styled.span`
 `;
 
 export const DocumentIcon = memo(function ({ type }: Props) {
-  const className = iconClassNameByType[type] || defaultIcon;
-  return <Styled_Icon className={className} aria-hidden="true"></Styled_Icon>;
+  const {title, className} = iconByType[type] || defaultIcon;
+  return <Styled_Icon className={className} title={title} aria-hidden="true"></Styled_Icon>;
 });
