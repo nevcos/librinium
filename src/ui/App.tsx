@@ -10,8 +10,8 @@ import { PlantUmlPreview } from "@nevcos/preview-plantuml/src/ui/PlantUmlPreview
 import { PreviewPresentation } from "@nevcos/preview-presentation/src/ui/PreviewPresentation";
 import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 
-import { documentStoreActions } from "../store/rtk/documentStore";
-import * as storeSelectors from "../store/domain/documentStoreState/documentStoreStateSelectors";
+import { documentStoreActions } from "../store/documentStore";
+import * as storeSelectors from "../domain/documentStoreState/documentStoreStateSelectors";
 import { DocumentName } from "../../../shared/src/document/DocumentName";
 
 const Styled_Grid = styled.div`

@@ -1,7 +1,7 @@
-import { DocumentContent } from "../document/DocumentContent";
-import { DocumentId } from "../document/DocumentId";
-import { DocumentName } from "../document/DocumentName";
-import { DocumentContentType } from "../document/DocumentContentType";
+import { DocumentContent } from "../domain/document/DocumentContent";
+import { DocumentId } from "../domain/document/DocumentId";
+import { DocumentName } from "../domain/document/DocumentName";
+import { DocumentContentType } from "../domain/document/DocumentContentType";
 
 export const documentMock0 = {
   id: "0" as DocumentId,

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { Document } from "@nevcos/shared/src/document/Document";
-import * as DocumentsApi from "../../remoteApi/documentsApi";
+import * as DocumentsApi from "../remoteApi/documentsApi";
 import { initialState } from "../domain/documentStoreState/DocumentStoreState";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";

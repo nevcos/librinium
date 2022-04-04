@@ -7,8 +7,8 @@ import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/Renderi
 import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 
 import logoPath from "./assets/logo.svg";
-import { BreadCrumb } from "./BreadCrumb";
-import { Spinner } from "./Spinner";
+import { BreadCrumb } from "./sidebar/BreadCrumb";
+import { Spinner } from "../shared/Spinner";
 import { DocumentIcon } from './DocumentIcon';
 import { DocumentName } from '../../../shared/src/document/DocumentName';
 
