@@ -10,7 +10,8 @@ export function getDefaultJestConfig() {
 
     // use esbuild for faster tests
     transform: {
-      "^.+\\.tsx?$": "esbuild-runner/jest"
+      "^.+\\.tsx?$": "esbuild-runner/jest",
+      "^.+\\.svg$": "<rootDir>/../../shared-dev/config/jest/stringExportTransformer.ts"
     },
 
     // setup files
