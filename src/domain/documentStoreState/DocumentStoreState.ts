@@ -7,10 +7,3 @@ export interface DocumentStoreState {
   selectedDocumentId: DocumentId | null;
   documents: DocumentMap;
 }
-
-export const initialState: DocumentStoreState = {
-  isLoading: false,
-  error: null,
-  selectedDocumentId: null,
-  documents: {}
-};

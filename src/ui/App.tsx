@@ -7,13 +7,11 @@ import type { DocumentName } from "../domain/document/DocumentName";
 import type { DocumentId } from "../domain/document/DocumentId";
 import { DocumentContentType } from "../domain/document/DocumentContentType";
 
+import { documentStoreActions, documentStoreSelectors } from '../store/documentStore';
 import { CodeEditor } from "./editor/CodeEditor";
 import { DocumentsList } from "./sidebar/DocumentsList";
 import { PlantUmlPreview } from "./previewPlantUml/PlantUmlPreview";
 import { PreviewPresentation } from "./previewRemark/PreviewPresentation";
-
-import { documentStoreActions } from "../store/documentStore";
-import * as storeSelectors from "../domain/documentStoreState/documentStoreStateSelectors";
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -56,9 +54,9 @@ const Styled_Preview = styled.section`
 export function App() {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(storeSelectors.isLoading);
-  const documents = useSelector(storeSelectors.getDocuments);
-  const selectedDocument = useSelector(storeSelectors.getSelectedDocument);
+  const isLoading = useSelector(documentStoreSelectors.isLoading);
+  const documents = useSelector(documentStoreSelectors.getDocuments);
+  const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
 
   useEffect(() => {
     dispatch(documentStoreActions.fetchDocuments());
@@ -70,10 +68,6 @@ export function App() {
     []
   );
   const onDeleteDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.deleteDocument(id)), []);
-  const onCodeChange = useCallback(
-    (code: DocumentContent) => dispatch(documentStoreActions.updateSelectedDocumentContent(code)),
-    []
-  );
   const onRenameDocument = useCallback(
     (id: DocumentId, name: DocumentName) => dispatch(documentStoreActions.updateDocumentName({id, name})),
     []
@@ -95,7 +89,7 @@ export function App() {
       {selectedDocument ? (
         <>
           <Styled_Editor>
-            <CodeEditor key={selectedDocument?.id} code={selectedDocument?.code} onChange={onCodeChange} />
+            <CodeEditor key={selectedDocument?.id} />
           </Styled_Editor>
           <Styled_Preview>
             {selectedDocument?.type === DocumentContentType.REMARK ? (

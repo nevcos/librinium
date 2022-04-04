@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { Document } from "../domain/document/Document";
 import type { DocumentContentType } from "../domain/document/DocumentContentType";
 import * as DocumentsApi from "../remoteApi/documentsApi";
-import { initialState } from "../domain/documentStoreState/DocumentStoreState";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
 
@@ -13,7 +12,7 @@ export const storeName = "document";
 
 export const documentStore = createSlice({
   name: storeName,
-  initialState: initialState,
+  initialState: selectors.createEmptyState(),
   reducers: reducers
 });
 

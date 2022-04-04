@@ -1,4 +1,4 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { Payload } from "@reduxjs/toolkit";
 import type { DocumentMap } from "../document/DocumentMap";
 import type { DocumentName } from '../document/DocumentName';
 import type { Document } from "../document/Document";
@@ -7,24 +7,26 @@ import type { DocumentContent } from "../document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { getSelectedDocument, getDocument } from './documentStoreStateSelectors';
 
-export function setDocuments(state: DocumentStoreState, action: PayloadAction<DocumentMap>): void {
+interface Payload<T> { payload: T; }
+
+export function setDocuments(state: DocumentStoreState, action: Payload<DocumentMap>): void {
   state.documents = action.payload;
   state.selectedDocumentId = Object.values(state.documents)[0]?.id;
 }
 
-export function addDocument(state: DocumentStoreState, action: PayloadAction<Document>): void {
+export function addDocument(state: DocumentStoreState, action: Payload<Document>): void {
   const document = action.payload;
   state.documents[document.id] = document;
   state.selectedDocumentId = document.id;
 }
 
-export function selectDocument(state: DocumentStoreState, action: PayloadAction<DocumentId>): void {
+export function selectDocument(state: DocumentStoreState, action: Payload<DocumentId>): void {
   // noinspection UnnecessaryLocalVariableJS
   const id = action.payload;
   state.selectedDocumentId = id;
 }
 
-export function updateSelectedDocumentContent(state: DocumentStoreState, action: PayloadAction<DocumentContent>): void {
+export function updateSelectedDocumentContent(state: DocumentStoreState, action: Payload<DocumentContent>): void {
   const code = action.payload;
   const selectedDocument = getSelectedDocument(state);
   if (selectedDocument && selectedDocument.code !== code) {
@@ -32,7 +34,7 @@ export function updateSelectedDocumentContent(state: DocumentStoreState, action:
   }
 }
 
-export function deleteDocument(state: DocumentStoreState, action: PayloadAction<DocumentId>): void {
+export function deleteDocument(state: DocumentStoreState, action: Payload<DocumentId>): void {
   const id = action.payload;
   delete state.documents[id];
   if (state.selectedDocumentId === id) {
@@ -40,11 +42,11 @@ export function deleteDocument(state: DocumentStoreState, action: PayloadAction<
   }
 }
 
-export function setIsLoading(state: DocumentStoreState, action: PayloadAction<boolean>): void {
+export function setIsLoading(state: DocumentStoreState, action: Payload<boolean>): void {
   state.isLoading = action.payload;
 }
 
-export function updateDocumentName(state: DocumentStoreState, action: PayloadAction<{id: DocumentId, name: DocumentName}>): void {
+export function updateDocumentName(state: DocumentStoreState, action: Payload<{id: DocumentId, name: DocumentName}>): void {
   const {id, name} = action.payload;
   const document = getDocument(state, id);
   if (!document) throw new Error("Document not found");

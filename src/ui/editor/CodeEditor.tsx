@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from 'react';
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
@@ -6,8 +6,10 @@ import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
 
+import { documentStoreSelectors, documentStoreActions } from '../../store/documentStore';
 import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { RenderingCounter } from "../shared/RenderingCounter";
+import { useSelector, useDispatch } from 'react-redux';
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -22,14 +24,18 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
-interface Props {
-  code: DocumentContent | undefined;
-  onChange?: (code: DocumentContent) => void;
-}
+export const CodeEditor = memo(function (): JSX.Element {
+  const dispatch = useDispatch();
+  const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
+  const code = selectedDocument?.code;
 
-export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
+  
+  const onCodeChange = useCallback(
+    (code: DocumentContent) => dispatch(documentStoreActions.updateSelectedDocumentContent(code)),
+    []
+  );
 
   useLayoutEffect(() => {
     if (codeMirror.current || !elementRef.current) return;
@@ -41,7 +47,7 @@ export const CodeEditor = memo(function ({ code, onChange }: Props): JSX.Element
     codeMirror.current.on(
       "change",
       debounce(() => {
-        onChange?.(codeMirror.current?.getValue() as DocumentContent);
+        onCodeChange(codeMirror.current?.getValue() as DocumentContent);
       }, CHANGE_DEBOUNCE_MS)
     );
   }, []);

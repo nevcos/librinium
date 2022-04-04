@@ -6,6 +6,15 @@ import type { Document } from "../document/Document";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { DocumentContentType } from "../document/DocumentContentType";
 
+export function createEmptyState(): DocumentStoreState {
+  return {
+    isLoading: false,
+    error: null,
+    selectedDocumentId: null,
+    documents: {}
+  };
+}
+
 export function createNewDocument(type: DocumentContentType): Document {
   const id = getNextDocumentId();
   switch (type) {
