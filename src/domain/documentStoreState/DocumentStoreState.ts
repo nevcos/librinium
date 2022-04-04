@@ -1,6 +1,5 @@
-import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import { DocumentMap } from "@nevcos/shared/src/document/DocumentMap";
-import { documentsMapMock } from "@nevcos/shared/src/mock/documents";
+import type { DocumentId } from "../document/DocumentId";
+import type { DocumentMap } from "../document/DocumentMap";
 
 export interface DocumentStoreState {
   isLoading: boolean;

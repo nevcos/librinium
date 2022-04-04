@@ -1,7 +1,6 @@
-import React from "react";
 import { render } from "@testing-library/react";
 import { PlantUmlPreview } from "./PlantUmlPreview";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
+import type { DocumentContent } from "../../domain/document/DocumentContent";
 
 describe("<PlantUmlPreview />", () => {
   test("should display an image with the correct document", async () => {

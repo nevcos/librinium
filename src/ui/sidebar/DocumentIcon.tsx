@@ -1,7 +1,7 @@
 import { memo } from "react";
-
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 import styled from 'styled-components';
+
+import { DocumentContentType } from "../../domain/document/DocumentContentType";
 
 const iconByType = {
   [DocumentContentType.PLANT_UML]: {title: "PlantUML diagram", className: "fa-solid fa-diagram-project"},

@@ -1,6 +1,6 @@
-import type { Document } from "@nevcos/shared/src/document/Document";
-import type { DocumentMap } from "@nevcos/shared/src/document/DocumentMap";
-import type { DocumentId } from "@nevcos/shared/src/document/DocumentId";
+import type { Document } from "../domain/document/Document";
+import type { DocumentMap } from "../domain/document/DocumentMap";
+import type { DocumentId } from "../domain/document/DocumentId";
 
 const BASE_URL = "https://my-json-server.typicode.com/nevcos/react-plantuml-ide";
 

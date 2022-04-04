@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { Document } from "@nevcos/shared/src/document/Document";
+
+import type { Document } from "../domain/document/Document";
+import type { DocumentContentType } from "../domain/document/DocumentContentType";
 import * as DocumentsApi from "../remoteApi/documentsApi";
 import { initialState } from "../domain/documentStoreState/DocumentStoreState";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
 
 const storeName = "document";
 

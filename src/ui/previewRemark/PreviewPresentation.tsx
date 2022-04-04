@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
+
+import type { DocumentContent } from "../../domain/document/DocumentContent";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;

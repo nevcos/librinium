@@ -1,7 +1,7 @@
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
-import React from "react";
+
+import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { CodeEditor } from "./CodeEditor";
 
 describe("<CodeEditor />", () => {

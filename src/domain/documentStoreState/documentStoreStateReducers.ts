@@ -1,8 +1,9 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { DocumentMap } from "@nevcos/shared/src/document/DocumentMap";
-import type { Document } from "@nevcos/shared/src/document/Document";
-import type { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import type { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
+import type { DocumentMap } from "../document/DocumentMap";
+import type { DocumentName } from '../document/DocumentName';
+import type { Document } from "../document/Document";
+import type { DocumentId } from "../document/DocumentId";
+import type { DocumentContent } from "../document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { getSelectedDocument, getDocument } from './documentStoreStateSelectors';
 

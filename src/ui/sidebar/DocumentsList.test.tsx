@@ -1,12 +1,14 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
-import { DocumentsList } from "./DocumentsList";
 import Mock = jest.Mock;
-import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import { DocumentName } from "@nevcos/shared/src/document/DocumentName";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
-import { Document } from "@nevcos/shared/src/document/Document";
+
+import type { DocumentId } from "../../domain/document/DocumentId";
+import type { DocumentName } from "../../domain/document/DocumentName";
+import type { DocumentContent } from "../../domain/document/DocumentContent";
+import { DocumentContentType } from "../../domain/document/DocumentContentType";
+import type { Document } from "../../domain/document/Document";
+
+import { DocumentsList } from "./DocumentsList";
 
 const document0: Document = {
   id: "0" as DocumentId,
@@ -27,6 +29,7 @@ const documents = [document0, document1];
 describe("<DocumentsList />", () => {
   test("should call onCreateDocument with proper type when clicking on create PlantUml button", async () => {
     const props = {
+      isLoading: false,
       documents: [],
       onCreateDocument: jest.fn()
     };
@@ -40,6 +43,7 @@ describe("<DocumentsList />", () => {
 
   test("should call onCreateDocument with proper type when clicking on create Remark button", async () => {
     const props = {
+      isLoading: false,
       documents: [],
       onCreateDocument: jest.fn()
     };
@@ -53,6 +57,7 @@ describe("<DocumentsList />", () => {
 
   test("should callback onSelectDocument when clicking on select button for document 0", async () => {
     const props = {
+      isLoading: false,
       documents,
       onSelectDocument: jest.fn((id) => id)
     };
@@ -69,6 +74,7 @@ describe("<DocumentsList />", () => {
 
   test("should callback onRenameDocument when double clicking on select button for document 0", async () => {
     const props = {
+      isLoading: false,
       documents,
       onRenameDocument: jest.fn((id) => id)
     };
@@ -80,10 +86,12 @@ describe("<DocumentsList />", () => {
 
     await waitForCallbackToBeCalledOnce(props.onRenameDocument);
     expect(props.onRenameDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
+    expect(props.onRenameDocument.mock.calls[0][1]).toBeDefined();
   });
 
   test("should callback onDeleteDocument when clicking on delete button for document 1", async () => {
     const props = {
+      isLoading: false,
       documents: [document0, document1],
       onDeleteDocument: jest.fn((id) => id)
     };

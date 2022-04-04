@@ -1,9 +1,10 @@
-import { DocumentId, getNextDocumentId } from "@nevcos/shared/src/document/DocumentId";
-import { DocumentName } from "@nevcos/shared/src/document/DocumentName";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
-import { Document } from "@nevcos/shared/src/document/Document";
-import { DocumentStoreState } from "./DocumentStoreState";
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
+import type { DocumentId } from "../document/DocumentId";
+import { getNextDocumentId } from "../document/DocumentId";
+import type { DocumentName } from "../document/DocumentName";
+import type { DocumentContent } from "../document/DocumentContent";
+import type { Document } from "../document/Document";
+import type { DocumentStoreState } from "./DocumentStoreState";
+import type { DocumentContentType } from "../document/DocumentContentType";
 
 export function createNewDocument(type: DocumentContentType): Document {
   const id = getNextDocumentId();

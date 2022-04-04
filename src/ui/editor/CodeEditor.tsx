@@ -5,8 +5,9 @@ import styled from "styled-components";
 import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
-import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/RenderingCounter";
+
+import type { DocumentContent } from "../../domain/document/DocumentContent";
+import { RenderingCounter } from "../shared/RenderingCounter";
 
 const CHANGE_DEBOUNCE_MS = 600;
 

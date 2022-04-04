@@ -2,17 +2,18 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { CodeEditor } from "@nevcos/code-editor/src/ui/CodeEditor";
-import { DocumentContent } from "@nevcos/shared/src/document/DocumentContent";
-import { DocumentsList } from "@nevcos/list/src/ui/DocumentsList";
-import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import { PlantUmlPreview } from "@nevcos/preview-plantuml/src/ui/PlantUmlPreview";
-import { PreviewPresentation } from "@nevcos/preview-presentation/src/ui/PreviewPresentation";
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
+import type { DocumentContent } from "../domain/document/DocumentContent";
+import type { DocumentName } from "../domain/document/DocumentName";
+import type { DocumentId } from "../domain/document/DocumentId";
+import { DocumentContentType } from "../domain/document/DocumentContentType";
+
+import { CodeEditor } from "./editor/CodeEditor";
+import { DocumentsList } from "./sidebar/DocumentsList";
+import { PlantUmlPreview } from "./previewPlantUml/PlantUmlPreview";
+import { PreviewPresentation } from "./previewRemark/PreviewPresentation";
 
 import { documentStoreActions } from "../store/documentStore";
 import * as storeSelectors from "../domain/documentStoreState/documentStoreStateSelectors";
-import { DocumentName } from "../../../shared/src/document/DocumentName";
 
 const Styled_Grid = styled.div`
   background-color: white;

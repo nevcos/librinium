@@ -1,16 +1,17 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 import styled from "styled-components";
 
-import { Document } from "@nevcos/shared/src/document/Document";
-import { DocumentId } from "@nevcos/shared/src/document/DocumentId";
-import { RenderingCounter } from "@nevcos/shared/src/ui/renderingCounter/RenderingCounter";
-import { DocumentContentType } from "@nevcos/shared/src/document/DocumentContentType";
+import type { Document } from "../../domain/document/Document";
+import type { DocumentId } from "../../domain/document/DocumentId";
+import type { DocumentName } from '../../domain/document/DocumentName';
+import { DocumentContentType } from "../../domain/document/DocumentContentType";
+
+import { RenderingCounter } from "../shared/RenderingCounter";
+import { Spinner } from "../shared/Spinner";
 
 import logoPath from "./assets/logo.svg";
-import { BreadCrumb } from "./sidebar/BreadCrumb";
-import { Spinner } from "../shared/Spinner";
+import { BreadCrumb } from "./BreadCrumb";
 import { DocumentIcon } from './DocumentIcon';
-import { DocumentName } from '../../../shared/src/document/DocumentName';
 
 const Styled_Container = styled.div`
   background-color: #275063;
@@ -112,7 +113,7 @@ export const DocumentsList = memo(function ({
   const onCreateRemark = useCallback(() => onCreateDocument?.(DocumentContentType.REMARK), []);
   const onDoubleClickRename = useCallback((document) => {
     if (!onRenameDocument) return;
-    const newName = prompt("Rename", document.name);
+    const newName = window.prompt("Rename", document.name);
     if (newName) {
       onRenameDocument(document.id, newName as DocumentName);
     }
