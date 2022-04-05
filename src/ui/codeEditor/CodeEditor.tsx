@@ -43,6 +43,8 @@ export function CodeEditor(): JSX.Element {
     if (codeMirror.current || !elementRef.current) return;
 
     codeMirror.current = CodeMirror(elementRef.current, {
+      lineWrapping: true,
+      lineNumbers: true,
       value: code || "",
       mode: "javascript"
     });

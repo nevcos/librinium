@@ -28,10 +28,6 @@ const Styled_Editor = styled.section`
 const Styled_Preview = styled.section`
   overflow: auto;
 
-  /* background-color: yellow; */
-  border-top: 1px solid #ccc;
-  padding-top: 0.6rem;
-
   position: absolute;
   top: 0;
   right: 0;
