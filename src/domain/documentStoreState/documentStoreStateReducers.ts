@@ -1,4 +1,3 @@
-import type { Payload } from "@reduxjs/toolkit";
 import type { DocumentMap } from "../document/DocumentMap";
 import type { DocumentName } from '../document/DocumentName';
 import type { Document } from "../document/Document";
