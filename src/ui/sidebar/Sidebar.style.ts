@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100%;
-  background-color: #275063;
+  background-color: #2d404d;
   color: white;
   display: flex;
   flex-direction: column;
@@ -11,15 +11,17 @@ export const Container = styled.div`
 // Header
 
 export const Header = styled.header`
-  padding: .6rem;
+  margin: 0.6rem;
+  margin-left: 1rem;
+`;
+
+export const Logo = styled.div`
+  margin: 1.5rem 0;
 `;
 
 export const Title = styled.div`
   margin-top: 1.2rem;
 `;
-
-export const Logo = styled.img``;
-
 // Nav
 
 export const Nav = styled.nav`

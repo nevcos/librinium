@@ -43,7 +43,9 @@ export function Sidebar(): JSX.Element {
       <RenderingCounter />
 
       <Styled.Header>
-        <Styled.Logo src={logoPath} alt="librinium logo"></Styled.Logo>
+        <Styled.Logo>
+          <img src={logoPath} alt="librinium logo" />
+        </Styled.Logo>
         <Styled.Title>
           <BreadCrumb />
         </Styled.Title>
