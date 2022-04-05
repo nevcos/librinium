@@ -1,20 +1,19 @@
 import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import type { Document } from '../../domain/document/Document';
 import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
-import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
+import type { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
 
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
-
 import logoPath from "./assets/logo.svg";
 import { BreadCrumb } from "./BreadCrumb";
 import { DocumentIcon } from './DocumentIcon';
-import * as Styled from './Sidebar.style';
-import { useSelector, useDispatch } from 'react-redux';
 import { documentStoreActions, documentStoreSelectors } from '../../store/documentStore';
+
+import * as Styled from './Sidebar.style';
 
 export function Sidebar(): JSX.Element {
   const dispatch = useDispatch();

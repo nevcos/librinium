@@ -18,9 +18,11 @@ const CodeEditorDiv = styled.div`
   height: 100%;
   position: relative;
 
+  // Override
   > .CodeMirror {
     width: 100%;
     height: 100%;
+    background-color: transparent;
   }
 `;
 

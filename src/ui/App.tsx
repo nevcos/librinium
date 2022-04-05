@@ -1,28 +1,17 @@
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import type { Document } from "../domain/document/Document";
-import type { DocumentName } from "../domain/document/DocumentName";
-import type { DocumentId } from "../domain/document/DocumentId";
-import { DocumentContentType } from "../domain/document/DocumentContentType";
-
-import { documentStoreActions, documentStoreSelectors } from '../store/documentStore';
-import { CodeEditor } from "./codeEditor/CodeEditor";
+import { documentStoreActions } from '../store/documentStore';
 import { Sidebar } from "./sidebar/Sidebar";
-import { PreviewPlantUml } from "./previewPlantUml/PreviewPlantUml";
-import { PreviewPresentation } from "./previewRemark/PreviewRemark";
-import { isLoading } from '../domain/documentStoreState/documentStoreStateSelectors';
+import { Content } from './content/Content';
 
 const Styled_Grid = styled.div`
   background-color: white;
   height: 100%;
   display: grid;
-  grid-template-areas:
-    "sidebar content"
-    "sidebar preview";
+  grid-template-areas: "sidebar content";
   grid-template-columns: fit-content(100%) auto;
-  grid-template-rows: fit-content(80%);
   grid-gap: 0.6rem;
 `;
 
@@ -37,35 +26,15 @@ const Styled_Sidebar = styled.aside`
   resize: horizontal;
 `;
 
-const Styled_Editor = styled.section`
+const Styled_Content = styled.div`
   grid-area: content;
-  overflow: auto;
+  height: 100%;
 
-  background-color: white;
-`;
-
-const Styled_Preview = styled.section`
-  grid-area: preview;
-  overflow: auto;
-
-  background-color: white;
-  border-top: 1px solid #ccc;
-  padding-top: 0.6rem;
-`;
-
-const Styled_EmptyState = styled.div`
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-  color: #ccc;
+  overflow: hidden;
 `;
 
 export function App(): JSX.Element {
   const dispatch = useDispatch();
-
-  const isLoading = useSelector(documentStoreSelectors.isLoading);
-  const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
 
   useEffect(() => {
     dispatch(documentStoreActions.fetchDocuments());
@@ -76,44 +45,9 @@ export function App(): JSX.Element {
       <Styled_Sidebar>
         <Sidebar />
       </Styled_Sidebar>
-      {selectedDocument ? (
-        <>
-          <Styled_Editor>
-            <CodeEditor key={selectedDocument?.id} />
-          </Styled_Editor>
-          <Styled_Preview>
-            {renderPreview(selectedDocument)}
-          </Styled_Preview>
-        </>
-      ) : 
-      (
-        <Styled_EmptyState>
-          {isLoading ? (
-            <>
-              <span className="fa-solid fa-spinner" />
-              waiting ...
-            </>
-          ) : (
-            <>
-              <span className="fa-solid fa-arrow-left-long" />
-              select or create a document
-            </>
-          )}
-        </Styled_EmptyState>
-      )}
+      <Styled_Content>
+        <Content />
+      </Styled_Content>
     </Styled_Grid>
   );
-}
-
-function renderPreview(document: Document | null): JSX.Element | null {
-  if (!document) return null;
-  switch(document.type) {
-    case DocumentContentType.PLANT_UML:
-      return <PreviewPlantUml key={document.id} />;
-    case DocumentContentType.REMARK:
-      return <PreviewPresentation key={document.id} />
-    case DocumentContentType.MARKDOWN:
-    default:
-      return null;
-  }
 }

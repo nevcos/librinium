@@ -11,6 +11,19 @@ const Container = styled.div`
   position: relative !important;
   width: 100%;
   height: 100%;
+
+  // Override
+  &.remark-container {
+    background: transparent;
+
+    .remark-slide-scaler {
+      box-shadow: none;
+    }
+
+    .remark-slide-content {
+      background-color: #eee;
+    }
+  }
 `;
 
 export function PreviewPresentation() {
