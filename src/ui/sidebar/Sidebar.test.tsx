@@ -1,5 +1,6 @@
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
+import { act } from "react-dom/test-utils";
 import Mock = jest.Mock;
 
 import type { DocumentId } from "../../domain/document/DocumentId";
@@ -9,6 +10,9 @@ import { DocumentContentType } from "../../domain/document/DocumentContentType";
 import type { Document } from "../../domain/document/Document";
 
 import { Sidebar } from "./Sidebar";
+import { renderWithDocumentStore } from '../../test/reactTestUtils';
+import { createEmptyState, getSelectedDocument, getDocuments } from '../../domain/documentStoreState/documentStoreStateSelectors';
+import { addDocument } from "../../domain/documentStoreState/documentStoreStateReducers";
 
 const document0: Document = {
   id: "0" as DocumentId,
@@ -24,106 +28,79 @@ const document1: Document = {
   type: DocumentContentType.PLANT_UML
 };
 
-const documents = [document0, document1];
-
 describe("<DocumentsList />", () => {
-  test("should call onCreateDocument with proper type when clicking on create PlantUml button", async () => {
-    const props = {
-      isLoading: false,
-      documents: [],
-      onCreateDocument: jest.fn()
-    };
-    render(<Sidebar {...props} />);
+  it("should create a PlantUML document and select it when clicking on create PlantUml button", async () => {
+    const {getState} = renderWithDocumentStore(<Sidebar />);
 
     await clickButton("create-plantuml");
 
-    await waitForCallbackToBeCalledOnce(props.onCreateDocument);
-    expect(props.onCreateDocument.mock.calls[0][0]).toBe(DocumentContentType.PLANT_UML);
+    expect(await screen.findByTestId("document")).toBeDefined();
+    expect(getSelectedDocument(getState())?.type).toBe(DocumentContentType.PLANT_UML);
   });
 
-  test("should call onCreateDocument with proper type when clicking on create Remark button", async () => {
-    const props = {
-      isLoading: false,
-      documents: [],
-      onCreateDocument: jest.fn()
-    };
-    render(<Sidebar {...props} />);
+  it("should create a Remark document and select it when clicking on create Remark button", async () => {
+    const {getState} = renderWithDocumentStore(<Sidebar />);
 
     await clickButton("create-remark");
 
-    await waitForCallbackToBeCalledOnce(props.onCreateDocument);
-    expect(props.onCreateDocument.mock.calls[0][0]).toBe(DocumentContentType.REMARK);
+    expect(await screen.findByTestId("document")).toBeDefined();
+    expect(getSelectedDocument(getState())?.type).toBe(DocumentContentType.REMARK);
   });
 
-  test("should callback onSelectDocument when clicking on select button for document 0", async () => {
-    const props = {
-      isLoading: false,
-      documents,
-      onSelectDocument: jest.fn((id) => id)
-    };
-    render(<Sidebar {...props} />);
+  it("should select document when clicking on select button for first document", async () => {
+    const state = createEmptyState();
+    addDocument(state, {payload: document0});
+    addDocument(state, {payload: document1});
+    const {getState} = renderWithDocumentStore(<Sidebar />, state);
 
-    const createBtns = await screen.findAllByTestId<HTMLButtonElement>("select");
-    const documentIndex = 0;
-    fireEvent.click(createBtns[documentIndex]);
-    const triggeredDocumentId = documents[documentIndex].id;
+    await clickNthButton("select", 0);
 
-    await waitForCallbackToBeCalledOnce(props.onSelectDocument);
-    expect(props.onSelectDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
+    expect(getSelectedDocument(getState())?.id).toBe(document0.id);
   });
 
-  test("should callback onRenameDocument when double clicking on select button for document 0", async () => {
+  it("should rename when double clicking on select button for first document", async () => {
     const newName = "New Name";
     jest.spyOn(global, "prompt").mockReturnValueOnce(newName);
     
-    const props = {
-      isLoading: false,
-      documents,
-      onRenameDocument: jest.fn((id) => id)
-    };
-    render(<Sidebar {...props} />);
+    const state = createEmptyState();
+    addDocument(state, {payload: document0});
+    const {getState} = renderWithDocumentStore(<Sidebar />, state);
 
-    const index = 0;
-    await doubleClickNthButton("select", index);
-    const triggeredDocumentId = documents[index].id;
+    await doubleClickNthButton("select", 0);
 
-    await waitForCallbackToBeCalledOnce(props.onRenameDocument);
-    expect(props.onRenameDocument.mock.calls[0]).toEqual([triggeredDocumentId, newName]);
+    expect(getSelectedDocument(getState())?.name).toBe(newName);
   });
 
-  test("should callback onDeleteDocument when clicking on delete button for document 1", async () => {
+  it("should delete document when clicking on delete button for document 1", async () => {
     jest.spyOn(global, "confirm").mockReturnValueOnce(true);
-    const props = {
-      isLoading: false,
-      documents: [document0, document1],
-      onDeleteDocument: jest.fn((id) => id)
-    };
-    render(<Sidebar {...props} />);
+    
+    const state = createEmptyState();
+    addDocument(state, {payload: document0});
+    const {getState} = renderWithDocumentStore(<Sidebar />, state);
 
-    const index = 0;
-    await clickNthButton("delete", index);
-    const triggeredDocumentId = documents[index].id;
+    await clickNthButton("delete", 0);
 
-    await waitForCallbackToBeCalledOnce(props.onDeleteDocument);
-    expect(props.onDeleteDocument.mock.calls[0][0]).toBe(triggeredDocumentId);
+    expect(getDocuments(getState()).length).toBe(0);
   });
 });
 
 async function clickButton(testId: string): Promise<void> {
   const btn = await screen.findByTestId<HTMLButtonElement>(testId);
-  fireEvent.click(btn);
+  act(() => {
+    fireEvent.click(btn);
+  });
 }
 
 async function clickNthButton(testId: string, index: number): Promise<void> {
   const btns = await screen.findAllByTestId<HTMLButtonElement>(testId);
-  fireEvent.click(btns[index]);
+  act(() => {
+    fireEvent.click(btns[index]);
+  });
 }
 
 async function doubleClickNthButton(testId: string, index: number): Promise<void> {
   const btns = await screen.findAllByTestId<HTMLButtonElement>(testId);
-  fireEvent.doubleClick(btns[index]);
-}
-
-function waitForCallbackToBeCalledOnce(callback: Mock): Promise<void> {
-  return waitFor(() => expect(callback).toBeCalledTimes(1));
+  act(() => {
+    fireEvent.doubleClick(btns[index]);
+  });
 }

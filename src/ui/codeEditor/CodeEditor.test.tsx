@@ -8,7 +8,7 @@ import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStor
 import { createNewPlantUml, createEmptyState } from '../../domain/documentStoreState/documentStoreStateSelectors';
 import { addDocument, selectDocument } from '../../domain/documentStoreState/documentStoreStateReducers';
 
-export function createInitialState(documentContent: DocumentContent): DocumentStoreState {
+function createInitialState(documentContent: DocumentContent): DocumentStoreState {
   const document = createNewPlantUml();
   document.code = documentContent;
 
@@ -20,7 +20,7 @@ export function createInitialState(documentContent: DocumentContent): DocumentSt
 }
 
 describe("<CodeEditor />", () => {
-  test("should display code editor with the expected code", async () => {
+  it("should display code editor with the expected code", async () => {
     const code = "Test->Success" as DocumentContent;
     const state = createInitialState(code);
 
@@ -30,7 +30,7 @@ describe("<CodeEditor />", () => {
     expect(codeContainer?.textContent).toBe(code);
   });
 
-  test("should change code in store when user changes code", async () => {
+  it("should change code in store when user changes code", async () => {
     // TODO
   });
 });

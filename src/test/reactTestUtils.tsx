@@ -4,13 +4,14 @@ import { Provider } from "react-redux";
 
 import { documentStoreReducer } from '../store/documentStore';
 import { DocumentStoreState } from "../domain/documentStoreState/DocumentStoreState";
+import { createEmptyState } from '../domain/documentStoreState/documentStoreStateSelectors';
 
 /**
  * @see https://redux.js.org/usage/writing-tests#components
  */
 export function renderWithDocumentStore(
   ui: JSX.Element,
-  preloadedState: DocumentStoreState,
+  preloadedState: DocumentStoreState = createEmptyState(),
   renderOptions: unknown[] = []
 ) {
   const store = configureStore({ reducer: documentStoreReducer, preloadedState });
@@ -19,5 +20,10 @@ export function renderWithDocumentStore(
     return <Provider store={store}>{children}</Provider>;
   }
 
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+  const renderResult = rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+
+  return {
+    renderResult,
+    getState: (): DocumentStoreState => store.getState()
+  };
 }

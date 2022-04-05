@@ -55,37 +55,16 @@ const Styled_Preview = styled.section`
 export function App(): JSX.Element {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(documentStoreSelectors.isLoading);
-  const documents = useSelector(documentStoreSelectors.getDocuments);
   const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
 
   useEffect(() => {
     dispatch(documentStoreActions.fetchDocuments());
   }, []);
 
-  const onSelectDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.selectDocument(id)), []);
-  const onCreateDocument = useCallback(
-    (type: DocumentContentType) => dispatch(documentStoreActions.createNewDocument(type)),
-    []
-  );
-  const onDeleteDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.deleteDocument(id)), []);
-  const onRenameDocument = useCallback(
-    (id: DocumentId, name: DocumentName) => dispatch(documentStoreActions.updateDocumentName({id, name})),
-    []
-  );
-
   return (
     <Styled_Grid>
       <Styled_Sidebar>
-        <Sidebar
-          isLoading={isLoading}
-          selectedId={selectedDocument?.id}
-          documents={documents}
-          onSelectDocument={onSelectDocument}
-          onCreateDocument={onCreateDocument}
-          onDeleteDocument={onDeleteDocument}
-          onRenameDocument={onRenameDocument}
-        />
+        <Sidebar />
       </Styled_Sidebar>
       {selectedDocument ? (
         <>

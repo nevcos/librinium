@@ -1,6 +1,5 @@
 import { memo, useCallback } from 'react';
 
-import type { Document } from "../../domain/document/Document";
 import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
@@ -12,40 +11,30 @@ import logoPath from "./assets/logo.svg";
 import { BreadCrumb } from "./BreadCrumb";
 import { DocumentIcon } from './DocumentIcon';
 import * as Styled from './Sidebar.style';
+import { useSelector, useDispatch } from 'react-redux';
+import { documentStoreActions, documentStoreSelectors } from '../../store/documentStore';
+import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
 
-interface Props {
-  isLoading: boolean;
-  documents: Document[];
-  selectedId?: DocumentId | null;
-  onSelectDocument?: (id: DocumentId) => void;
-  onCreateDocument?: (type: DocumentContentType) => void;
-  onDeleteDocument?: (id: DocumentId) => void;
-  onRenameDocument?: (id: DocumentId, newName: DocumentName) => void;
-}
+export const Sidebar = function (): JSX.Element {
+  const dispatch = useDispatch();
 
-export const Sidebar = memo(function ({
-  isLoading,
-  documents,
-  selectedId,
-  onSelectDocument,
-  onCreateDocument,
-  onDeleteDocument,
-  onRenameDocument
-}: Props): JSX.Element {
-  const onCreatePlantUml = useCallback(() => onCreateDocument?.(DocumentContentType.PLANT_UML), []);
-  const onCreateRemark = useCallback(() => onCreateDocument?.(DocumentContentType.REMARK), []);
+  const isLoading = useSelector<DocumentStoreState>(documentStoreSelectors.isLoading);
+  const documents = useSelector<DocumentStoreState>(documentStoreSelectors.getDocuments);
+  const selectedId = useSelector<DocumentStoreState>(state => state.selectedDocumentId);
+
+  const onClickSelectDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.selectDocument(id)), []);
+  const onClickCreatePlantUml = useCallback(() => dispatch(documentStoreActions.createNewDocument(DocumentContentType.PLANT_UML)), []);
+  const onClickCreateRemark = useCallback(() => dispatch(documentStoreActions.createNewDocument(DocumentContentType.REMARK)), []);
   const onDoubleClickRename = useCallback((document) => {
-    if (!onRenameDocument) return;
     const newName = window.prompt("Rename", document.name);
     if (newName) {
-      onRenameDocument(document.id, newName as DocumentName);
+      dispatch(documentStoreActions.updateDocumentName({id: document.id, name: newName as DocumentName}));
     }
   }, []);
   const onClickDeleteDocument = useCallback((document) => {
-    if (!onDeleteDocument) return;
     const isConfirmed = window.confirm(`Delete ${document.name}?`);
     if (isConfirmed) {
-      onDeleteDocument(document.id);
+      dispatch(documentStoreActions.deleteDocument(document.id));
     }
   }, []);
 
@@ -66,9 +55,9 @@ export const Sidebar = memo(function ({
         ) : (
           <Styled.ListUl>
             {documents.map((document) => (
-              <Styled.OptionLi key={document.id} className={document.id === selectedId ? "--selected" : ""}>
+              <Styled.OptionLi key={document.id} className={document.id === selectedId ? "--selected" : ""} data-testid="document">
                 <Styled.OpenButton
-                  onClick={() => onSelectDocument?.(document.id)}
+                  onClick={() => onClickSelectDocument(document.id)}
                   onDoubleClick={() => onDoubleClickRename(document)}
                   data-testid="select"
                 >
@@ -81,13 +70,13 @@ export const Sidebar = memo(function ({
               </Styled.OptionLi>
             ))}
             <Styled.OptionLi>
-              <Styled.NewButton onClick={onCreatePlantUml} data-testid="create-plantuml">
+              <Styled.NewButton onClick={onClickCreatePlantUml} data-testid="create-plantuml">
                 <DocumentIcon type={DocumentContentType.PLANT_UML}></DocumentIcon>
                 <span>new Diagram ...</span>
               </Styled.NewButton>
             </Styled.OptionLi>
             <Styled.OptionLi>
-              <Styled.NewButton onClick={onCreateRemark} data-testid="create-remark">
+              <Styled.NewButton onClick={onClickCreateRemark} data-testid="create-remark">
                 <DocumentIcon type={DocumentContentType.REMARK}></DocumentIcon>
                 <span>new Presentation ...</span>
               </Styled.NewButton>
@@ -101,4 +90,4 @@ export const Sidebar = memo(function ({
       </Styled.Footer>
     </Styled.Container>
   );
-});
+}
