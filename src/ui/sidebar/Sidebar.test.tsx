@@ -8,7 +8,7 @@ import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
 import type { Document } from "../../domain/document/Document";
 
-import { DocumentsList } from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 
 const document0: Document = {
   id: "0" as DocumentId,
@@ -33,7 +33,7 @@ describe("<DocumentsList />", () => {
       documents: [],
       onCreateDocument: jest.fn()
     };
-    render(<DocumentsList {...props} />);
+    render(<Sidebar {...props} />);
 
     await clickButton("create-plantuml");
 
@@ -47,7 +47,7 @@ describe("<DocumentsList />", () => {
       documents: [],
       onCreateDocument: jest.fn()
     };
-    render(<DocumentsList {...props} />);
+    render(<Sidebar {...props} />);
 
     await clickButton("create-remark");
 
@@ -61,7 +61,7 @@ describe("<DocumentsList />", () => {
       documents,
       onSelectDocument: jest.fn((id) => id)
     };
-    render(<DocumentsList {...props} />);
+    render(<Sidebar {...props} />);
 
     const createBtns = await screen.findAllByTestId<HTMLButtonElement>("select");
     const documentIndex = 0;
@@ -81,7 +81,7 @@ describe("<DocumentsList />", () => {
       documents,
       onRenameDocument: jest.fn((id) => id)
     };
-    render(<DocumentsList {...props} />);
+    render(<Sidebar {...props} />);
 
     const index = 0;
     await doubleClickNthButton("select", index);
@@ -98,7 +98,7 @@ describe("<DocumentsList />", () => {
       documents: [document0, document1],
       onDeleteDocument: jest.fn((id) => id)
     };
-    render(<DocumentsList {...props} />);
+    render(<Sidebar {...props} />);
 
     const index = 0;
     await clickNthButton("delete", index);

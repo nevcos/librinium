@@ -2,13 +2,14 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
+import type { Document } from "../domain/document/Document";
 import type { DocumentName } from "../domain/document/DocumentName";
 import type { DocumentId } from "../domain/document/DocumentId";
 import { DocumentContentType } from "../domain/document/DocumentContentType";
 
 import { documentStoreActions, documentStoreSelectors } from '../store/documentStore';
 import { CodeEditor } from "./codeEditor/CodeEditor";
-import { DocumentsList } from "./sidebar/Sidebar";
+import { Sidebar } from "./sidebar/Sidebar";
 import { PlantUmlPreview } from "./previewPlantUml/PreviewPlantUml";
 import { PreviewPresentation } from "./previewRemark/PreviewRemark";
 
@@ -51,7 +52,7 @@ const Styled_Preview = styled.section`
   padding-top: 0.6rem;
 `;
 
-export function App() {
+export function App(): JSX.Element {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(documentStoreSelectors.isLoading);
@@ -76,7 +77,7 @@ export function App() {
   return (
     <Styled_Grid>
       <Styled_Sidebar>
-        <DocumentsList
+        <Sidebar
           isLoading={isLoading}
           selectedId={selectedDocument?.id}
           documents={documents}
@@ -92,11 +93,7 @@ export function App() {
             <CodeEditor key={selectedDocument?.id} />
           </Styled_Editor>
           <Styled_Preview>
-            {selectedDocument?.type === DocumentContentType.REMARK ? (
-              <PreviewPresentation key={selectedDocument?.id} code={selectedDocument?.code} />
-            ) : (
-              <PlantUmlPreview key={selectedDocument?.id} code={selectedDocument?.code} />
-            )}
+            {renderPreview(selectedDocument)}
           </Styled_Preview>
         </>
       ) : (
@@ -104,4 +101,17 @@ export function App() {
       )}
     </Styled_Grid>
   );
+}
+
+function renderPreview(document: Document): JSX.Element | null {
+  if (!document) return null;
+  switch(document.type) {
+    case DocumentContentType.PLANT_UML:
+      return <PlantUmlPreview key={document.id} code={document.code} />;
+    case DocumentContentType.REMARK:
+      return <PreviewPresentation key={document.id} code={document.code} />
+    case DocumentContentType.MARKDOWN:
+    default:
+      return null;
+  }
 }

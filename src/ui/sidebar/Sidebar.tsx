@@ -23,7 +23,7 @@ interface Props {
   onRenameDocument?: (id: DocumentId, newName: DocumentName) => void;
 }
 
-export const DocumentsList = memo(function ({
+export const Sidebar = memo(function ({
   isLoading,
   documents,
   selectedId,
