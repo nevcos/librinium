@@ -27,9 +27,10 @@ const Styled_Grid = styled.div`
 
 const Styled_Sidebar = styled.aside`
   grid-area: sidebar;
-  overflow: auto;
-  display: grid;
-
+  height: 100%;
+  
+  overflow: hidden;
+  width: 250px;
   min-width: 200px;
   max-width: 500px;
   resize: horizontal;
