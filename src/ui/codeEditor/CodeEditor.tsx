@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
@@ -24,7 +24,7 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
-export const CodeEditor = memo(function (): JSX.Element {
+export function CodeEditor(): JSX.Element {
   const dispatch = useDispatch();
   const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
   const code = selectedDocument?.code;
@@ -66,4 +66,4 @@ export const CodeEditor = memo(function (): JSX.Element {
       <CodeEditorDiv ref={elementRef} />
     </>
   );
-});
+}

@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { documentStoreActions, documentStoreSelectors } from '../../store/documentStore';
 import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
 
-export const Sidebar = function (): JSX.Element {
+export function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
 
   const isLoading = useSelector<DocumentStoreState>(documentStoreSelectors.isLoading);

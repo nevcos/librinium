@@ -28,7 +28,7 @@ const document1: Document = {
   type: DocumentContentType.PLANT_UML
 };
 
-describe("<DocumentsList />", () => {
+describe("<Sidebar />", () => {
   it("should create a PlantUML document and select it when clicking on create PlantUml button", async () => {
     const {getState} = renderWithDocumentStore(<Sidebar />);
 
