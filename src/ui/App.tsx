@@ -2,16 +2,15 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import type { DocumentContent } from "../domain/document/DocumentContent";
 import type { DocumentName } from "../domain/document/DocumentName";
 import type { DocumentId } from "../domain/document/DocumentId";
 import { DocumentContentType } from "../domain/document/DocumentContentType";
 
 import { documentStoreActions, documentStoreSelectors } from '../store/documentStore';
-import { CodeEditor } from "./editor/CodeEditor";
-import { DocumentsList } from "./sidebar/DocumentsList";
-import { PlantUmlPreview } from "./previewPlantUml/PlantUmlPreview";
-import { PreviewPresentation } from "./previewRemark/PreviewPresentation";
+import { CodeEditor } from "./codeEditor/CodeEditor";
+import { DocumentsList } from "./sidebar/Sidebar";
+import { PlantUmlPreview } from "./previewPlantUml/PreviewPlantUml";
+import { PreviewPresentation } from "./previewRemark/PreviewRemark";
 
 const Styled_Grid = styled.div`
   background-color: white;

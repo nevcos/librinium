@@ -11,7 +11,7 @@ import { Spinner } from "../shared/Spinner";
 import logoPath from "./assets/logo.svg";
 import { BreadCrumb } from "./BreadCrumb";
 import { DocumentIcon } from './DocumentIcon';
-import * as Styled from './DocumentsList.style';
+import * as Styled from './Sidebar.style';
 
 interface Props {
   isLoading: boolean;

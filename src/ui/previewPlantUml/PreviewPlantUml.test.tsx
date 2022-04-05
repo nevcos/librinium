@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { PlantUmlPreview } from "./PlantUmlPreview";
+import { PlantUmlPreview } from "./PreviewPlantUml";
 import type { DocumentContent } from "../../domain/document/DocumentContent";
 
 describe("<PlantUmlPreview />", () => {

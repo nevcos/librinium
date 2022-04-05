@@ -8,7 +8,7 @@ import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
 import type { Document } from "../../domain/document/Document";
 
-import { DocumentsList } from "./DocumentsList";
+import { DocumentsList } from "./Sidebar";
 
 const document0: Document = {
   id: "0" as DocumentId,
@@ -92,6 +92,7 @@ describe("<DocumentsList />", () => {
   });
 
   test("should callback onDeleteDocument when clicking on delete button for document 1", async () => {
+    jest.spyOn(global, "confirm").mockReturnValueOnce(true);
     const props = {
       isLoading: false,
       documents: [document0, document1],
