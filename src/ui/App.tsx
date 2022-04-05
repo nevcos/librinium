@@ -12,6 +12,7 @@ import { CodeEditor } from "./codeEditor/CodeEditor";
 import { Sidebar } from "./sidebar/Sidebar";
 import { PreviewPlantUml } from "./previewPlantUml/PreviewPlantUml";
 import { PreviewPresentation } from "./previewRemark/PreviewRemark";
+import { isLoading } from '../domain/documentStoreState/documentStoreStateSelectors';
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -52,9 +53,18 @@ const Styled_Preview = styled.section`
   padding-top: 0.6rem;
 `;
 
+const Styled_EmptyState = styled.div`
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  color: #ccc;
+`;
+
 export function App(): JSX.Element {
   const dispatch = useDispatch();
 
+  const isLoading = useSelector(documentStoreSelectors.isLoading);
   const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
 
   useEffect(() => {
@@ -75,8 +85,21 @@ export function App(): JSX.Element {
             {renderPreview(selectedDocument)}
           </Styled_Preview>
         </>
-      ) : (
-        <div>nothing is selected</div>
+      ) : 
+      (
+        <Styled_EmptyState>
+          {isLoading ? (
+            <>
+              <span className="fa-solid fa-spinner" />
+              waiting ...
+            </>
+          ) : (
+            <>
+              <span className="fa-solid fa-arrow-left-long" />
+              select or create a document
+            </>
+          )}
+        </Styled_EmptyState>
       )}
     </Styled_Grid>
   );
