@@ -10,7 +10,7 @@ import { DocumentContentType } from "../domain/document/DocumentContentType";
 import { documentStoreActions, documentStoreSelectors } from '../store/documentStore';
 import { CodeEditor } from "./codeEditor/CodeEditor";
 import { Sidebar } from "./sidebar/Sidebar";
-import { PlantUmlPreview } from "./previewPlantUml/PreviewPlantUml";
+import { PreviewPlantUml } from "./previewPlantUml/PreviewPlantUml";
 import { PreviewPresentation } from "./previewRemark/PreviewRemark";
 
 const Styled_Grid = styled.div`
@@ -76,19 +76,19 @@ export function App(): JSX.Element {
           </Styled_Preview>
         </>
       ) : (
-        <div>Nothing to show 🤷‍♂️</div>
+        <div>nothing is selected</div>
       )}
     </Styled_Grid>
   );
 }
 
-function renderPreview(document: Document): JSX.Element | null {
+function renderPreview(document: Document | null): JSX.Element | null {
   if (!document) return null;
   switch(document.type) {
     case DocumentContentType.PLANT_UML:
-      return <PlantUmlPreview key={document.id} code={document.code} />;
+      return <PreviewPlantUml key={document.id} />;
     case DocumentContentType.REMARK:
-      return <PreviewPresentation key={document.id} code={document.code} />
+      return <PreviewPresentation key={document.id} />
     case DocumentContentType.MARKDOWN:
     default:
       return null;

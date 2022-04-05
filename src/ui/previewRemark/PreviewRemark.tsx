@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import type { DocumentContent } from "../../domain/document/DocumentContent";
+import { useSelector } from 'react-redux';
+import { documentStoreSelectors } from '../../store/documentStore';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
@@ -12,11 +13,8 @@ const Container = styled.div`
   height: 100%;
 `;
 
-interface Props {
-  code: DocumentContent;
-}
-
-export function PreviewPresentation({ code }: Props) {
+export function PreviewPresentation() {
+  const code = useSelector(documentStoreSelectors.getSelectedDocument)?.code;
   const container = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

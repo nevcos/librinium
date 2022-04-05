@@ -1,13 +1,19 @@
-import { render } from "@testing-library/react";
-import { PlantUmlPreview } from "./PreviewPlantUml";
+import { PreviewPlantUml } from "./PreviewPlantUml";
 import type { DocumentContent } from "../../domain/document/DocumentContent";
+import { renderWithDocumentStore } from '../../test/reactTestUtils';
+import { createEmptyState, createNewPlantUml } from '../../domain/documentStoreState/documentStoreStateSelectors';
+import { addDocument } from '../../domain/documentStoreState/documentStoreStateReducers';
 
-describe("<PlantUmlPreview />", () => {
-  test("should display an image with the correct document", async () => {
+describe("<PreviewPlantUml />", () => {
+  it("should display an image with the correct document", async () => {
     const code = "Test->Success" as DocumentContent;
+    const document = createNewPlantUml()
+    document.code = code;
+    const state = createEmptyState();
+    addDocument(state, {payload: document});
 
-    const result = render(<PlantUmlPreview code={code} />);
-    const img = result.container.querySelector("img");
+    const {renderResult} = renderWithDocumentStore(<PreviewPlantUml />, state);
+    const img = renderResult.container.querySelector("img");
 
     expect(img?.src).toBe("http://www.plantuml.com/plantuml/png/~1UDeBIIqkqRKBBarEJYqk1W0X4GJb");
   });

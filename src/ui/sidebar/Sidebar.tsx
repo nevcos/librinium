@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 
+import type { Document } from '../../domain/document/Document';
 import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
+import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
 
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
@@ -13,13 +15,12 @@ import { DocumentIcon } from './DocumentIcon';
 import * as Styled from './Sidebar.style';
 import { useSelector, useDispatch } from 'react-redux';
 import { documentStoreActions, documentStoreSelectors } from '../../store/documentStore';
-import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
 
 export function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector<DocumentStoreState>(documentStoreSelectors.isLoading);
-  const documents = useSelector<DocumentStoreState>(documentStoreSelectors.getDocuments);
+  const isLoading = useSelector(documentStoreSelectors.isLoading);
+  const documents = useSelector(documentStoreSelectors.getDocuments);
   const selectedId = useSelector<DocumentStoreState>(state => state.selectedDocumentId);
 
   const onClickSelectDocument = useCallback((id: DocumentId) => dispatch(documentStoreActions.selectDocument(id)), []);
