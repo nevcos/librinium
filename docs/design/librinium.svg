@@ -109,11 +109,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="265.38285"
-     inkscape:cy="385.12922"
+     inkscape:zoom="1"
+     inkscape:cx="527.55185"
+     inkscape:cy="321.93016"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1936"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
@@ -133,7 +133,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -569,42 +569,42 @@
            style="stroke-width:0.889429" />
         <g
            id="g3495-8"
-           transform="matrix(1.0674241,0,0,1.0674241,-47.612931,153.82386)"
-           style="fill:#ffffff;stroke-width:0.936835">
+           transform="matrix(1.0120585,0,0,1.0120585,-37.169335,146.25819)"
+           style="fill:#ffffff;stroke-width:0.988084">
           <g
              id="g3465-2"
-             transform="matrix(1.3218477,0,0,1.3218477,-17.565503,42.908224)"
-             style="fill:#ffffff;stroke-width:0.708731">
+             transform="matrix(1.3218477,0,0,1.3218477,-18.304943,42.908224)"
+             style="fill:#ffffff;stroke-width:0.747503">
             <text
                xml:space="preserve"
-               style="font-style:normal;font-weight:normal;font-size:4.18008px;line-height:1;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.187519"
+               style="font-style:normal;font-weight:normal;font-size:4.18008px;line-height:1;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.197777"
                x="58.334248"
                y="-131.97719"
                id="text912-8-7-7-2-1-3-0-3-3-5-5-5"><tspan
                  sodipodi:role="line"
                  x="58.334248"
                  y="-131.97719"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.18008px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.187519"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.18008px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.197777"
                  id="tspan916-3-2-3-9-3-3-1-3-8-8-5-9">libr</tspan></text>
             <text
                xml:space="preserve"
-               style="font-style:normal;font-weight:normal;font-size:4.35016px;line-height:1;font-family:sans-serif;opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.187518"
+               style="font-style:normal;font-weight:normal;font-size:4.35016px;line-height:1;font-family:sans-serif;opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.197776"
                x="65.258713"
                y="-131.97977"
                id="text912-1-9-2-8-8-8-4-4-3-0-2-9-8"><tspan
                  sodipodi:role="line"
                  x="65.258713"
                  y="-131.97977"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.35016px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.187518"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.35016px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.197776"
                  id="tspan916-2-6-9-6-0-9-8-2-7-9-8-3-7"><tspan
-                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;opacity:0.506452;fill:#ffffff;stroke-width:0.187518"
+                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;opacity:0.506452;fill:#ffffff;stroke-width:0.197776"
                    id="tspan2097-0-3-0-6-3-0-1-3-8-7-1-5-8">inium</tspan></tspan></text>
           </g>
           <g
              id="g3576-3"
-             style="fill:#ffffff;stroke-width:0.936835">
+             style="fill:#ffffff;stroke-width:0.988084">
             <rect
-               style="fill:#ffffff;fill-opacity:1;stroke-width:0.247871;stroke-linecap:round"
+               style="fill:#ffffff;fill-opacity:1;stroke-width:0.261431;stroke-linecap:round"
                id="rect3248-2"
                width="3.4395833"
                height="5.8208332"
@@ -613,7 +613,7 @@
                ry="0"
                rx="0" />
             <rect
-               style="fill:#ffffff;fill-opacity:1;stroke-width:0.247871;stroke-linecap:round"
+               style="fill:#ffffff;fill-opacity:1;stroke-width:0.261431;stroke-linecap:round"
                id="rect3456-0"
                width="1.7197918"
                height="5.8208332"
@@ -622,7 +622,7 @@
                ry="0"
                rx="0" />
             <rect
-               style="fill:#ffffff;fill-opacity:1;stroke-width:0.247871;stroke-linecap:round"
+               style="fill:#ffffff;fill-opacity:1;stroke-width:0.261431;stroke-linecap:round"
                id="rect3458-0"
                width="0.85989583"
                height="5.8208332"
@@ -642,7 +642,7 @@
              id="tspan2820"
              x="10.010993"
              y="146.08511"
-             style="stroke-width:0.264583"></tspan></text>
+             style="stroke-width:0.264583" /></text>
         <g
            id="g1629-5-5"
            transform="translate(-0.29551868,-52.963722)"
@@ -679,6 +679,10 @@
            d="m 5.4672051,179.22048 -0.5150239,1.80262 c -0.019716,0.0684 -0.090934,0.10784 -0.1593355,0.0885 -0.068402,-0.0197 -0.1078331,-0.0909 -0.08852,-0.15933 l 0.5150234,-1.80254 c 0.019716,-0.0684 0.090934,-0.10797 0.1593356,-0.0884 0.068402,0.0196 0.1078331,0.0908 0.08852,0.15916 z m 0.4176522,0.32434 0.4506453,0.45065 c 0.050295,0.0503 0.050295,0.13157 0,0.18187 l -0.4506453,0.45065 c -0.050295,0.0503 -0.1315731,0.0503 -0.181868,0 -0.050295,-0.0503 -0.050295,-0.13158 0,-0.18187 l 0.3593095,-0.35971 -0.3593095,-0.35972 c -0.050295,-0.0503 -0.050295,-0.13157 0,-0.18187 0.050295,-0.0503 0.1315724,-0.0503 0.181868,0 z m -1.4163156,0.18187 -0.3595107,0.35972 0.3595107,0.35971 c 0.050296,0.0503 0.050296,0.13157 0,0.18187 -0.050296,0.0503 -0.1315725,0.0503 -0.1818678,0 l -0.4507584,-0.45065 c -0.050279,-0.0503 -0.050279,-0.13157 0,-0.18187 l 0.4507584,-0.45065 c 0.050296,-0.0503 0.1315724,-0.0503 0.1818678,0 0.050296,0.0503 0.050296,0.13158 0,0.18187 z"
            id="path3984"
            style="fill:#aab2b7;fill-opacity:1;stroke-width:0.264583" />
+        <path
+           d="m 5.4743284,9.863199 c 0,-0.125228 0.1015579,-0.226786 0.2267861,-0.226786 h 2.7214281 c 0.1254404,0 0.2267855,0.101558 0.2267855,0.226786 0,0.1254397 -0.1013451,0.226785 -0.2267855,0.226785 H 5.7011145 c -0.1252282,0 -0.2267861,-0.1013453 -0.2267861,-0.226785 z m 0,1.133928 c 0,-0.12544 0.1015579,-0.226786 0.2267861,-0.226786 h 2.7214281 c 0.1254404,0 0.2267855,0.101346 0.2267855,0.226786 0,0.125441 -0.1013451,0.226786 -0.2267855,0.226786 H 5.7011145 c -0.1252282,0 -0.2267861,-0.101345 -0.2267861,-0.226786 z m 2.9482142,1.360714 H 5.7011145 c -0.1252282,0 -0.2267861,-0.101344 -0.2267861,-0.226785 0,-0.125442 0.1015579,-0.226786 0.2267861,-0.226786 h 2.7214281 c 0.1254404,0 0.2267855,0.101344 0.2267855,0.226786 0,0.125441 -0.1013451,0.226785 -0.2267855,0.226785 z"
+           id="path1282"
+           style="fill:#ffffff;stroke-width:0.264583" />
       </g>
       <text
          xml:space="preserve"

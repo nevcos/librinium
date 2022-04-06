@@ -13,6 +13,7 @@ export const sidebarInput = css`
 
 export const SidebarButton = styled.button`
   ${sidebarInput}
+  vertical-align: middle;
 
   &:not(:disabled) {
     cursor: pointer;
@@ -20,6 +21,10 @@ export const SidebarButton = styled.button`
 
   > :nth-child(2) {
     margin-left: 0.6rem;
+
+    @media (max-width: 800px) {
+      display: none;
+    }
   }
 `;
 
@@ -40,16 +45,22 @@ export const Container = styled.div`
 // Header
 
 export const Header = styled.header`
-  padding: 0.6rem;
-  padding-bottom: 0;
+  padding: 1.8rem 0.6rem 0;
 `;
 
-export const Logo = styled.div`
-  padding: 1.4rem 0.6rem 0.6rem;
+export const ToggleButton = styled(SidebarButton)`
+`;
+
+export const Logo = styled.img`
+  vertical-align: middle;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const Search = styled.div`
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   position: relative;
 
   > span {
@@ -126,6 +137,10 @@ export const DeleteButton = styled(SidebarButton)`
   &:focus {
     background-color: #d45500;  
   }
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const NewButton = styled(SidebarButton)`
@@ -140,4 +155,8 @@ export const Footer = styled.footer`
   padding: 1rem 1.2rem;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;

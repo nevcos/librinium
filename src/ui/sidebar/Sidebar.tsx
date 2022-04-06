@@ -41,11 +41,11 @@ export function Sidebar(): JSX.Element {
   return (
     <Styled.Container>
       <RenderingCounter />
-
       <Styled.Header>
-        <Styled.Logo>
-          <img src={logoPath} alt="librinium logo" />
-        </Styled.Logo>
+        <Styled.ToggleButton aria-label="Expand / Collapse menu" title="Expand / Collapse menu">
+          <span className="fa-solid fa-bars" aria-hidden="true"></span>
+        </Styled.ToggleButton>
+        <Styled.Logo src={logoPath} alt="librinium" />
         <Styled.Search>
           <span className="fa-solid fa-search" aria-hidden="true"></span>
           <input type="search" placeholder='search...'></input>
