@@ -5,6 +5,7 @@ import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
 import type { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
+import { Gists } from "../gists/Gists"
 
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
@@ -86,6 +87,8 @@ export function Sidebar(): JSX.Element {
           </Styled.ListUl>
         )}
       </Styled.Nav>
+
+      <Gists />
 
       <Styled.Footer>
         <div>
