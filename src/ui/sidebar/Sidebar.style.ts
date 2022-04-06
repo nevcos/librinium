@@ -1,26 +1,86 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
+
+// Common
+
+export const sidebarInput = css`
+  border: none;
+  border-radius: 0.2rem;
+  background-color: transparent;
+  text-align: left;
+  padding: 0.8rem 0.8rem;
+  color: inherit;
+`;
+
+export const SidebarButton = styled.button`
+  ${sidebarInput}
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  > :nth-child(2) {
+    margin-left: 0.6rem;
+  }
+`;
+
+// Container
 
 export const Container = styled.div`
   height: 100%;
-  background-color: #2d404d;
+  background-color: #183153;
   color: white;
   display: flex;
   flex-direction: column;
+
+  a, a:link, a:visited {
+    color: inherit;
+  }
 `;
 
 // Header
 
 export const Header = styled.header`
-  margin: 0.6rem;
-  margin-left: 1rem;
+  padding: 0.6rem;
+  padding-bottom: 0;
 `;
 
 export const Logo = styled.div`
-  margin: 1.5rem 0;
+  padding: 1.4rem 0.6rem 0.6rem;
 `;
 
-export const Title = styled.div`
+export const Search = styled.div`
   margin-top: 1.2rem;
+  position: relative;
+
+  > span {
+    position: absolute;
+    font-size: 0.8rem;
+    left: 0.8rem;
+    top: 1.1rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  > input {
+    ${sidebarInput}
+    border-radius: 0;
+    width: 100%;
+    padding-left: 2.4rem;
+    border-bottom: 1px solid transparent;
+
+    &:focus {
+      outline: none;
+      border-color: white;
+    }
+
+    &::placeholder {
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.5)
+    }
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+  }
 `;
 // Nav
 
@@ -45,50 +105,29 @@ export const OptionLi = styled.li`
   border-radius: 0.2rem;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   &.--selected {
-    background-color: rgba(255, 255, 255, 0.3);
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
+    background-color: rgba(0, 0, 0, 0.8);
   }
 `;
 
-export const AbstractButton = styled.button`
-  border: none;
-  border-radius: 0.2rem;
-  background-color: transparent;
-  text-align: left;
-  padding: 0.6rem 0.8rem;
-  color: inherit;
-
-  &:not(:disabled) {
-    cursor: pointer;
-  }
-
-  > :nth-child(2) {
-    margin-left: 0.6rem;
-  }
-`;
-
-export const OpenButton = styled(AbstractButton)`
+export const OpenButton = styled(SidebarButton)`
   width: 100%;
 `;
 
-export const DeleteButton = styled(AbstractButton)`
+export const DeleteButton = styled(SidebarButton)`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
   &:hover,
   &:focus {
-    background-color: rosybrown;
+    background-color: #d45500;  
   }
 `;
 
-export const NewButton = styled(AbstractButton)`
+export const NewButton = styled(SidebarButton)`
   width: 100%;
   color: rgba(255, 255, 255, 0.5);
   font-style: italic;
@@ -97,7 +136,7 @@ export const NewButton = styled(AbstractButton)`
 // Footer
 
 export const Footer = styled.footer`
-  padding: 0.6rem;
+  padding: 1rem 1.2rem;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
 `;

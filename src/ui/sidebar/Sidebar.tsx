@@ -46,9 +46,10 @@ export function Sidebar(): JSX.Element {
         <Styled.Logo>
           <img src={logoPath} alt="librinium logo" />
         </Styled.Logo>
-        <Styled.Title>
-          <BreadCrumb />
-        </Styled.Title>
+        <Styled.Search>
+          <span className="fa-solid fa-search" aria-hidden="true"></span>
+          <input type="search" placeholder='search...'></input>
+        </Styled.Search>
       </Styled.Header>
 
       <Styled.Nav>
@@ -66,8 +67,8 @@ export function Sidebar(): JSX.Element {
                   <DocumentIcon type={document.type}></DocumentIcon>
                   <span>{document.name}</span>
                 </Styled.OpenButton>
-                <Styled.DeleteButton onClick={() => onClickDeleteDocument(document)} data-testid="delete" title="Delete">
-                  <i className="fa-solid fa-xmark"></i>
+                <Styled.DeleteButton onClick={() => onClickDeleteDocument(document)} data-testid="delete" title="Delete" aria-label='Delete'>
+                  <span className="fa-solid fa-xmark" aria-hidden="true"></span>
                 </Styled.DeleteButton>
               </Styled.OptionLi>
             ))}
@@ -88,7 +89,14 @@ export function Sidebar(): JSX.Element {
       </Styled.Nav>
 
       <Styled.Footer>
-        <span className="fa-solid fa-circle-info" aria-hidden="true" /> Double click on an document name to rename it
+        <div>
+          <span className="fa-solid fa-wand-magic-sparkles" aria-hidden="true" /> double click a name to rename
+        </div>
+        <div>
+           <a href="#about">
+             <span className="fa-solid fa-code" aria-hidden="true" /> about librinium ...
+           </a>
+        </div>
       </Styled.Footer>
     </Styled.Container>
   );
