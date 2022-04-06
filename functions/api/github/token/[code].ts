@@ -2,11 +2,10 @@ import { Context } from "../../../interface/Context";
 import { defaultError } from "../../../util/callback";
 
 export async function onRequestGet(context: Context): Promise<Response> {
-  if (!context.params.code) throw new Error("missing code");
-
   try {
+    if (!context.params.code) throw new Error("missing code");
     const response = await getToken(context);
-    if (!response.ok) throw new Error(JSON.stringify({status: response.status, text: response.statusText}));
+    if (!response.ok) throw new Error(JSON.stringify({ status: response.status, text: response.statusText }));
     const data = await response.json();
     return new Response(JSON.stringify({ token: data.access_token }));
   } catch (err) {
@@ -22,12 +21,12 @@ async function getToken(context: Context): Promise<Response> {
   return fetch(endpoint, {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      Accept: "application/json"
     },
     body: new URLSearchParams({
       client_id: clientId,
       client_secret: clientSecret,
-      code: context.params.code,
-    }),
+      code: context.params.code
+    })
   });
 }
