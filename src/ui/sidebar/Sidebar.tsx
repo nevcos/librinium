@@ -9,7 +9,6 @@ import type { DocumentStoreState } from '../../domain/documentStoreState/Documen
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
 import logoPath from "./assets/logo.svg";
-import { BreadCrumb } from "./BreadCrumb";
 import { DocumentIcon } from './DocumentIcon';
 import { documentStoreActions, documentStoreSelectors } from '../../store/documentStore';
 
