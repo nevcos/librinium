@@ -56,8 +56,9 @@ export const Search = styled.div`
     position: absolute;
     font-size: 0.8rem;
     left: 0.8rem;
-    top: 1.1rem;
+    top: 1rem;
     color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
   }
 
   > input {
