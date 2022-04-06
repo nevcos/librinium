@@ -24,7 +24,7 @@ export function Gists(): JSX.Element {
       // 3. it neither token or code exists, get client id
       getSetClientId();
     }
-  }, []);
+  }, [clientId, token]);
 
   async function getSetGists() {
     const gistsData = await endpointResource(`/api/github/gists/${token}`)();
