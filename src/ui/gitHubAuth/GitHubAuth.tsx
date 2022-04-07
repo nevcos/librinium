@@ -3,11 +3,10 @@ import { GITHUB_CLIENT_ID, GITHUB_TOKEN_COOKIE_KEY } from "../../remoteApi/githu
 
 export function GitHubAuth(): JSX.Element {
   const token = Cookies.get(GITHUB_TOKEN_COOKIE_KEY);
-  const clientId = Cookies.get(GITHUB_CLIENT_ID);
 
   function auth() {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
   }
 
-  return <>{clientId && !token && <button onClick={() => auth()}>show me my gists!</button>}</>;
+  return <>{!token && <button onClick={() => auth()}>show me my gists!</button>}</>;
 }
