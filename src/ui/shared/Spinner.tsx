@@ -6,6 +6,6 @@ const SpinnerDiv = styled.div`
 
 export function Spinner() {
   return <SpinnerDiv aria-label="Loading...">
-    <i className="fa-solid fa-spinner" aria-hidden="true"></i>
+    <i className="icon fa-solid fa-spinner" aria-hidden="true"></i>
   </SpinnerDiv>;
 }
