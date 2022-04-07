@@ -40,11 +40,11 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
   return (
     <Styled.OptionLi key={document.id} className={isActive ? "--active" : ""} data-testid="document">
       <Styled.NavLink to={to} onDoubleClick={onDoubleClickRename} data-testid="open">
-        <DocumentIcon type={document.type}></DocumentIcon>
+        <DocumentIcon type={document.type} />
         <span className="label">{document.name}</span>
       </Styled.NavLink>
       <Styled.DeleteButton onClick={onClickDeleteDocument} data-testid="delete" title="Delete" aria-label="Delete">
-        <span className="icon fa-solid fa-xmark" aria-hidden="true"></span>
+        <span className="icon fa-solid fa-xmark" aria-hidden="true" />
       </Styled.DeleteButton>
     </Styled.OptionLi>
   );

@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { documentContentTypeValues } from '../../domain/document/DocumentContentType';
-import { Gists } from "../gists/Gists";
 
 import { documentStoreSelectors } from "../../store/documentStore";
+import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
 import logoPath from "./assets/logo.svg";
@@ -21,14 +21,16 @@ export function Sidebar(): JSX.Element {
       <RenderingCounter />
       <Styled.Header>
         <Styled.ToggleButton aria-label="Expand / Collapse menu" title="Expand / Collapse menu">
-          <span className="icon fa-solid fa-bars" aria-hidden="true"></span>
+          <span className="icon fa-solid fa-bars" aria-hidden="true" />
         </Styled.ToggleButton>
         <Styled.Logo src={logoPath} alt="librinium" />
         <Styled.Search>
-          <span className="icon fa-solid fa-search" aria-hidden="true"></span>
-          <input type="search" placeholder="search..."></input>
+          <span className="icon fa-solid fa-search" aria-hidden="true" />
+          <input type="search" placeholder="search..." />
         </Styled.Search>
       </Styled.Header>
+
+      <GitHubAuth />
 
       <Styled.Nav>
         {isLoading ? (
@@ -36,20 +38,18 @@ export function Sidebar(): JSX.Element {
         ) : (
           <>
             <Styled.ListUl className="documents-list">
-              {documents.map((document) => 
+              {documents.map((document) =>
                 <SidebarNavItemLink document={document} />
               )}
             </Styled.ListUl>
             <Styled.ListUl className="create-list">
-              {documentContentTypeValues.map((type) => 
+              {documentContentTypeValues.map((type) =>
                 <SidebarNavItemCreate type={type} />
               )}
             </Styled.ListUl>
           </>
         )}
       </Styled.Nav>
-
-      <Gists />
 
       <Styled.Footer>
         <div>

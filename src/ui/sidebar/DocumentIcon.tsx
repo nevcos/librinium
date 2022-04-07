@@ -6,7 +6,7 @@ import { DocumentContentType } from "../../domain/document/DocumentContentType";
 const iconByType = {
   [DocumentContentType.PLANT_UML]: {title: "PlantUML diagram", className: "icon fa-solid fa-diagram-project"},
   [DocumentContentType.REMARK]: {title: "Remark presentation", className: "icon fa-solid fa-chalkboard"},
-  [DocumentContentType.MARKDOWN]: {title: "Markdown document", className: "icon fa-solid fa-file-lines"}, 
+  [DocumentContentType.MARKDOWN]: {title: "Markdown document", className: "icon fa-solid fa-file-lines"},
 };
 
 const defaultIcon = {title: "Document", className: "icon fa-solid fa-file"};
@@ -21,5 +21,5 @@ const Styled_Icon = styled.span`
 
 export const DocumentIcon = memo(function ({ type }: Props) {
   const {title, className} = iconByType[type] || defaultIcon;
-  return <Styled_Icon className={className} title={title} aria-hidden="true"></Styled_Icon>;
+  return <Styled_Icon className={className} title={title} aria-hidden="true" />;
 });

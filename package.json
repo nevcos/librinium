@@ -23,7 +23,6 @@
     "@types/react": "~17.0.33",
     "@types/react-dom": "~17.0.10",
     "@types/styled-components": "~5.1.23",
-    "axios": "^0.26.1",
     "codemirror": "5.65.1",
     "js-cookie": "^3.0.1",
     "lodash.debounce": "4.0.8",
