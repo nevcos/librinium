@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { documentStoreActions } from '../store/documentStore';
 import { Sidebar } from "./sidebar/Sidebar";
 import { Content } from './content/Content';
+import { useGithub } from "../hook/useGitHub";
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -35,6 +36,8 @@ const Styled_Content = styled.div`
 
 export function App(): JSX.Element {
   const dispatch = useDispatch();
+
+  useGithub();
 
   useEffect(() => {
     dispatch(documentStoreActions.fetchDocuments());

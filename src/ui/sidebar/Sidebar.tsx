@@ -5,8 +5,8 @@ import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from '../../domain/document/DocumentName';
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
 import type { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
-import { Gists } from "../gists/Gists"
 
+import { GitHubAuth } from '../gitHubAuth/GitHubAuth';
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
 import logoPath from "./assets/logo.svg";
@@ -41,6 +41,8 @@ export function Sidebar(): JSX.Element {
   return (
     <Styled.Container>
       <RenderingCounter />
+
+      <GitHubAuth />
 
       <Styled.Header>
         <Styled.Logo>
@@ -87,8 +89,6 @@ export function Sidebar(): JSX.Element {
           </Styled.ListUl>
         )}
       </Styled.Nav>
-
-      <Gists />
 
       <Styled.Footer>
         <div>
