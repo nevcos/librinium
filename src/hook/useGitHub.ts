@@ -1,41 +1,25 @@
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { getClientId, getToken } from "../remoteApi/githubApi";
-
-export const GITHUB_URL_PARAM_CODE_KEY = "code";
-export const GITHUB_TOKEN_COOKIE_KEY = "gh_token";
-export const GITHUB_CLIENT_ID_COOKIE_KEY = "gh_client_id";
+import { useEffect } from "react";
+import { getToken, GITHUB_TOKEN_COOKIE_KEY, GITHUB_CODE_SEARCH_PARAM_KEY } from "../remoteApi/githubApi";
 
 export const useGithub = () => {
-  const [clientId, setClientId] = useState(undefined);
-
   useEffect(() => {
-    if (!clientId) {
-      // 1. get client id
-      getSetClientId();
-    } else {
-      // 2. (try to) get token
-      getSetToken();
-    }
-  }, [clientId]);
+    tryToGetSetToken();
+  }, []);
 
-  async function getSetToken() {
-    const URLParams = new URLSearchParams(window.location.search);
-    const code = URLParams.get(GITHUB_URL_PARAM_CODE_KEY);
+  async function tryToGetSetToken(): Promise<void> {
+    const code = new URLSearchParams(window.location.search).get(GITHUB_CODE_SEARCH_PARAM_KEY);
 
     if (!code) return;
 
     const token = (await getToken(code)) as unknown as string;
+    // save using cookies
     Cookies.set(GITHUB_TOKEN_COOKIE_KEY, token);
-    URLParams.delete(GITHUB_URL_PARAM_CODE_KEY);
+    // clear browser url by pushing a new history state
+    cleanUrl();
   }
 
-  async function getSetClientId() {
-    const clientId = await getClientId();
-
-    if (!clientId) return;
-
-    Cookies.set(GITHUB_CLIENT_ID_COOKIE_KEY, clientId);
-    setClientId(clientId);
+  function cleanUrl(): void {
+    window.history.pushState({}, document.title, window.location.pathname);
   }
 };
