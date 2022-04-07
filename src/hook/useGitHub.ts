@@ -15,7 +15,7 @@ export const useGithub = () => {
     const token = (await getToken(code)) as unknown as string;
     // save using cookies
     Cookies.set(GITHUB_TOKEN_COOKIE_KEY, token);
-    // clear browser url by pushing a new history state
+    // clear code from browser url by pushing a new history state
     cleanUrl();
   }
 
