@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Link } from 'react-router-dom';
 
 // Common
 
@@ -11,7 +12,7 @@ export const sidebarInput = css`
   color: inherit;
 `;
 
-export const SidebarButton = styled.button`
+export const sidebarButtonLink = css`
   ${sidebarInput}
   vertical-align: middle;
 
@@ -49,7 +50,9 @@ export const Header = styled.header`
   padding-bottom: 0;
 `;
 
-export const ToggleButton = styled(SidebarButton)``;
+export const ToggleButton = styled.button`
+  ${sidebarButtonLink}
+`;
 
 export const Logo = styled.img`
   vertical-align: middle;
@@ -101,11 +104,11 @@ export const Nav = styled.nav`
   overflow: hidden;
 
   > .documents-list {
+    padding: var(--sidebar-padding);
     overflow: hidden;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
     scroll-padding: var(--sidebar-padding);
-    padding: var(--sidebar-padding);
 
     &::-webkit-scrollbar {
       width: var(--scroll-size);
@@ -119,7 +122,6 @@ export const Nav = styled.nav`
 
   > .create-list {
     flex-shrink: 0;
-    overflow: hidden;
     padding: var(--sidebar-padding);
     padding-top: 0;
   }
@@ -143,16 +145,19 @@ export const OptionLi = styled.li`
     background-color: var(--sidebar-item-hover-bg-color);
   }
 
-  &.--selected {
+  &.--active {
     background-color: var(--sidebar-item-selected-bg-color);
   }
 `;
 
-export const OpenButton = styled(SidebarButton)`
+export const NavLink = styled(Link)`
+  ${sidebarButtonLink}  
+  text-decoration: none;
   width: 100%;
 `;
 
-export const DeleteButton = styled(SidebarButton)`
+export const DeleteButton = styled.button`
+  ${sidebarButtonLink}
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   display: var(--sidebar-labels-display);
@@ -163,7 +168,8 @@ export const DeleteButton = styled(SidebarButton)`
   }
 `;
 
-export const NewButton = styled(SidebarButton)`
+export const NewButton = styled.button`
+  ${sidebarButtonLink}
   width: 100%;
   color: var(--sidebar-content-dimmed-color);
   font-style: italic;
