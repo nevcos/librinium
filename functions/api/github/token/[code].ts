@@ -7,7 +7,7 @@ export async function onRequestGet(context: Context): Promise<Response> {
     const response = await getToken(context);
     if (!response.ok) throw new Error(JSON.stringify({ status: response.status, text: response.statusText }));
     const data = await response.json();
-    return new Response(JSON.stringify({ token: data.access_token }));
+    return new Response(JSON.stringify({ token: data }));
   } catch (err) {
     return defaultError(err);
   }
