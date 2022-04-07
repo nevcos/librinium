@@ -9,5 +9,5 @@ export function GitHubAuth(): JSX.Element {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
   }
 
-  return <>{!token && <button onClick={() => auth()}>show me my gists!</button>}</>;
+  return <>{!token && <button onClick={() => auth()}>GHAuth</button>}</>;
 }
