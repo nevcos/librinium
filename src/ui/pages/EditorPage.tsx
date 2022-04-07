@@ -19,14 +19,10 @@ const Styled_Sidebar = styled.aside`
   height: 100%;
 
   overflow: hidden;
-  width: 50px;
-
-  @media (min-width: 800px) {
-    width: 250px;
-    min-width: 200px;
-    max-width: 500px;
-    resize: horizontal;
-  }
+  width: var(--sidebar-width);
+  max-width: var(--sidebar-max-width);
+  min-width: var(--sidebar-min-width);
+  resize: var(--sidebar-resize);
 `;
 
 const Styled_Content = styled.div`

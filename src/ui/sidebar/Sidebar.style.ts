@@ -1,13 +1,13 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 // Common
 
 export const sidebarInput = css`
   border: none;
-  border-radius: 0.2rem;
+  border-radius: var(--input-border-radius);
   background-color: transparent;
   text-align: left;
-  padding: 0.8rem 0.8rem;
+  padding: var(--input-padding);
   color: inherit;
 `;
 
@@ -19,12 +19,9 @@ export const SidebarButton = styled.button`
     cursor: pointer;
   }
 
-  > :nth-child(2) {
-    margin-left: 0.6rem;
-
-    @media (max-width: 800px) {
-      display: none;
-    }
+  > .label {
+    margin-left: var(--sidebar-padding);
+    display: var(--sidebar-labels-display);
   }
 `;
 
@@ -32,12 +29,14 @@ export const SidebarButton = styled.button`
 
 export const Container = styled.div`
   height: 100%;
-  background-color: #183153;
-  color: white;
+  background-color: var(--sidebar-bg-color);
+  color: var(--sidebar-content-color);
   display: flex;
   flex-direction: column;
 
-  a, a:link, a:visited {
+  a,
+  a:link,
+  a:visited {
     color: inherit;
   }
 `;
@@ -45,30 +44,28 @@ export const Container = styled.div`
 // Header
 
 export const Header = styled.header`
-  padding: 1.8rem 0.6rem 0;
+  padding: var(--sidebar-padding);
+  padding-top: calc(var(--sidebar-padding) * 3);
+  padding-bottom: 0;
 `;
 
-export const ToggleButton = styled(SidebarButton)`
-`;
+export const ToggleButton = styled(SidebarButton)``;
 
 export const Logo = styled.img`
   vertical-align: middle;
-
-  @media (max-width: 800px) {
-    display: none;
-  }
+  display: var(--sidebar-labels-display);
 `;
 
 export const Search = styled.div`
-  margin-top: 1.4rem;
+  margin-top: calc(var(--sidebar-padding) * 2);
   position: relative;
 
-  > span {
+  > .icon {
     position: absolute;
-    font-size: 0.8rem;
-    left: 0.8rem;
+    font-size: var(--icon-size);
+    left: var(--input-padding);
     top: 1rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--sidebar-content-dimmed-color);
     pointer-events: none;
   }
 
@@ -86,7 +83,7 @@ export const Search = styled.div`
 
     &::placeholder {
       font-style: italic;
-      color: rgba(255, 255, 255, 0.5)
+      color: var(--sidebar-content-dimmed-color);
     }
 
     &::-webkit-search-cancel-button {
@@ -94,13 +91,38 @@ export const Search = styled.div`
     }
   }
 `;
+
 // Nav
 
 export const Nav = styled.nav`
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
-  padding: 0.6rem;
-  overflow-y: auto;
+  > .documents-list {
+    overflow: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-padding: var(--sidebar-padding);
+    padding: var(--sidebar-padding);
+
+    &::-webkit-scrollbar {
+      width: var(--scroll-size);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scroll-color);
+      border-radius: var(--input-border-radius);
+    }
+  }
+
+  > .create-list {
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: var(--sidebar-padding);
+    padding-top: 0;
+  }
 `;
 
 export const ListUl = styled.ul`
@@ -109,19 +131,20 @@ export const ListUl = styled.ul`
   margin: 0;
 
   display: grid;
-  grid-gap: 0.2rem;
+  grid-gap: .2rem;
 `;
 
 export const OptionLi = styled.li`
   display: flex;
-  border-radius: 0.2rem;
+  border-radius: var(--input-border-radius);
+  scroll-snap-align: start;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--sidebar-item-hover-bg-color);
   }
 
   &.--selected {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--sidebar-item-selected-bg-color);
   }
 `;
 
@@ -132,20 +155,17 @@ export const OpenButton = styled(SidebarButton)`
 export const DeleteButton = styled(SidebarButton)`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  display: var(--sidebar-labels-display);
 
   &:hover,
   &:focus {
-    background-color: #d45500;  
-  }
-
-  @media (max-width: 800px) {
-    display: none;
+    background-color: var(--sidebar-delete-active-bg-color);
   }
 `;
 
 export const NewButton = styled(SidebarButton)`
   width: 100%;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--sidebar-content-dimmed-color);
   font-style: italic;
 `;
 
@@ -153,10 +173,7 @@ export const NewButton = styled(SidebarButton)`
 
 export const Footer = styled.footer`
   padding: 1rem 1.2rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-
-  @media (max-width: 800px) {
-    display: none;
-  }
+  font-size: var(--font-small-size);
+  color: var(--sidebar-content-dimmed-color);
+  display: var(--sidebar-labels-display);
 `;

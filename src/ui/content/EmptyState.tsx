@@ -7,12 +7,12 @@ export function EmptyState(): JSX.Element {
 
   return isLoading ? (
     <>
-      <span className="fa-solid fa-spinner" />
+      <span className="icon fa-solid fa-spinner" />
       waiting ...
     </>
   ) : (
     <>
-      <span className="fa-solid fa-arrow-left-long" />
+      <span className="icon fa-solid fa-arrow-left-long" />
       select or create a document
     </>
   );

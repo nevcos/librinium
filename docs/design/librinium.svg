@@ -109,11 +109,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="527.55185"
-     inkscape:cy="321.93016"
+     inkscape:zoom="0.5"
+     inkscape:cx="-29.622988"
+     inkscape:cy="432.67513"
      inkscape:document-units="px"
-     inkscape:current-layer="g1936"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
@@ -785,7 +785,7 @@
     </g>
     <g
        id="g1736"
-       transform="translate(-224.27076,259.51809)">
+       transform="translate(-261.31245,259.51809)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726"
@@ -830,7 +830,7 @@
     </g>
     <g
        id="g1736-8"
-       transform="translate(-178.5901,259.59019)">
+       transform="translate(-215.63179,259.59019)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5"
@@ -885,7 +885,7 @@
     </g>
     <g
        id="g2049"
-       transform="translate(-317.61566,328.40515)">
+       transform="translate(-354.65735,328.40515)">
       <rect
          style="fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-6"
@@ -930,7 +930,7 @@
     </g>
     <g
        id="g2062"
-       transform="translate(-230.05816,191.96533)">
+       transform="translate(-267.09985,191.96533)">
       <rect
          style="fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-6-9"
@@ -1002,7 +1002,7 @@
     </g>
     <g
        id="g1736-8-7"
-       transform="translate(-178.5901,213.65527)">
+       transform="translate(-215.63179,213.65527)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-8"
@@ -1080,7 +1080,7 @@
     </g>
     <g
        id="g1736-8-7-2"
-       transform="translate(-178.5901,305.52511)">
+       transform="translate(-215.63179,305.52511)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-8-9"
@@ -1130,7 +1130,7 @@
     </g>
     <g
        id="g1736-8-7-2-9"
-       transform="translate(-178.5901,351.46004)">
+       transform="translate(-215.63179,351.46004)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-8-9-3"
@@ -1195,7 +1195,7 @@
     </g>
     <g
        id="g1736-8-7-2-9-5"
-       transform="translate(-225.56854,351.24372)">
+       transform="translate(-262.61023,351.24372)">
       <rect
          style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
          id="rect1726-5-8-9-3-5"
@@ -1270,12 +1270,12 @@
     <text
        xml:space="preserve"
        style="font-size:21.1667px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;stroke-width:0.264583"
-       x="-252.79247"
+       x="-289.83408"
        y="17.412006"
        id="text2794"><tspan
          sodipodi:role="line"
          id="tspan2792"
-         x="-252.79247"
+         x="-289.83408"
          y="17.412006"
          style="font-size:21.1667px;text-align:end;text-anchor:end;fill:#ececec;stroke-width:0.264583">Logos</tspan></text>
     <text
@@ -1289,5 +1289,163 @@
          x="-14.391218"
          y="16.159241"
          style="font-size:21.1667px;text-align:end;text-anchor:end;fill:#ececec;stroke-width:0.264583">UI</tspan></text>
+    <g
+       id="g1736-8-7-28"
+       transform="translate(-170.06747,213.65527)">
+      <rect
+         style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
+         id="rect1726-5-8-1"
+         width="42.333336"
+         height="42.333336"
+         x="-16.463802"
+         y="-213.65527" />
+      <g
+         id="g3408-7"
+         transform="translate(14.864585,-37.053973)">
+        <g
+           id="g3495-0"
+           transform="translate(-76.729167,-21.695833)">
+          <g
+             id="g3465-1"
+             transform="matrix(1.3218477,0,0,1.3218477,-18.231661,42.908224)"
+             style="stroke-width:0.756517">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-weight:normal;font-size:4.18008px;line-height:1;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.200162"
+               x="58.334248"
+               y="-131.97719"
+               id="text912-8-7-7-2-1-3-0-3-3-5-5-7"><tspan
+                 sodipodi:role="line"
+                 x="58.334248"
+                 y="-131.97719"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.18008px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#000000;fill-opacity:1;stroke-width:0.200162"
+                 id="tspan916-3-2-3-9-3-3-1-3-8-8-5-2">libr</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-weight:normal;font-size:4.35016px;line-height:1;font-family:sans-serif;opacity:0.5;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.200161"
+               x="65.258713"
+               y="-131.97977"
+               id="text912-1-9-2-8-8-8-4-4-3-0-2-9-88"><tspan
+                 sodipodi:role="line"
+                 x="65.258713"
+                 y="-131.97977"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.35016px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#000000;fill-opacity:1;stroke-width:0.200161"
+                 id="tspan916-2-6-9-6-0-9-8-2-7-9-8-3-9"><tspan
+                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;opacity:0.506452;fill:#000000;stroke-width:0.200161"
+                   id="tspan2097-0-3-0-6-3-0-1-3-8-7-1-5-84">inium</tspan></tspan></text>
+          </g>
+          <g
+             id="g3576-9"
+             transform="rotate(-90,52.708448,-133.7388)">
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3248-8"
+               width="3.4395833"
+               height="5.8208332"
+               x="48.908714"
+               y="-136.51692"
+               ry="0"
+               rx="0" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3456-9"
+               width="1.7197918"
+               height="5.8208332"
+               x="53.138397"
+               y="-136.0265"
+               ry="0"
+               rx="0" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3458-7"
+               width="0.85989583"
+               height="5.8208332"
+               x="55.648285"
+               y="-136.51692"
+               ry="0"
+               rx="0" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g1736-8-7-28-8"
+       transform="translate(-124.93378,213.65527)">
+      <rect
+         style="opacity:1;fill:#e6e6e6;stroke:none;stroke-width:0.264583;stroke-linecap:round"
+         id="rect1726-5-8-1-2"
+         width="42.333336"
+         height="42.333336"
+         x="-16.463802"
+         y="-213.65527" />
+      <g
+         id="g3408-7-3"
+         transform="translate(14.864585,-37.053973)">
+        <g
+           id="g3495-0-3"
+           transform="translate(-76.729167,-21.695833)">
+          <g
+             id="g3465-1-9"
+             transform="matrix(1.3218477,0,0,1.3218477,-18.231661,42.908224)"
+             style="stroke-width:0.756517">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-weight:normal;font-size:4.18008px;line-height:1;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.200162"
+               x="58.334248"
+               y="-131.97719"
+               id="text912-8-7-7-2-1-3-0-3-3-5-5-7-52"><tspan
+                 sodipodi:role="line"
+                 x="58.334248"
+                 y="-131.97719"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.18008px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#000000;fill-opacity:1;stroke-width:0.200162"
+                 id="tspan916-3-2-3-9-3-3-1-3-8-8-5-2-7">libr</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-weight:normal;font-size:4.35016px;line-height:1;font-family:sans-serif;opacity:0.5;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.200161"
+               x="65.258713"
+               y="-131.97977"
+               id="text912-1-9-2-8-8-8-4-4-3-0-2-9-88-2"><tspan
+                 sodipodi:role="line"
+                 x="65.258713"
+                 y="-131.97977"
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.35016px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#000000;fill-opacity:1;stroke-width:0.200161"
+                 id="tspan916-2-6-9-6-0-9-8-2-7-9-8-3-9-9"><tspan
+                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;opacity:0.506452;fill:#000000;stroke-width:0.200161"
+                   id="tspan2097-0-3-0-6-3-0-1-3-8-7-1-5-84-2">inium</tspan></tspan></text>
+          </g>
+          <g
+             id="g3576-9-2"
+             transform="matrix(0,1,1,0,186.44725,-186.44725)">
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3248-8-0"
+               width="3.4395833"
+               height="5.8208332"
+               x="48.908714"
+               y="-135.4586"
+               ry="0"
+               rx="0" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3456-9-3"
+               width="1.7197918"
+               height="5.8208332"
+               x="53.138397"
+               y="-136.37988"
+               ry="0"
+               rx="0" />
+            <rect
+               style="fill:#000000;fill-opacity:1;stroke-width:0.264583;stroke-linecap:round"
+               id="rect3458-7-3"
+               width="0.85989583"
+               height="5.8208332"
+               x="55.648285"
+               y="-135.4586"
+               ry="0"
+               rx="0" />
+          </g>
+        </g>
+      </g>
+    </g>
   </g>
 </svg>
