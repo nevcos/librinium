@@ -5,9 +5,9 @@ import type { Document } from "../../domain/document/Document";
 import type { DocumentId } from "../../domain/document/DocumentId";
 import type { DocumentName } from "../../domain/document/DocumentName";
 import { DocumentContentType } from "../../domain/document/DocumentContentType";
-import type { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
+import type { DocumentStoreState } from "../../domain/documentStoreState/DocumentStoreState";
 
-import { GitHubAuth } from '../gitHubAuth/GitHubAuth';
+import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
 import logoPath from "./assets/logo.svg";
@@ -83,7 +83,7 @@ export function Sidebar(): JSX.Element {
                     <span className="label">{document.name}</span>
                   </Styled.OpenButton>
                   <Styled.DeleteButton
-                    onClick={(event) => onClickDeleteDocument(document, event)}
+                    onClick={(event) => onClickDeleteDocument(document, event as unknown as MouseEvent)}
                     data-testid="delete"
                     title="Delete"
                     aria-label="Delete"
