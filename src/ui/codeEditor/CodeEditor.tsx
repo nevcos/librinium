@@ -10,6 +10,10 @@ import { documentStoreSelectors, documentStoreActions } from '../../store/docume
 import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { useSelector, useDispatch } from 'react-redux';
+import {DocumentStoreState} from "../../domain/documentStoreState/DocumentStoreState";
+import {Document} from "../../domain/document/Document";
+import {DocumentId} from "../../domain/document/DocumentId";
+import {useActiveGist} from "../shared/useActiveGist";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -26,16 +30,21 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
+type Params = {
+  gistId: DocumentId;
+}
+
 export function CodeEditor(): JSX.Element {
+  const {gist, gistId} = useActiveGist();
   const dispatch = useDispatch();
-  const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
-  const code = selectedDocument?.code;
+
+  const code = gist?.code || "";
 
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
-  
+
   const onCodeChange = useCallback(
-    (code: DocumentContent) => dispatch(documentStoreActions.updateSelectedDocumentContent(code)),
+    (code: DocumentContent) => dispatch(documentStoreActions.updateDocumentContent({id: gistId, code})),
     []
   );
 

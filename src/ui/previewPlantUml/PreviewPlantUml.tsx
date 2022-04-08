@@ -4,14 +4,15 @@ import styled from "styled-components";
 import { buildPlantUmlUrl } from "../../service/plantUml";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { documentStoreSelectors } from '../../store/documentStore';
+import {useActiveGist} from "../shared/useActiveGist";
 
 const PlantUmlPreviewDiv = styled.div`
   text-align: center;
 `;
 
 export function PreviewPlantUml(): JSX.Element {
-  const code = useSelector(documentStoreSelectors.getSelectedDocument)?.code;
-  const src = buildPlantUmlUrl(code);
+  const {gist} = useActiveGist();
+  const src = buildPlantUmlUrl(gist.code);
 
   return (
     <>
