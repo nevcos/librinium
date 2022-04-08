@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useOutlet } from "react-router-dom";
 import styled from "styled-components";
 import { Sidebar } from "../sidebar/Sidebar";
 import { documentStoreActions } from "../../store/documentStore";
-import { Content } from "../content/Content";
+import { EmptyState } from '../content/EmptyState';
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -32,8 +33,17 @@ const Styled_Content = styled.div`
   overflow: hidden;
 `;
 
+const Styled_EmptyState = styled.div`
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  color: #ccc;
+`;
+
 export function EditorPage() {
   const dispatch = useDispatch();
+  const outlet = useOutlet();
 
   useEffect(() => {
     dispatch(documentStoreActions.fetchDocuments());
@@ -45,7 +55,13 @@ export function EditorPage() {
         <Sidebar />
       </Styled_Sidebar>
       <Styled_Content>
-        <Content />
+        {outlet ? (
+          outlet
+        ) : (
+          <Styled_EmptyState>
+            <EmptyState />
+          </Styled_EmptyState>
+        )}
       </Styled_Content>
     </Styled_Grid>
   );

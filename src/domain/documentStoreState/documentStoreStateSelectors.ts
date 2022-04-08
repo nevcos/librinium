@@ -60,7 +60,8 @@ export function getDocuments(state: DocumentStoreState): Document[] {
   return Object.values(state.documents);
 }
 
-export function getDocument(state: DocumentStoreState, documentId: DocumentId): Document | null {
+export function getDocument(state: DocumentStoreState, documentId?: DocumentId): Document | null {
+  if (!documentId) return null;
   return getDocuments(state).find((document) => document.id === documentId) || null;
 }
 
