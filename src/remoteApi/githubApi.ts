@@ -5,6 +5,7 @@ const CLOUDFLARE_ENDPOINT = "/api/github";
 export const GITHUB_CLIENT_ID = "27ea828995278ad0d743";
 export const GITHUB_CODE_SEARCH_PARAM_KEY = "code";
 export const GITHUB_TOKEN_COOKIE_KEY = "gh_token";
+export const GITHUB_AUTH_ENDPOINT = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
 
 export async function getToken(code: string): Promise<any> {
   const data: any = await request(`${CLOUDFLARE_ENDPOINT}/token/${code}`);

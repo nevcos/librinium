@@ -8,15 +8,28 @@ export const useGithub = () => {
   }, []);
 
   async function tryToGetSetToken(): Promise<void> {
+    const storedToken = Cookies.get(GITHUB_TOKEN_COOKIE_KEY);
+
+    if (storedToken) {
+      console.info("tryToGetSetToken() - already stored");
+      return;
+    }
+
     const code = new URLSearchParams(window.location.search).get(GITHUB_CODE_SEARCH_PARAM_KEY);
 
-    if (!code) return;
+    if (!code) {
+      console.info("tryToGetSetToken() - code missing");
+    } else {
+      const token = (await getToken(code)) as unknown as string;
 
-    const token = (await getToken(code)) as unknown as string;
-    // save using cookies
-    Cookies.set(GITHUB_TOKEN_COOKIE_KEY, token);
-    // clear code from browser url by pushing a new history state
-    cleanUrl();
+      // save using cookies
+      Cookies.set(GITHUB_TOKEN_COOKIE_KEY, token);
+
+      // clear code from browser url by pushing a new history state
+      cleanUrl();
+
+      console.info("tryToGetSetToken() - success");
+    }
   }
 
   function cleanUrl(): void {
