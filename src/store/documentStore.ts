@@ -14,7 +14,7 @@ export const storeName = "document";
 
 export const documentStore = createSlice({
   name: storeName,
-  initialState: selectors.createEmptyState(),
+  initialState: selectors.createEmptyGistState(),
   reducers
 });
 

@@ -6,7 +6,7 @@ import type { Document } from "../document/Document";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { DocumentContentType } from "../document/DocumentContentType";
 
-export function createEmptyState(): DocumentStoreState {
+export function createEmptyGistState(): DocumentStoreState {
   return {
     isLoading: false,
     error: null,

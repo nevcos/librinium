@@ -6,20 +6,22 @@ import {MemoryRouter, Routes, Route, useLocation} from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 
 import { documentStoreReducer } from '../store/documentStore';
-import { DocumentStoreState } from "../domain/documentStoreState/DocumentStoreState";
-import { createEmptyState } from '../domain/documentStoreState/documentStoreStateSelectors';
+import {StoreState} from "../store/StoreState";
+import {createEmptyState} from "../domain/storeState/storeStateSelectors";
+import {userStoreReducer} from "../store/userStore";
 
 /**
  * @see https://redux.js.org/usage/writing-tests#components
  */
 export function renderWithRoutingAndStore(
   ui: JSX.Element,
-  preloadedState: DocumentStoreState = createEmptyState(),
+  preloadedState: StoreState = createEmptyState(),
   currentRoute: string = "",
   componentRoutePath: string = "*",
   renderOptions: {[key: string]: unknown} = {}
 ) {
-  const store = configureStore({ reducer: documentStoreReducer, preloadedState });
+  const reducer = {user: userStoreReducer, gist: documentStoreReducer};
+  const store = configureStore({ reducer, preloadedState });
 
   function Wrapper({ children }: { children: JSX.Element }) {
     return <MemoryRouter initialEntries={[currentRoute]}>
@@ -36,7 +38,7 @@ export function renderWithRoutingAndStore(
 
   return {
     renderResult,
-    getState: (): DocumentStoreState => store.getState()
+    getState: (): StoreState => store.getState()
   };
 }
 
