@@ -21,7 +21,7 @@ export const SidebarNavItemCreate = memo(function ({ type }: Props) {
   }, [type]);
   return (
     <Styled.OptionLi>
-      <Styled.NewButton onClick={onClickCreate} data-testid="create-plantuml">
+      <Styled.NewButton onClick={onClickCreate} data-testid={`create-${type}`}>
         <DocumentIcon type={type} />
         <span className="label">new {labelDocumentContentTypeMap[type]} ...</span>
       </Styled.NewButton>

@@ -39,12 +39,12 @@ export function Sidebar(): JSX.Element {
           <>
             <Styled.ListUl className="documents-list">
               {documents.map((document) =>
-                <SidebarNavItemLink document={document} />
+                <SidebarNavItemLink document={document} key={document.id} />
               )}
             </Styled.ListUl>
             <Styled.ListUl className="create-list">
               {documentContentTypeValues.map((type) =>
-                <SidebarNavItemCreate type={type} />
+                <SidebarNavItemCreate type={type} key={type} />
               )}
             </Styled.ListUl>
           </>
