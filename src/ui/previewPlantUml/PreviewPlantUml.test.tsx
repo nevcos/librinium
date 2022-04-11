@@ -12,7 +12,7 @@ describe("<PreviewPlantUml />", () => {
     const state = createEmptyState();
     addDocument(state, {payload: document});
 
-    const {renderResult} = renderWithRoutingAndStore(<PreviewPlantUml />, state);
+    const {renderResult} = renderWithRoutingAndStore(<PreviewPlantUml />, state, `/gists/${document.id}`, "/gists/:gistId");
     const img = renderResult.container.querySelector("img");
 
     expect(img?.src).toBe("http://www.plantuml.com/plantuml/png/~1UDeBIIqkqRKBBarEJYqk1W0X4GJb");

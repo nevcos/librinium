@@ -1,8 +1,8 @@
 import { render as rtlRender } from "@testing-library/react";
 import {configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import {MemoryRouter, useLocation} from "react-router-dom";
-/* Required for using `toHaveTextContent` */
+import {MemoryRouter, Routes, Route, useLocation} from "react-router-dom";
+/** Required for `toHaveTextContent` */
 import "@testing-library/jest-dom/extend-expect";
 
 import { documentStoreReducer } from '../store/documentStore';
@@ -14,16 +14,21 @@ import { createEmptyState } from '../domain/documentStoreState/documentStoreStat
  */
 export function renderWithRoutingAndStore(
   ui: JSX.Element,
-  route: string = "",
   preloadedState: DocumentStoreState = createEmptyState(),
+  currentRoute: string = "",
+  componentRoutePath: string = "*",
   renderOptions: {[key: string]: unknown} = {}
 ) {
   const store = configureStore({ reducer: documentStoreReducer, preloadedState });
 
   function Wrapper({ children }: { children: JSX.Element }) {
-    return <MemoryRouter initialEntries={[route]}>
+    return <MemoryRouter initialEntries={[currentRoute]}>
       <LocationDisplay />
-      <Provider store={store}>{children}</Provider>;
+      <Provider store={store}>
+        <Routes>
+          <Route path={componentRoutePath} element={children} />
+        </Routes>
+      </Provider>;
     </MemoryRouter>
   }
 

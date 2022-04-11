@@ -9,11 +9,9 @@ import type { DocumentContent } from "../../domain/document/DocumentContent";
 import {DocumentContentType, documentContentTypeValues} from "../../domain/document/DocumentContentType";
 import { createEmptyState, getDocuments } from '../../domain/documentStoreState/documentStoreStateSelectors';
 import { addDocument } from "../../domain/documentStoreState/documentStoreStateReducers";
-
-import { Sidebar } from "./Sidebar";
 import { renderWithRoutingAndStore } from '../../test/reactTestUtils';
 
-const GISTS_PATH = "/gists/";
+import { Sidebar } from "./Sidebar";
 
 const DOCUMENT_0: Document = {
   id: "0" as DocumentId,
@@ -32,7 +30,7 @@ const DOCUMENT_1: Document = {
 describe("<Sidebar />", () => {
 
   it.each(documentContentTypeValues)("should create a %s document and select it when clicking on create %s button", async (type: DocumentContentType) => {
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, GISTS_PATH);
+    const {getState} = renderWithRoutingAndStore(<Sidebar />);
 
     await clickFirstElement(`create-${type}`);
 
@@ -46,7 +44,7 @@ describe("<Sidebar />", () => {
     const state = createEmptyState();
     addDocument(state, {payload: DOCUMENT_0});
     addDocument(state, {payload: DOCUMENT_1});
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, GISTS_PATH, state);
+    const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
 
     await clickNthElement("open", 0);
 
@@ -59,7 +57,7 @@ describe("<Sidebar />", () => {
 
     const state = createEmptyState();
     addDocument(state, {payload: DOCUMENT_0});
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, GISTS_PATH, state);
+    const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("open", 0);
 
@@ -71,7 +69,7 @@ describe("<Sidebar />", () => {
 
     const state = createEmptyState();
     addDocument(state, {payload: DOCUMENT_0});
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, GISTS_PATH, state);
+    const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("delete", 0);
 

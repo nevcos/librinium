@@ -14,9 +14,9 @@ describe("<CodeEditor />", () => {
     const state = createEmptyState()
     addDocument(state, {payload: document});
 
-    renderWithRoutingAndStore(<CodeEditor />, state);
+    renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${document.id}`);
 
-    // FIXME
+    // FIXME: Not working
     // expect(await screen.findByText(document.code)).toBeDefined();
   });
 
