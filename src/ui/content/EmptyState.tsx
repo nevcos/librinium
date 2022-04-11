@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
+import { useGistSelector } from "../../hook/useGistSelector";
 
 import { documentStoreSelectors } from "../../store/documentStore";
 
 export function EmptyState(): JSX.Element {
-  const isLoading = useSelector(documentStoreSelectors.isLoading);
+  const isLoading = useGistSelector(documentStoreSelectors.isLoading);
 
   return isLoading ? (
     <>

@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
@@ -11,6 +10,7 @@ import { documentStoreSelectors } from "../../store/documentStore";
 import { PreviewPlantUml } from "../previewPlantUml/PreviewPlantUml";
 import { PreviewPresentation } from "../previewRemark/PreviewRemark";
 import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
+import { useGistSelector } from "../../hook/useGistSelector";
 
 const Styled_Container = styled.div`
   height: 100%;
@@ -43,7 +43,7 @@ type Params = {
 
 export function Content(): JSX.Element {
   const {gistId} = useParams<Params>();
-  const gist = useSelector<DocumentStoreState, Document | null>(state => documentStoreSelectors.getDocument(state, gistId));
+  const gist = useGistSelector(state => documentStoreSelectors.getDocument(state, gistId));
 
   return (
     <Styled_Container>

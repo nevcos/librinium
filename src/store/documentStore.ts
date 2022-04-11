@@ -13,7 +13,7 @@ export const storeName = "document";
 export const documentStore = createSlice({
   name: storeName,
   initialState: selectors.createEmptyState(),
-  reducers: reducers
+  reducers
 });
 
 //#endregion

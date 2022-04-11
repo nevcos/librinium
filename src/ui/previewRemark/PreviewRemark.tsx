@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
 import { documentStoreSelectors } from "../../store/documentStore";
+import { useGistSelector } from "../../hook/useGistSelector";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
@@ -34,7 +34,7 @@ const Container = styled.div`
 `;
 
 export function PreviewPresentation() {
-  const code = useSelector(documentStoreSelectors.getSelectedDocument)?.code;
+  const code = useGistSelector(documentStoreSelectors.getSelectedDocument)?.code;
   const container = useRef<HTMLDivElement | null>(null);
   const currentSlide = useRef<number>();
 

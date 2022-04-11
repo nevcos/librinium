@@ -9,7 +9,8 @@ import "codemirror/lib/codemirror.css";
 import { documentStoreSelectors, documentStoreActions } from '../../store/documentStore';
 import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { RenderingCounter } from "../shared/RenderingCounter";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useGistSelector } from '../../hook/useGistSelector';
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -28,7 +29,7 @@ const CodeEditorDiv = styled.div`
 
 export function CodeEditor(): JSX.Element {
   const dispatch = useDispatch();
-  const selectedDocument = useSelector(documentStoreSelectors.getSelectedDocument);
+  const selectedDocument = useGistSelector(documentStoreSelectors.getSelectedDocument);
   const code = selectedDocument?.code;
 
   const elementRef = useRef<HTMLDivElement | null>(null);

@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { documentContentTypeValues } from '../../domain/document/DocumentContentType';
@@ -11,10 +10,11 @@ import logoPath from "./assets/logo.svg";
 import * as Styled from "./Sidebar.style";
 import { SidebarNavItemLink as SidebarNavItemLink } from './SidebarNavItemLink';
 import { SidebarNavItemCreate } from './SidebarNavItemCreate';
+import { useGistSelector } from "../../hook/useGistSelector";
 
 export function Sidebar(): JSX.Element {
-  const isLoading = useSelector(documentStoreSelectors.isLoading);
-  const documents = useSelector(documentStoreSelectors.getDocuments);
+  const isLoading = useGistSelector(documentStoreSelectors.isLoading);
+  const documents = useGistSelector(documentStoreSelectors.getDocuments);
 
   return (
     <Styled.Container>
