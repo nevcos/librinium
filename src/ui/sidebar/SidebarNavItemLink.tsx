@@ -1,10 +1,11 @@
 import { memo, MouseEvent, useCallback } from "react";
 import { useDispatch } from 'react-redux';
-import { useResolvedPath, useMatch } from "react-router-dom";
 
 import type { Document } from "../../domain/document/Document";
 import { DocumentName } from "../../domain/document/DocumentName";
 import { documentStoreActions } from "../../store/documentStore";
+
+import {useNavigation} from "../shared/useNavigation";
 import { DocumentIcon } from "./DocumentIcon";
 import * as Styled from "./Sidebar.style";
 
@@ -13,17 +14,18 @@ type Props = {
 };
 
 export const SidebarNavItemLink = memo(function ({ document }: Props) {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const to = `/gists/${document.id}`;
-
-  const { pathname } = useResolvedPath(to);
-  const isActive = !! useMatch({ path: pathname, end: true });
+  const isActive = navigation.isActive(to);
 
   const onDoubleClickRename = useCallback(() => {
     const newName = window.prompt("Rename", document.name);
     if (newName) {
-      dispatch(documentStoreActions.updateDocumentName({ id: document.id, name: newName as DocumentName }));
+      const id = document.id;
+      const name = newName as DocumentName;
+      dispatch(documentStoreActions.updateDocumentName({ id, name }));
     }
   }, [document]);
   const onClickDeleteDocument = useCallback(
@@ -31,7 +33,8 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
       const isConfirmationBypassed = event.ctrlKey && event.shiftKey;
       const isConfirmed = isConfirmationBypassed || window.confirm(`Delete ${document.name}?`);
       if (isConfirmed) {
-        dispatch(documentStoreActions.deleteDocument(document.id));
+        const id = document.id;
+        dispatch(documentStoreActions.deleteDocument({navigation, id}));
       }
     },
     [document]

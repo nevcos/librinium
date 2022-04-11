@@ -10,7 +10,6 @@ export function createEmptyState(): DocumentStoreState {
   return {
     isLoading: false,
     error: null,
-    selectedDocumentId: null,
     documents: {}
   };
 }
@@ -62,10 +61,5 @@ export function getDocuments(state: DocumentStoreState): Document[] {
 
 export function getDocument(state: DocumentStoreState, documentId?: DocumentId): Document | null {
   if (!documentId) return null;
-  return getDocuments(state).find((document) => document.id === documentId) || null;
-}
-
-export function getSelectedDocument(state: DocumentStoreState): Document | null {
-  if (!state.selectedDocumentId) return null;
-  return getDocument(state, state.selectedDocumentId);
+  return state.documents[documentId] || null;
 }

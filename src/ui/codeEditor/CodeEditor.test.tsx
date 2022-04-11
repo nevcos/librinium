@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/dom";
 
-import { renderWithDocumentStore } from "../../test/reactTestUtils";
+import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
 import type { DocumentContent } from "../../domain/document/DocumentContent";
 import { CodeEditor } from "./CodeEditor";
@@ -14,9 +14,9 @@ describe("<CodeEditor />", () => {
     const state = createEmptyState()
     addDocument(state, {payload: document});
 
-    renderWithDocumentStore(<CodeEditor />, state);
+    renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${document.id}`);
 
-    // FIXME
+    // FIXME: Not working
     // expect(await screen.findByText(document.code)).toBeDefined();
   });
 

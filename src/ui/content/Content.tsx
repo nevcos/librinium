@@ -1,16 +1,12 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 
-import type { Document } from "../../domain/document/Document";
-import type { DocumentId } from '../../domain/document/DocumentId';
-import { DocumentContentType } from "../../domain/document/DocumentContentType";
+import type {Document} from "../../domain/document/Document";
+import {DocumentContentType} from "../../domain/document/DocumentContentType";
 
-import { CodeEditor } from "../codeEditor/CodeEditor";
-import { documentStoreSelectors } from "../../store/documentStore";
-import { PreviewPlantUml } from "../previewPlantUml/PreviewPlantUml";
-import { PreviewPresentation } from "../previewRemark/PreviewRemark";
-import { DocumentStoreState } from '../../domain/documentStoreState/DocumentStoreState';
-import { useGistSelector } from "../../hook/useGistSelector";
+import {useActiveGist} from "../shared/useActiveGist";
+import {CodeEditor} from "../codeEditor/CodeEditor";
+import {PreviewPlantUml} from "../previewPlantUml/PreviewPlantUml";
+import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 
 const Styled_Container = styled.div`
   height: 100%;
@@ -37,31 +33,26 @@ const Styled_Preview = styled.section`
   height: 100%;
 `;
 
-type Params = {
-  gistId: DocumentId;
-}
-
 export function Content(): JSX.Element {
-  const {gistId} = useParams<Params>();
-  const gist = useGistSelector(state => documentStoreSelectors.getDocument(state, gistId));
+  const {gist, gistId} = useActiveGist();
 
   return (
-    <Styled_Container>
+    <Styled_Container key={gistId}>
       <Styled_Editor>
-        <CodeEditor key={gistId} />
+        <CodeEditor />
       </Styled_Editor>
       <Styled_Preview>{renderPreview(gist)}</Styled_Preview>
     </Styled_Container>
   );
 }
 
-function renderPreview(document: Document | null): JSX.Element | null {
-  if (!document) return null;
-  switch (document.type) {
+function renderPreview(gist: Document | null): JSX.Element | null {
+  if (!gist) return null;
+  switch (gist.type) {
     case DocumentContentType.PLANT_UML:
-      return <PreviewPlantUml key={document.id} />;
+      return <PreviewPlantUml key={gist.id} />;
     case DocumentContentType.REMARK:
-      return <PreviewPresentation key={document.id} />;
+      return <PreviewPresentation key={gist.id} />;
     case DocumentContentType.MARKDOWN:
     default:
       return null;

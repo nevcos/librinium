@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 import { documentContentTypeValues } from '../../domain/document/DocumentContentType';
-
 import { documentStoreSelectors } from "../../store/documentStore";
+
 import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
-import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
+import { RenderingCounter } from "../shared/RenderingCounter";
 import logoPath from "./assets/logo.svg";
 import * as Styled from "./Sidebar.style";
 import { SidebarNavItemLink as SidebarNavItemLink } from './SidebarNavItemLink';
@@ -39,12 +39,12 @@ export function Sidebar(): JSX.Element {
           <>
             <Styled.ListUl className="documents-list">
               {documents.map((document) =>
-                <SidebarNavItemLink document={document} />
+                <SidebarNavItemLink document={document} key={document.id} />
               )}
             </Styled.ListUl>
             <Styled.ListUl className="create-list">
               {documentContentTypeValues.map((type) =>
-                <SidebarNavItemCreate type={type} />
+                <SidebarNavItemCreate type={type} key={type} />
               )}
             </Styled.ListUl>
           </>
