@@ -12,11 +12,6 @@ export async function getToken(code: string): Promise<any> {
   return data?.token;
 }
 
-export async function getClientId(): Promise<any> {
-  const data: any = await request(`${CLOUDFLARE_ENDPOINT}/client`);
-  return data?.id;
-}
-
 export async function getGists(): Promise<any> {
   const token = Cookies.get(GITHUB_TOKEN_COOKIE_KEY);
   const data = await request(GITHUB_ENDPOINT + "/gists", {
