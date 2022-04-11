@@ -61,5 +61,5 @@ export function getDocuments(state: DocumentStoreState): Document[] {
 
 export function getDocument(state: DocumentStoreState, documentId?: DocumentId): Document | null {
   if (!documentId) return null;
-  return getDocuments(state).find((document) => document.id === documentId) || null;
+  return state.documents[documentId] || null;
 }

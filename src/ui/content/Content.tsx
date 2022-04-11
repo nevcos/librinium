@@ -34,10 +34,10 @@ const Styled_Preview = styled.section`
 `;
 
 export function Content(): JSX.Element {
-  const {gist} = useActiveGist();
+  const {gist, gistId} = useActiveGist();
 
   return (
-    <Styled_Container>
+    <Styled_Container key={gistId}>
       <Styled_Editor>
         <CodeEditor />
       </Styled_Editor>
