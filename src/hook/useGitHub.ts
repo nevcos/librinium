@@ -16,6 +16,10 @@ export const useGithub = () => {
 
     if (storedToken) {
       console.info("tryToGetSetToken() - already stored");
+
+      // update store
+      dispatch(userStoreActions.setAuth(true));
+
       return;
     }
 
