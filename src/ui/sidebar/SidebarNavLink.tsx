@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { useResolvedPath, useMatch, Link } from 'react-router-dom';
+import {useNavigation} from "../shared/useNavigation";
 
 interface Props {
   to: string;
@@ -8,11 +9,11 @@ interface Props {
 }
 
 export const SidebarNavLink = memo(function ({ to, children, ...rest }: Props): JSX.Element {
-  const { pathname } = useResolvedPath(to);
-  const match = useMatch({ path: pathname, end: true });
+  const navigation = useNavigation();
+  const isActive = navigation.isActive(to);
 
   return (
-    <Link to={to} className={match ? "--active" : ""} {...rest}>
+    <Link to={to} className={isActive ? "--active" : ""} {...rest}>
       {children}
     </Link>
   );

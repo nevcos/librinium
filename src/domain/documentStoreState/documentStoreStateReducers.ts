@@ -15,8 +15,6 @@ export function setDocuments(state: DocumentStoreState, action: Payload<Document
 export function addDocument(state: DocumentStoreState, action: Payload<Document>): void {
   const document = action.payload;
   state.documents[document.id] = document;
-  // FIXME:
-  // state.selectedDocumentId = document.id;
 }
 
 export function updateDocumentContent(state: DocumentStoreState, action: Payload<{id: DocumentId, code: DocumentContent}>): void {
@@ -30,10 +28,6 @@ export function updateDocumentContent(state: DocumentStoreState, action: Payload
 export function deleteDocument(state: DocumentStoreState, action: Payload<DocumentId>): void {
   const id = action.payload;
   delete state.documents[id]
-  // FIXME:;
-  // if (state.selectedDocumentId === id) {
-  //   state.selectedDocumentId = null;
-  // }
 }
 
 export function setIsLoading(state: DocumentStoreState, action: Payload<boolean>): void {

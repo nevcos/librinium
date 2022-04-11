@@ -5,6 +5,8 @@ import type { DocumentContentType } from "../domain/document/DocumentContentType
 import * as DocumentsApi from "../remoteApi/documentsApi";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
+import {DocumentId} from "../domain/document/DocumentId";
+import {UseNavigationApi} from "../ui/shared/useNavigation";
 
 export const storeName = "document";
 
@@ -25,20 +27,23 @@ const fetchDocuments = createAsyncThunk(`${storeName}/fetchDocuments`, async (_,
     const documents = await DocumentsApi.getDocuments();
     thunkAPI.dispatch(documentStore.actions.setDocuments(documents));
   } catch (error) {
-    // TBD
+    throw error;
+    // FIXME
   } finally {
     thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
   }
 });
 
-const createNewDocument = createAsyncThunk(`${storeName}/postDocument`, async (type: DocumentContentType, thunkAPI) => {
+const createNewDocument = createAsyncThunk(`${storeName}/postDocument`, async ({navigation, type}: {navigation: UseNavigationApi, type: DocumentContentType}, thunkAPI) => {
   thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
   const newDocument = selectors.createNewDocument(type);
   try {
     // await DocumentsApi.postDocument(newDocument);
     thunkAPI.dispatch(documentStore.actions.addDocument(newDocument));
+    navigation.navigate(`/gists/${newDocument.id}`, { replace: false });
   } catch (error) {
-    // TBD
+    throw error;
+    // FIXME
   } finally {
     thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
   }
@@ -46,6 +51,22 @@ const createNewDocument = createAsyncThunk(`${storeName}/postDocument`, async (t
 
 export const putDocumentThunk = createAsyncThunk(`${storeName}/putDocument`, async (document: Document, thunkAPI) => {
   await DocumentsApi.putDocument(document.id, document);
+});
+
+const deleteDocument = createAsyncThunk(`${storeName}/deleteDocument`, async ({navigation, id}: {navigation: UseNavigationApi, id: DocumentId}, thunkAPI) => {
+  thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
+  try {
+    thunkAPI.dispatch(documentStore.actions.deleteDocument(id));
+    const isActiveRoute = navigation.isActive(`/gists/${id}`);
+    if (isActiveRoute) {
+      navigation.navigate(`/gists/`, { replace: false });
+    }
+  } catch (error) {
+    throw error;
+    // FIXME
+  } finally {
+    thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+  }
 });
 
 //#endregion
@@ -56,7 +77,8 @@ export const documentStoreReducer = documentStore.reducer;
 export const documentStoreActions = {
   ...documentStore.actions,
   fetchDocuments,
-  createNewDocument
+  createNewDocument,
+  deleteDocument
 };
 
 //#endregion
