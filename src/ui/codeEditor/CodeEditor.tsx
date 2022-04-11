@@ -1,18 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
-import { useLayoutEffect, useRef } from "react";
 
 import "codemirror/lib/codemirror.css";
 
-import { documentStoreSelectors, documentStoreActions } from '../../store/documentStore';
 import type { DocumentContent } from "../../domain/document/DocumentContent";
+import type { DocumentId } from "../../domain/document/DocumentId";
+import { documentStoreActions } from '../../store/documentStore';
+
 import { RenderingCounter } from "../shared/RenderingCounter";
-import { useSelector, useDispatch } from 'react-redux';
-import {DocumentStoreState} from "../../domain/documentStoreState/DocumentStoreState";
-import {Document} from "../../domain/document/Document";
-import {DocumentId} from "../../domain/document/DocumentId";
 import {useActiveGist} from "../shared/useActiveGist";
 
 const CHANGE_DEBOUNCE_MS = 600;

@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useOutlet } from "react-router-dom";
 import styled from "styled-components";
-import { Sidebar } from "../sidebar/Sidebar";
+
 import { documentStoreActions } from "../../store/documentStore";
+
+import { Sidebar } from "../sidebar/Sidebar";
 import { EmptyState } from '../content/EmptyState';
 
 const Styled_Grid = styled.div`

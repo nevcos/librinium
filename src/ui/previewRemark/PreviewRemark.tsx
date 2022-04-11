@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
-import { documentStoreSelectors } from "../../store/documentStore";
 import {useActiveGist} from "../shared/useActiveGist";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,7 +34,7 @@ const Container = styled.div`
 
 export function PreviewPresentation() {
   const {gist} = useActiveGist();
-  const code = gist.code;
+  const code = gist?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
   const currentSlide = useRef<number>();
 
@@ -53,5 +51,5 @@ export function PreviewPresentation() {
     };
   }, [code]);
 
-  return <Container ref={container}></Container>;
+  return <Container ref={container} />;
 }

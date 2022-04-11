@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import { DocumentContentType, labelDocumentContentTypeMap } from "../../domain/document/DocumentContentType";
 import { documentStoreActions } from "../../store/documentStore";
+
+import {useNavigation} from "../shared/useNavigation";
 import * as Styled from "./Sidebar.style";
 import { DocumentIcon } from "./DocumentIcon";
-import {useNavigation} from "../shared/useNavigation";
 
 type Props = {
   type: DocumentContentType;

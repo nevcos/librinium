@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { documentContentTypeValues } from '../../domain/document/DocumentContentType';
-
 import { documentStoreSelectors } from "../../store/documentStore";
+
 import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
-import { RenderingCounter } from "../shared/RenderingCounter";
 import { Spinner } from "../shared/Spinner";
+import { RenderingCounter } from "../shared/RenderingCounter";
 import logoPath from "./assets/logo.svg";
 import * as Styled from "./Sidebar.style";
 import { SidebarNavItemLink as SidebarNavItemLink } from './SidebarNavItemLink';

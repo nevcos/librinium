@@ -1,13 +1,13 @@
 import { memo, MouseEvent, useCallback } from "react";
 import { useDispatch } from 'react-redux';
-import {useResolvedPath, useMatch, useNavigate} from "react-router-dom";
 
 import type { Document } from "../../domain/document/Document";
 import { DocumentName } from "../../domain/document/DocumentName";
 import { documentStoreActions } from "../../store/documentStore";
+
+import {useNavigation} from "../shared/useNavigation";
 import { DocumentIcon } from "./DocumentIcon";
 import * as Styled from "./Sidebar.style";
-import {useNavigation} from "../shared/useNavigation";
 
 type Props = {
   document: Document;
@@ -18,9 +18,7 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
   const dispatch = useDispatch();
 
   const to = `/gists/${document.id}`;
-
-  const { pathname } = useResolvedPath(to);
-  const isActive = !! useMatch({ path: pathname, end: true });
+  const isActive = navigation.isActive(to);
 
   const onDoubleClickRename = useCallback(() => {
     const newName = window.prompt("Rename", document.name);
