@@ -8,14 +8,14 @@ export async function uploadFile(file: File) {
   const formdata = new FormData();
   formdata.append("image", file);
 
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: "POST",
     headers: headers,
     body: formdata,
     redirect: "follow"
   };
 
-  const response = await fetch(`${ENDPOINT}/image`, requestOptions)
+  const response = await fetch(`${ENDPOINT}/image`, requestOptions);
   const result = await response.json();
 
   console.log(result);
