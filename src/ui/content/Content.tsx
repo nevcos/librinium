@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 import type {Document} from "../../domain/document/Document";
@@ -11,6 +11,7 @@ import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
 import {PreviewMarkdown} from "../previewMarkdown/PreviewMarkdown";
+import {uploadFile} from "../../remoteApi/imgurApi";
 
 const Styled_Container = styled.div`
   position: relative;
@@ -18,11 +19,16 @@ const Styled_Container = styled.div`
   overflow: hidden;
 `;
 
+const Styled_Toolbar = styled.header`
+  background-color: var(--color-gray-lightest);
+`;
+
 const Styled_Editor = styled.section`
   position: relative;
   height: 100%;
   width: 100%;
   overflow: auto;
+  border-top: 1px solid var(--color-gray-light);
 
   z-index: 2;
   transition: opacity 200ms;
@@ -85,11 +91,21 @@ export function Content(): JSX.Element {
     node && initZoomable(node);
   }, []);
 
+  const onSelectedFile = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadFile(file);
+    }
+  }, []);
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
 
+
   return (
     <Styled_Container key={gistId}>
+      <Styled_Toolbar>
+        <input type="file" onChange={onSelectedFile} />
+      </Styled_Toolbar>
       <Styled_Editor className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_Editor>
