@@ -8,7 +8,7 @@ import { DocumentContentType } from "../document/DocumentContentType";
 import { Folder } from "../folder/Folder";
 import { FolderId } from "../folder/FolderId";
 
-export function createEmptyState(): DocumentStoreState {
+export function createEmptyGistState(): DocumentStoreState {
   return {
     isLoading: false,
     error: null,

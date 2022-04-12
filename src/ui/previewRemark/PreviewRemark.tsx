@@ -22,6 +22,14 @@ const Container = styled.div`
   &.remark-container {
     background: transparent;
 
+    &:focus {
+      outline: none;
+
+      .remark-slide {
+        outline: 1px solid var(--color-gray-dark);
+      }
+    }
+
     .remark-slide-scaler {
       box-shadow: none;
     }

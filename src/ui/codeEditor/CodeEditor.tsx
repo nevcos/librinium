@@ -1,17 +1,19 @@
-import { useCallback, useLayoutEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import {useCallback, useLayoutEffect, useRef} from 'react';
+import {useDispatch} from 'react-redux';
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
 
+import "codemirror/mode/markdown/markdown";
+import "./plantumlMode";
 import "codemirror/lib/codemirror.css";
 
-import type { DocumentContent } from "../../domain/document/DocumentContent";
-import type { DocumentId } from "../../domain/document/DocumentId";
-import { documentStoreActions } from '../../store/documentStore';
+import type {DocumentContent} from "../../domain/document/DocumentContent";
+import {documentStoreActions} from '../../store/documentStore';
 
-import { RenderingCounter } from "../shared/RenderingCounter";
+import {RenderingCounter} from "../shared/RenderingCounter";
 import {useActiveGist} from "../shared/useActiveGist";
+import {DocumentContentType} from "../../domain/document/DocumentContentType";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -28,15 +30,12 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
-type Params = {
-  gistId: DocumentId;
-}
-
 export function CodeEditor(): JSX.Element {
   const {gist, gistId} = useActiveGist();
   const dispatch = useDispatch();
 
   const code = gist?.code || "";
+  const type = gist?.type;
 
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
@@ -53,7 +52,7 @@ export function CodeEditor(): JSX.Element {
       lineWrapping: true,
       lineNumbers: true,
       value: code || "",
-      mode: "javascript"
+      mode: getEditMode(type)
     });
     codeMirror.current.on(
       "change",
@@ -61,7 +60,7 @@ export function CodeEditor(): JSX.Element {
         onCodeChange(codeMirror.current?.getValue() as DocumentContent);
       }, CHANGE_DEBOUNCE_MS)
     );
-  }, []);
+  }, [type]);
 
   useLayoutEffect(() => {
     if (codeMirror.current) {
@@ -77,4 +76,9 @@ export function CodeEditor(): JSX.Element {
       <CodeEditorDiv ref={elementRef} />
     </>
   );
+}
+
+function getEditMode(type: DocumentContentType | undefined) {
+  if (type === DocumentContentType.PLANT_UML) return "plantuml";
+  else return "markdown";
 }
