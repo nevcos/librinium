@@ -12,23 +12,19 @@ import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
 
 const Styled_Container = styled.div`
+  position: relative;
   height: 100%;
   overflow: hidden;
-  position: relative;
 `;
 
 const Styled_Editor = styled.section`
+  position: relative;
   height: 100%;
   width: 100%;
   overflow: auto;
 
-  position: relative;
   z-index: 2;
-
   transition: opacity 200ms;
-
-  &.--active {
-  }
 
   &:not(.--active) {
     pointer-events: none;
@@ -36,17 +32,16 @@ const Styled_Editor = styled.section`
   }
 `;
 
-const Styled_Preview = styled.section`
-  overflow: hidden;
-
+const Styled_PreviewContainer = styled.section`
   position: absolute;
-  width: 100%;
   top: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  overflow: hidden;
+
   z-index: 1;
   cursor: move;
-
   transition: opacity 200ms;
 
   &:not(.--active) {
@@ -57,10 +52,11 @@ const Styled_Preview = styled.section`
 
 const Styled_MouseCapture = styled.div`
   position: absolute;
-  width: 50%;
   top: 0;
   right: 0;
   bottom: 0;
+  width: 50%;
+
   z-index: 3;
   cursor: move;
 
@@ -71,19 +67,19 @@ const Styled_MouseCapture = styled.div`
 
 const Styled_PreviewContent = styled.div`
   position: absolute;
+  right: 0;
   width: 60%;
   height: 100%;
-  right: 0;
 `;
 
 export function Content(): JSX.Element {
   const {gist, gistId} = useActiveGist();
   const [isPreviewActive, setPreviewActive] = useState(false);
 
-  const previewRef = useRef<HTMLDivElement>(null);
+  const previewContainerRef = useRef<HTMLDivElement>(null);
   const previewContentRef = useRef<HTMLDivElement>(null);
 
-  const [isDragging] = useDraggable(previewRef, previewContentRef);
+  const [isDragging] = useDraggable(previewContainerRef, previewContentRef);
   useZoomable(previewContentRef);
 
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
@@ -94,13 +90,13 @@ export function Content(): JSX.Element {
       <Styled_Editor className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_Editor>
-      <Styled_Preview ref={previewRef}
-                      className={isPreviewActive || isDragging ? "--active" : ""}
-                      onMouseOut={onCaptureMouseOut}>
+      <Styled_PreviewContainer ref={previewContainerRef}
+                               className={isPreviewActive || isDragging ? "--active" : ""}
+                               onMouseOut={onCaptureMouseOut}>
         <Styled_PreviewContent ref={previewContentRef}>
             {renderPreview(gist)}
         </Styled_PreviewContent>
-      </Styled_Preview>
+      </Styled_PreviewContainer>
       <Styled_MouseCapture className={isPreviewActive || isDragging ? "" : "--active"}
                            onMouseOver={onCaptureMouseOver} aria-hidden="true" />
     </Styled_Container>

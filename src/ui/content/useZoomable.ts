@@ -1,17 +1,15 @@
-import {RefObject, useCallback, useEffect} from "react";
-
-let scale = 1;
+import {RefObject, useCallback, useEffect, useRef} from "react";
 
 export function useZoomable(element: RefObject<HTMLDivElement | null>) {
+  const scale = useRef<number>(1);
 
   const onPreviewWheel = useCallback((event) => {
     if (!event.ctrlKey || !element.current) return;
     event.preventDefault();
-    event.stopPropagation();
     event.stopImmediatePropagation();
-    scale += event.deltaY * -0.001;
-    scale = Math.min(Math.max(.125, scale), 4);
-    element.current.style.transform = `scale(${scale})`;
+    scale.current += event.deltaY * -0.001;
+    scale.current = Math.min(Math.max(.2, scale.current), 5);
+    element.current.style.transform = `scale(${scale.current})`;
   }, []);
 
   useEffect(() => {
