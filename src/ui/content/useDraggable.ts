@@ -1,40 +1,44 @@
-import {RefObject, useCallback, useEffect, useRef, useState} from "react";
+import { useState} from "react";
 
-export function useDraggable(container: RefObject<HTMLDivElement | null>, element: RefObject<HTMLDivElement | null>) {
-  const position = useRef<{x: number, y: number}>({x: 0, y: 0})
+export function useDraggable() {
+  let destroy: () => unknown;
   const [isDragging, setDragging] = useState(false);
 
-  const onMouseDown = useCallback((event) => {
-    event.preventDefault();
-    setDragging(true);
-    position.current.x = event.clientX;
-    position.current.y = event.clientY;
-    window.addEventListener("mouseup", onMouseUp, { once: true });
-    window.addEventListener("mousemove", onMouseMove);
-  }, []);
+  function initDraggable(container: HTMLElement) {
+    const position = {x: 0, y: 0};
+    const element = container.children[0] as HTMLElement;
 
-  const onMouseUp = useCallback((event) => {
-    event.preventDefault();
-    setDragging(false);
-    window.removeEventListener("mousemove", onMouseMove);
-  }, []);
+    function onMouseDown(event:MouseEvent) {
+      // event.preventDefault();
+      setDragging(true);
+      position.x = event.clientX;
+      position.y = event.clientY;
+      window.addEventListener("mouseup", onMouseUp, { once: true });
+      window.addEventListener("mousemove", onMouseMove);
+    }
 
-  const onMouseMove = useCallback((event) => {
-    event.preventDefault();
-    if (!element.current) return;
+    function onMouseUp(event: MouseEvent) {
+      event.preventDefault();
+      setDragging(false);
+      window.removeEventListener("mousemove", onMouseMove);
+    }
 
-    const deltaX = position.current.x - event.clientX;
-    const deltaY = position.current.y - event.clientY;
-    position.current.x = event.clientX;
-    position.current.y = event.clientY;
-    element.current.style.top = (element.current.offsetTop - deltaY) + "px";
-    element.current.style.left = (element.current.offsetLeft - deltaX) + "px";
-  }, []);
+    function onMouseMove(event: MouseEvent) {
+      event.preventDefault();
+      if (!element) return;
 
-  useEffect(() => {
-    container.current?.addEventListener("mousedown", onMouseDown);
-    () => container.current?.removeEventListener("mousedown", onMouseDown);
-  }, [onMouseDown])
+      const deltaX = position.x - event.clientX;
+      const deltaY = position.y - event.clientY;
+      position.x = event.clientX;
+      position.y = event.clientY;
+      element.style.top = (element.offsetTop - deltaY) + "px";
+      element.style.left = (element.offsetLeft - deltaX) + "px";
+    }
 
-  return [isDragging];
+    destroy?.();
+    container.addEventListener("mousedown", onMouseDown);
+    destroy = () => container.removeEventListener("mousedown", onMouseDown);
+  }
+
+  return {isDragging, initDraggable};
 }

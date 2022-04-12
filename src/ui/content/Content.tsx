@@ -10,6 +10,7 @@ import {PreviewPlantUml} from "../previewPlantUml/PreviewPlantUml";
 import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
+import {PreviewMarkdown} from "../previewMarkdown/PreviewMarkdown";
 
 const Styled_Container = styled.div`
   position: relative;
@@ -76,14 +77,20 @@ export function Content(): JSX.Element {
   const {gist, gistId} = useActiveGist();
   const [isPreviewActive, setPreviewActive] = useState(false);
 
-  const previewContainerRef = useRef<HTMLDivElement>(null);
-  const previewContentRef = useRef<HTMLDivElement>(null);
+  const {isDragging, initDraggable} = useDraggable();
+  const {initZoomable} = useZoomable();
 
-  const [isDragging] = useDraggable(previewContainerRef, previewContentRef);
-  useZoomable(previewContentRef);
+  const previewContainerRef = useCallback(node => {
+    node && initDraggable(node);
+  }, []);
+
+  const previewContentRef = useCallback(node => {
+    node && initZoomable(node);
+  }, []);
 
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
+
 
   return (
     <Styled_Container key={gistId}>
@@ -112,6 +119,6 @@ function renderPreview(gist: Document | null): JSX.Element | null {
       return <PreviewPresentation key={gist.id} />;
     case DocumentContentType.MARKDOWN:
     default:
-      return null;
+      return <PreviewMarkdown key={gist.id} />;
   }
 }

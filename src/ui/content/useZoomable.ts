@@ -1,23 +1,29 @@
-import {RefObject, useCallback, useEffect, useRef} from "react";
+const SCALE_STEP = .001;
+const SCALE_MIN = .2;
+const SCALE_MAX = .2;
 
-export function useZoomable(element: RefObject<HTMLDivElement | null>) {
-  const scale = useRef<number>(1);
+export function useZoomable() {
+  let destroy: () => unknown;
 
-  const onPreviewWheel = useCallback((event) => {
-    if (!event.ctrlKey || !element.current) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    scale.current += event.deltaY * -0.001;
-    scale.current = Math.min(Math.max(.2, scale.current), 5);
-    element.current.style.transform = `scale(${scale.current})`;
-  }, []);
+  function initZoomable(element: HTMLElement) {
+    let scale = 1;
 
-  useEffect(() => {
+    function onPreviewWheel(event: WheelEvent) {
+      if (!event.ctrlKey || !element) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      scale += - event.deltaY * SCALE_STEP;
+      scale = Math.min(Math.max(SCALE_MIN, scale), SCALE_MAX);
+      element.style.transform = `scale(${scale})`;
+    }
+
+    destroy?.();
     // By default react `wheel` event is passive, which doesn't allow to prevent or stop propagation, so it's required
     // to set the listener this way
     // @see https://stackoverflow.com/a/67258046/198787
-    element.current?.addEventListener("wheel", onPreviewWheel, {passive: false, capture: true});
-    return () => element.current?.removeEventListener("wheel", onPreviewWheel);
-  }, [element, onPreviewWheel]);
+    element.addEventListener("wheel", onPreviewWheel, {passive: false, capture: true});
+    destroy = () => element.removeEventListener("wheel", onPreviewWheel);
+  }
 
+  return {initZoomable};
 }
