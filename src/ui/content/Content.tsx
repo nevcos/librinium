@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 import type {Document} from "../../domain/document/Document";
@@ -67,12 +67,6 @@ const Styled_MouseCapture = styled.div`
   }
 `;
 
-const Styled_PreviewContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-`;
-
 const Styled_PreviewContent = styled.div`
   position: absolute;
   width: 60%;
@@ -88,7 +82,8 @@ export function Content(): JSX.Element {
   const {gist, gistId} = useActiveGist();
   const [isPreviewActive, setPreviewActive] = useState(false);
   const [isDragging, setDragging] = useState(false);
-  const previewContainerRef = useRef<HTMLDivElement>(null);
+
+  const previewRef = useRef<HTMLDivElement>(null);
   const previewContentRef = useRef<HTMLDivElement>(null);
 
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
@@ -102,16 +97,17 @@ export function Content(): JSX.Element {
     window.addEventListener("mouseup", onPreviewMouseUp, { once: true });
     window.addEventListener("mousemove", onPreviewMouseMove);
   }, []);
+  
   const onPreviewMouseUp = useCallback((event) => {
     event.preventDefault();
     setDragging(false);
     window.removeEventListener("mousemove", onPreviewMouseMove);
   }, []);
+
   const onPreviewMouseMove = useCallback((event) => {
     console.log("onPreviewMouseMove");
     event.preventDefault();
-    // if (!isDragging) return;
-    const element = previewContainerRef.current;
+    const element = previewContentRef.current;
     if (!element) return;
 
     // calculate the new cursor position:
@@ -121,10 +117,13 @@ export function Content(): JSX.Element {
     pos4 = event.clientY;
     element.style.top = (element.offsetTop - pos2) + "px";
     element.style.left = (element.offsetLeft - pos1) + "px";
+  }, []);
 
-  }, [isDragging]);
   const onPreviewWheel = useCallback((event) => {
+    if (!event.ctrlKey) return;
     event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
     const element = previewContentRef.current;
     if (!element) return;
     scale += event.deltaY * -0.001;
@@ -132,20 +131,26 @@ export function Content(): JSX.Element {
     element.style.transform = `scale(${scale})`;
   }, []);
 
+  useEffect(() => {
+    // By default react `wheel` event is passive, which doesn't allow to prevent or stop propagation, so it's required
+    // to set the listener this way
+    // @see https://stackoverflow.com/a/67258046/198787
+    previewRef.current?.addEventListener("wheel", onPreviewWheel, {passive: false, capture: true});
+    return () => previewRef.current?.removeEventListener("wheel", onPreviewWheel);
+  }, [previewRef, onPreviewWheel]);
+
   return (
     <Styled_Container key={gistId}>
       <Styled_Editor className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_Editor>
-      <Styled_Preview className={isPreviewActive || isDragging ? "--active" : ""}
+      <Styled_Preview ref={previewRef}
+                      className={isPreviewActive || isDragging ? "--active" : ""}
                       onMouseOut={onCaptureMouseOut}
-                      onMouseDown={onPreviewMouseDown}
-                      onWheel={onPreviewWheel}>
-        <Styled_PreviewContainer ref={previewContainerRef}>
-          <Styled_PreviewContent ref={previewContentRef}>
+                      onMouseDown={onPreviewMouseDown}>
+        <Styled_PreviewContent ref={previewContentRef}>
             {renderPreview(gist)}
-          </Styled_PreviewContent>
-        </Styled_PreviewContainer>
+        </Styled_PreviewContent>
       </Styled_Preview>
       <Styled_MouseCapture className={isPreviewActive || isDragging ? "" : "--active"}
                            onMouseOver={onCaptureMouseOver} aria-hidden="true" />
