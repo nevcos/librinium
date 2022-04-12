@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // Common
 
@@ -103,7 +103,7 @@ export const Nav = styled.nav`
   flex-direction: column;
   overflow: hidden;
 
-  > .documents-list {
+  > .folder-list {
     padding: var(--sidebar-padding);
     overflow: hidden;
     overflow-y: auto;
@@ -125,6 +125,10 @@ export const Nav = styled.nav`
     padding: var(--sidebar-padding);
     padding-top: 0;
   }
+
+  .documents-list {
+    padding-top: var(--input-padding);
+  }
 `;
 
 export const ListUl = styled.ul`
@@ -133,7 +137,7 @@ export const ListUl = styled.ul`
   margin: 0;
 
   display: grid;
-  grid-gap: .2rem;
+  grid-gap: 0.2rem;
 `;
 
 export const OptionLi = styled.li`
@@ -150,8 +154,20 @@ export const OptionLi = styled.li`
   }
 `;
 
+export const FolderLi = styled.li`
+  display: flex;
+  flex-direction: column;
+
+  padding: var(--input-padding);
+  padding-top: 0;
+
+  &:last-child  {
+    padding-bottom: 0;
+  }
+`;
+
 export const NavLink = styled(Link)`
-  ${sidebarButtonLink}  
+  ${sidebarButtonLink}
   text-decoration: none;
   width: 100%;
 `;

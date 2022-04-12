@@ -1,4 +1,6 @@
 import Cookies from "js-cookie";
+import { Gist } from "../interface/Gist";
+import { request } from "../util/request";
 
 const GITHUB_ENDPOINT = "https://api.github.com";
 const CLOUDFLARE_ENDPOINT = "/api/github";
@@ -12,25 +14,19 @@ export async function getToken(code: string): Promise<any> {
   return data?.token;
 }
 
-export async function getGists(): Promise<any> {
+export async function getGists(): Promise<Gist[]> {
   const token = Cookies.get(GITHUB_TOKEN_COOKIE_KEY);
-  const data = await request(GITHUB_ENDPOINT + "/gists", {
+  const data = (await request(GITHUB_ENDPOINT + "/gists", {
     headers: {
       Accept: "application/vnd.github.v3+json",
       Authorization: `token ${token}`
     }
-  });
+  })) as unknown as Gist[];
 
   return data;
 }
 
-async function request(endpoint: string, options?: RequestInit): Promise<void> {
-  const response = await fetch(endpoint, options);
-
-  try {
-    if (!response.ok) throw new Error();
-    return await response.json();
-  } catch (err) {
-    console.error(`request() - failed (${endpoint})`);
-  }
-}
+// TODO: export async function searchGists(): Promise<any> {}
+// TODO: export async function createGist(): Promise<any> {}
+// TODO: export async function deleteGist(): Promise<any> {}
+// TODO: export async function updateGist(): Promise<any> {}

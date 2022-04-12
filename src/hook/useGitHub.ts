@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getToken, GITHUB_TOKEN_COOKIE_KEY, GITHUB_CODE_SEARCH_PARAM_KEY } from "../remoteApi/githubApi";
+import { getToken, GITHUB_TOKEN_COOKIE_KEY, GITHUB_CODE_SEARCH_PARAM_KEY } from "../remoteApi/gitHubApi";
 import { userStoreActions } from "../store/userStore";
 
 export const useGithub = () => {
