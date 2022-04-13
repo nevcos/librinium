@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import type { Note } from "../domain/note/Note";
 import type { NoteContentType } from "../domain/note/NoteContentType";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
@@ -12,6 +11,7 @@ import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
 import { getNotesFromGists, getFolderFromGists } from "../service/gitHub";
 import { insertImageInEditor } from "../service/codeMirrorService";
 import { FolderId } from "../domain/folder/FolderId";
+import { NoteContent } from "../domain/note/NoteContent";
 
 export const storeName = "note";
 
@@ -59,25 +59,51 @@ const createNewNote = createAsyncThunk(
   }
 );
 
-export const putNoteThunk = createAsyncThunk(`${storeName}/putNote`, async (note: Note, thunkAPI) => {
-  // TODO
-});
-
-const deleteNote = createAsyncThunk(
-  `${storeName}/deleteNote`,
+const updateNote = createAsyncThunk(
+  `${storeName}/updateNote`,
   async (
-    { navigation, noteId, folderId }: { navigation: UseNavigationApi; noteId: NoteId; folderId?: FolderId },
+    {
+      id,
+      code,
+      folderId
+    }: {
+      id: NoteId;
+      code: NoteContent;
+      folderId?: FolderId;
+    },
     thunkAPI
   ) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
       if (folderId) {
-        thunkAPI.dispatch(noteStore.actions.deleteNote(noteId));
+        thunkAPI.dispatch(noteStore.actions.updateNoteContent({ id, code }));
+        GitHubApi.updateGist(folderId, id, code);
+      } else {
+        // TODO
+      }
+    } catch (error) {
+      throw error;
+      // FIXME
+    } finally {
+      thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
+    }
+  }
+);
+const deleteNote = createAsyncThunk(
+  `${storeName}/deleteNote`,
+  async ({ navigation, id, folderId }: { navigation: UseNavigationApi; id: NoteId; folderId?: FolderId }, thunkAPI) => {
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
+    try {
+      if (folderId) {
+        thunkAPI.dispatch(noteStore.actions.deleteNote(id));
 
-        GitHubApi.deleteGistFile(folderId, noteId);
-        const isActiveRoute = navigation.isActive(`/note/${noteId}`);
+        GitHubApi.deleteGistFile(folderId, id);
+
+        const isActiveRoute = navigation.isActive(`/note/${id}`);
         if (isActiveRoute) {
           navigation.navigate("/note/", { replace: false });
+        } else {
+          // TODO
         }
       }
     } catch (error) {
@@ -109,6 +135,7 @@ const deleteFolder = createAsyncThunk(
     }
   }
 );
+
 const insertImage = createAsyncThunk(
   `${storeName}/uploadImage`,
   async ({ noteId, file }: { noteId: NoteId; file: File }, thunkAPI) => {
@@ -134,6 +161,7 @@ export const noteStoreActions = {
   ...noteStore.actions,
   fetchNotes,
   createNewNote,
+  updateNote,
   deleteNote,
   deleteFolder,
   insertImage

@@ -8,6 +8,9 @@ export const GITHUB_CODE_SEARCH_PARAM_KEY = "code";
 export const GITHUB_TOKEN_COOKIE_KEY = "gh_token";
 export const GITHUB_AUTH_ENDPOINT = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`;
 
+// TODO: export async function searchGists(): Promise<any> {}
+// TODO: export async function createGist(): Promise<any> {}
+
 export async function getToken(code: string): Promise<string> {
   const response = await fetch(`${CLOUDFLARE_ENDPOINT}/token/${code}`);
   if (!response.ok) throw new Error();
@@ -24,6 +27,24 @@ export async function getGists(): Promise<Gist[]> {
   });
   if (!response.ok) throw new Error();
   return await response.json();
+}
+
+export async function updateGist(id: string, filename: string, content: string): Promise<void> {
+  const token = Cookies.get(GITHUB_TOKEN_COOKIE_KEY);
+
+  await fetch(`${GITHUB_ENDPOINT}/gists/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `token ${token}`
+    },
+    body: JSON.stringify({
+      files: {
+        [filename]: {
+          content
+        }
+      }
+    })
+  });
 }
 
 export async function deleteGist(id: string): Promise<void> {
@@ -51,7 +72,3 @@ export async function deleteGistFile(id: string, filename: string): Promise<void
     })
   });
 }
-
-// TODO: export async function searchGists(): Promise<any> {}
-// TODO: export async function createGist(): Promise<any> {}
-// TODO: export async function updateGist(): Promise<any> {}
