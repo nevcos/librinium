@@ -1,10 +1,9 @@
-export async function request(endpoint: string, options?: RequestInit, hasJSONResponse = true): Promise<void> {
+export async function request<T>(
+  endpoint: string,
+  options?: RequestInit,
+  hasJSONResponse = true
+): Promise<T> {
   const response = await fetch(endpoint, options);
-
-  try {
-    if (!response.ok) throw new Error();
-    return (await hasJSONResponse) ? response.json() : response.text();
-  } catch (err) {
-    console.error(`request() - failed (${endpoint})`);
-  }
+  if (!response.ok) throw new Error();
+  return await (hasJSONResponse ? response.json() : response.text());
 }

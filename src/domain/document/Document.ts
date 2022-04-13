@@ -9,5 +9,5 @@ export interface Document {
   name: DocumentName;
   code: DocumentContent;
   type: DocumentContentType;
-  folderId: FolderId;
+  folderId?: FolderId;
 }

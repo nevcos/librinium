@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { Document } from "../domain/document/Document";
 import type { DocumentContentType } from "../domain/document/DocumentContentType";
 import * as DocumentsApi from "../remoteApi/documentsApi";
-import * as GitHubApi from "../remoteApi/gitHubApi";
+import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
 import { DocumentId } from "../domain/document/DocumentId";

@@ -40,6 +40,7 @@ export function createNewPlantUml(): Document {
     id,
     name: `New Diagram` as DocumentName,
     code: `New->Diagram` as DocumentContent,
+    type: DocumentContentType.PLANT_UML
   };
 }
 
@@ -64,6 +65,11 @@ export function getDocuments(state: DocumentStoreState): Document[] {
 export function getDocumentsByFolder(state: DocumentStoreState, folderId: FolderId): Document[] {
   const documents = getDocuments(state);
   return documents.filter((document) => document.folderId === folderId);
+}
+
+export function getDocumentsWithoutFolder(state: DocumentStoreState): Document[] {
+  const documents = getDocuments(state);
+  return documents.filter((document) => !document.folderId);
 }
 
 export function getDocument(state: DocumentStoreState, documentId?: DocumentId): Document | null {

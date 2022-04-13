@@ -1,4 +1,4 @@
-import { DocumentContentType } from "../domain/document/DocumentContentType";
+import { DocumentContentType } from "./DocumentContentType";
 
 export function getFileTypeFromExtension(filename: string): DocumentContentType {
   const DEFAULT_TYPE = DocumentContentType.MARKDOWN;

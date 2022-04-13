@@ -5,8 +5,8 @@ import { DocumentName } from "../domain/document/DocumentName";
 import { FolderId } from "../domain/folder/FolderId";
 import { FolderMap } from "../domain/folder/FolderMap";
 import { FolderName } from "../domain/folder/FolderName";
-import { Gist } from "../interface/Gist";
-import { getFileTypeFromExtension } from "../util/file";
+import { Gist } from "../remoteApi/gitHub/Gist";
+import { getFileTypeFromExtension } from "../domain/document/util";
 import { request } from "../util/request";
 
 export function getFolderFromGists(gists: Gist[]): FolderMap {
