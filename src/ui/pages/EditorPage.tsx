@@ -47,7 +47,7 @@ export function EditorPage() {
   const outlet = useOutlet();
 
   useEffect(() => {
-    dispatch(documentStoreActions.fetchGists());
+    dispatch(documentStoreActions.fetchDocuments());
   }, []);
 
   return (

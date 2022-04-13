@@ -28,13 +28,15 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
       dispatch(documentStoreActions.updateDocumentName({ id, name }));
     }
   }, [document]);
+
   const onClickDeleteDocument = useCallback(
     (event: MouseEvent) => {
       const isConfirmationBypassed = event.ctrlKey && event.shiftKey;
-      const isConfirmed = isConfirmationBypassed || window.confirm(`Delete ${document.name}?`);
+      const isConfirmed = isConfirmationBypassed || window.confirm(`Delete file ${document.name}?`);
       if (isConfirmed) {
-        const id = document.id;
-        dispatch(documentStoreActions.deleteDocument({ navigation, id }));
+        const folderId = document.folderId; // root file will have this as undefined
+        const fileId = document.id;
+        dispatch(documentStoreActions.deleteDocument({ navigation, fileId, folderId }));
       }
     },
     [document]

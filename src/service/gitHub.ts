@@ -7,7 +7,6 @@ import { FolderMap } from "../domain/folder/FolderMap";
 import { FolderName } from "../domain/folder/FolderName";
 import { Gist } from "../remoteApi/gitHub/Gist";
 import { getFileTypeFromExtension } from "../domain/document/util";
-import { request } from "../util/request";
 
 export function getFolderFromGists(gists: Gist[]): FolderMap {
   const folders: FolderMap = {};
@@ -32,12 +31,13 @@ export async function getFilesFromGists(gists: Gist[]): Promise<DocumentMap> {
       await Promise.all(
         Object.keys(gist.files).map(async (key) => {
           const file = gist.files[key];
-          const code = await request(file.raw_url, {}, false);
+          const codeRequest = await fetch(file.raw_url);
+          const code = (await codeRequest.text()) as DocumentContent;
 
           files[key as DocumentId] = {
             id: file.filename as DocumentId,
             name: file.filename as DocumentName,
-            code: code as unknown as DocumentContent,
+            code,
             type: getFileTypeFromExtension(file.filename),
             folderId: folderId
           };
