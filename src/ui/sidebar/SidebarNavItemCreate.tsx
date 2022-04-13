@@ -1,15 +1,15 @@
 import { memo, useCallback } from "react";
 import { useDispatch } from 'react-redux';
 
-import { DocumentContentType, labelDocumentContentTypeMap } from "../../domain/document/DocumentContentType";
-import { documentStoreActions } from "../../store/documentStore";
+import { NoteContentType, labelNoteContentTypeMap } from "../../domain/note/NoteContentType";
+import { noteStoreActions } from "../../store/noteStore";
 
 import {useNavigation} from "../shared/useNavigation";
 import * as Styled from "./Sidebar.style";
-import { DocumentIcon } from "./DocumentIcon";
+import { NoteIcon } from "./NoteIcon";
 
 type Props = {
-  type: DocumentContentType;
+  type: NoteContentType;
 };
 
 export const SidebarNavItemCreate = memo(function ({ type }: Props) {
@@ -17,13 +17,13 @@ export const SidebarNavItemCreate = memo(function ({ type }: Props) {
   const dispatch = useDispatch();
 
   const onClickCreate = useCallback(() => {
-    dispatch(documentStoreActions.createNewDocument({navigation, type}));
+    dispatch(noteStoreActions.createNewNote({navigation, type}));
   }, [type]);
   return (
     <Styled.OptionLi>
       <Styled.NewButton onClick={onClickCreate} data-testid={`create-${type}`}>
-        <DocumentIcon type={type} />
-        <span className="label">new {labelDocumentContentTypeMap[type]} ...</span>
+        <NoteIcon type={type} />
+        <span className="label">new {labelNoteContentTypeMap[type]} ...</span>
       </Styled.NewButton>
     </Styled.OptionLi>
   );

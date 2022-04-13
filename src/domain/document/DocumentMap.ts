@@ -1,4 +1,4 @@
-import type { Document } from "./Document";
-import type { DocumentId } from "./DocumentId";
+import type { Note } from "./Note";
+import type { NoteId } from "./NoteId";
 
-export type DocumentMap = { [id: DocumentId]: Document };
+export type NoteMap = { [id: NoteId]: Note };

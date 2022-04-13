@@ -5,7 +5,7 @@ import {MemoryRouter, Routes, Route, useLocation} from "react-router-dom";
 /** Required for `toHaveTextContent` */
 import "@testing-library/jest-dom/extend-expect";
 
-import { documentStoreReducer } from '../store/documentStore';
+import { noteStoreReducer } from '../store/noteStore';
 import {StoreState} from "../store/StoreState";
 import {createEmptyState} from "../domain/storeState/storeStateSelectors";
 import {userStoreReducer} from "../store/userStore";
@@ -20,7 +20,7 @@ export function renderWithRoutingAndStore(
   componentRoutePath: string = "*",
   renderOptions: {[key: string]: unknown} = {}
 ) {
-  const reducer = {user: userStoreReducer, gist: documentStoreReducer};
+  const reducer = {user: userStoreReducer, gist: noteStoreReducer};
   const store = configureStore({ reducer, preloadedState });
 
   function Wrapper({ children }: { children: JSX.Element }) {

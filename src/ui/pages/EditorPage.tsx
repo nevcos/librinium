@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useOutlet } from "react-router-dom";
 import styled from "styled-components";
 
-import { documentStoreActions } from "../../store/documentStore";
+import { noteStoreActions } from "../../store/noteStore";
 
 import { Sidebar } from "../sidebar/Sidebar";
 import { EmptyState } from "../content/EmptyState";
@@ -47,7 +47,7 @@ export function EditorPage() {
   const outlet = useOutlet();
 
   useEffect(() => {
-    dispatch(documentStoreActions.fetchDocuments());
+    dispatch(noteStoreActions.fetchNotes());
   }, []);
 
   return (

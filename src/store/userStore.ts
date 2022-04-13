@@ -7,7 +7,7 @@ export const storeName = "user";
 
 //#region Slice
 
-export const documentStore = createSlice({
+export const noteStore = createSlice({
   name: storeName,
   initialState: selectors.createEmptyState(),
   reducers: reducers
@@ -17,9 +17,9 @@ export const documentStore = createSlice({
 //#region Export
 
 export const userStoreSelectors = selectors;
-export const userStoreReducer = documentStore.reducer;
+export const userStoreReducer = noteStore.reducer;
 export const userStoreActions = {
-  ...documentStore.actions
+  ...noteStore.actions
 };
 
 //#endregion

@@ -16,7 +16,7 @@ export function PreviewPlantUml(): JSX.Element {
     <>
       <RenderingCounter />
       <PlantUmlPreviewDiv>
-        <img src={src} alt="PlantUML document" />
+        <img src={src} alt="PlantUML note" />
       </PlantUmlPreviewDiv>
     </>
   );

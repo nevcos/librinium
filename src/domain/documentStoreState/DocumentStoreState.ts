@@ -1,11 +1,11 @@
-import type { DocumentId } from "../document/DocumentId";
-import type { DocumentMap } from "../document/DocumentMap";
+import type { NoteId } from "../note/NoteId";
+import type { NoteMap } from "../note/NoteMap";
 import { FolderMap } from "../folder/FolderMap";
 
-export interface DocumentStoreState {
+export interface NoteStoreState {
   isLoading: boolean;
-  isUploadingImage: DocumentId | null;
+  isUploadingImage: NoteId | null;
   error: string | null;
-  documents: DocumentMap;
+  notes: NoteMap;
   folders: FolderMap;
 }

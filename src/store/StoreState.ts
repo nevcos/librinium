@@ -1,7 +1,7 @@
-import { DocumentStoreState } from "../domain/documentStoreState/DocumentStoreState";
+import { NoteStoreState } from "../domain/noteStoreState/NoteStoreState";
 import { UserStoreState } from "../domain/userStoreState/UserStoreState";
 
 export interface StoreState {
-  gist: DocumentStoreState;
+  gist: NoteStoreState;
   user: UserStoreState;
 }

@@ -2,18 +2,18 @@ import { screen } from "@testing-library/dom";
 
 import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
-import type { DocumentContent } from "../../domain/document/DocumentContent";
+import type { NoteContent } from "../../domain/note/NoteContent";
 import { CodeEditor } from "./CodeEditor";
-import { createNewPlantUml, createEmptyGistState } from '../../domain/documentStoreState/documentStoreStateSelectors';
-import { addDocument } from '../../domain/documentStoreState/documentStoreStateReducers';
+import { createNewPlantUml, createEmptyGistState } from '../../domain/noteStoreState/noteStoreStateSelectors';
+import { addNote } from '../../domain/noteStoreState/noteStoreStateReducers';
 import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
 
 describe("<CodeEditor />", () => {
   it("should display code editor with the expected code", async () => {
-    const document = createNewPlantUml();
-    document.code = "Test->Success" as DocumentContent;
+    const note = createNewPlantUml();
+    document.code = "Test->Success" as NoteContent;
     const state = createEmptyState()
-    addDocument(state.gist, {payload: document});
+    addNote(state.gist, {payload: note});
 
     renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${document.id}`);
 

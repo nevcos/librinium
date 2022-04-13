@@ -1,13 +1,13 @@
-import type { DocumentId } from "./DocumentId";
-import type { DocumentName } from "./DocumentName";
-import type { DocumentContent } from "./DocumentContent";
-import { DocumentContentType } from "./DocumentContentType";
+import type { NoteId } from "./NoteId";
+import type { NoteName } from "./NoteName";
+import type { NoteContent } from "./NoteContent";
+import { NoteContentType } from "./NoteContentType";
 import { FolderId } from "../folder/FolderId";
 
-export interface Document {
-  id: DocumentId;
-  name: DocumentName;
-  code: DocumentContent;
-  type: DocumentContentType;
+export interface Note {
+  id: NoteId;
+  name: NoteName;
+  code: NoteContent;
+  type: NoteContentType;
   folderId?: FolderId;
 }

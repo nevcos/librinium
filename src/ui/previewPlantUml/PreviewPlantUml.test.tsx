@@ -1,17 +1,17 @@
 import { PreviewPlantUml } from "./PreviewPlantUml";
-import type { DocumentContent } from "../../domain/document/DocumentContent";
+import type { NoteContent } from "../../domain/note/NoteContent";
 import { renderWithRoutingAndStore } from '../../test/reactTestUtils';
-import { createNewPlantUml } from '../../domain/documentStoreState/documentStoreStateSelectors';
-import { addDocument } from '../../domain/documentStoreState/documentStoreStateReducers';
+import { createNewPlantUml } from '../../domain/noteStoreState/noteStoreStateSelectors';
+import { addNote } from '../../domain/noteStoreState/noteStoreStateReducers';
 import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
 
 describe("<PreviewPlantUml />", () => {
-  it("should display an image with the correct document", async () => {
-    const code = "Test->Success" as DocumentContent;
-    const document = createNewPlantUml()
+  it("should display an image with the correct note", async () => {
+    const code = "Test->Success" as NoteContent;
+    const note = createNewPlantUml()
     document.code = code;
     const state = createEmptyState();
-    addDocument(state.gist, {payload: document});
+    addNote(state.gist, {payload: note});
 
     const {renderResult} = renderWithRoutingAndStore(<PreviewPlantUml />, state, `/gists/${document.id}`, "/gists/:gistId");
     const img = renderResult.container.querySelector("img");

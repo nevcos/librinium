@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import type { Document } from "../domain/document/Document";
-import type { DocumentContentType } from "../domain/document/DocumentContentType";
-import * as DocumentsApi from "../remoteApi/documentsApi";
+import type { Note } from "../domain/note/Note";
+import type { NoteContentType } from "../domain/note/NoteContentType";
+import * as NotesApi from "../remoteApi/notesApi";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
-import * as reducers from "../domain/documentStoreState/documentStoreStateReducers";
-import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
-import { DocumentId } from "../domain/document/DocumentId";
+import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
+import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
+import { NoteId } from "../domain/note/NoteId";
 import { UseNavigationApi } from "../ui/shared/useNavigation";
 import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
@@ -14,11 +14,11 @@ import { getFilesFromGists, getFolderFromGists } from "../service/gitHub";
 import { insertImageInEditor } from "../service/codeMirrorService";
 import { FolderId } from "../domain/folder/FolderId";
 
-export const storeName = "document";
+export const storeName = "note";
 
 //#region Slice
 
-export const documentStore = createSlice({
+export const noteStore = createSlice({
   name: storeName,
   initialState: selectors.createEmptyGistState(),
   reducers
@@ -27,54 +27,54 @@ export const documentStore = createSlice({
 //#endregion
 //#region Thunks
 
-const fetchDocuments = createAsyncThunk(`${storeName}/fetchDocuments`, async (_, thunkAPI) => {
-  thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
+const fetchNotes = createAsyncThunk(`${storeName}/fetchNotes`, async (_, thunkAPI) => {
+  thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
   try {
     const gists = await GitHubApi.getGists();
     const folders = getFolderFromGists(gists);
     const files = await getFilesFromGists(gists);
-    thunkAPI.dispatch(documentStore.actions.setFolders(folders));
-    thunkAPI.dispatch(documentStore.actions.setDocuments(files));
+    thunkAPI.dispatch(noteStore.actions.setFolders(folders));
+    thunkAPI.dispatch(noteStore.actions.setNotes(files));
   } catch (error) {
     throw error;
     // FIXME
   } finally {
-    thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
   }
 });
 
-const createNewDocument = createAsyncThunk(
-  `${storeName}/postDocument`,
-  async ({ navigation, type }: { navigation: UseNavigationApi; type: DocumentContentType }, thunkAPI) => {
-    thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
-    const newDocument = selectors.createNewDocument(type);
+const createNewNote = createAsyncThunk(
+  `${storeName}/postNote`,
+  async ({ navigation, type }: { navigation: UseNavigationApi; type: NoteContentType }, thunkAPI) => {
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
+    const newNote = selectors.createNewNote(type);
     try {
-      // await DocumentsApi.postDocument(newDocument);
-      thunkAPI.dispatch(documentStore.actions.addDocument(newDocument));
+      // await NotesApi.postNote(newNote);
+      thunkAPI.dispatch(noteStore.actions.addNote(newNote));
       navigation.navigate(`/gists/${newDocument.id}`, { replace: false });
     } catch (error) {
       throw error;
       // FIXME
     } finally {
-      thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+      thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
     }
   }
 );
 
-export const putDocumentThunk = createAsyncThunk(`${storeName}/putDocument`, async (document: Document, thunkAPI) => {
-  await DocumentsApi.putDocument(document.id, document);
+export const putNoteThunk = createAsyncThunk(`${storeName}/putNote`, async (note: Note, thunkAPI) => {
+  await NotesApi.putNote(document.id, note);
 });
 
-const deleteDocument = createAsyncThunk(
-  `${storeName}/deleteDocument`,
+const deleteNote = createAsyncThunk(
+  `${storeName}/deleteNote`,
   async (
-    { navigation, fileId, folderId }: { navigation: UseNavigationApi; fileId: DocumentId; folderId?: FolderId },
+    { navigation, fileId, folderId }: { navigation: UseNavigationApi; fileId: NoteId; folderId?: FolderId },
     thunkAPI
   ) => {
-    thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
       if (folderId) {
-        thunkAPI.dispatch(documentStore.actions.deleteDocument(fileId));
+        thunkAPI.dispatch(noteStore.actions.deleteNote(fileId));
 
         GitHubApi.deleteGistFile(folderId, fileId);
         const isActiveRoute = navigation.isActive(`/gists/${fileId}`);
@@ -86,7 +86,7 @@ const deleteDocument = createAsyncThunk(
       throw error;
       // FIXME
     } finally {
-      thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+      thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
     }
   }
 );
@@ -94,9 +94,9 @@ const deleteDocument = createAsyncThunk(
 const deleteFolder = createAsyncThunk(
   `${storeName}/deleteFolder`,
   async ({ navigation, id }: { navigation: UseNavigationApi; id: FolderId }, thunkAPI) => {
-    thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
-      thunkAPI.dispatch(documentStore.actions.deleteFolder(id));
+      thunkAPI.dispatch(noteStore.actions.deleteFolder(id));
 
       GitHubApi.deleteGist(id);
 
@@ -107,21 +107,21 @@ const deleteFolder = createAsyncThunk(
       throw error;
       // FIXME
     } finally {
-      thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+      thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
     }
   }
 );
 const insertImage = createAsyncThunk(
   `${storeName}/uploadImage`,
-  async ({ documentId, file }: { documentId: DocumentId; file: File }, thunkAPI) => {
-    thunkAPI.dispatch(documentStore.actions.startImageUpload(documentId));
+  async ({ noteId, file }: { noteId: NoteId; file: File }, thunkAPI) => {
+    thunkAPI.dispatch(noteStore.actions.startImageUpload(noteId));
     try {
       // const imgurFile = await uploadFile(file);
       const imgurFile = mockedImage;
       const imageDescriptor = fromImgurFileToImageDescriptor(imgurFile);
       insertImageInEditor(imageDescriptor);
     } catch (error) {
-      thunkAPI.dispatch(documentStore.actions.finishImageUpload(documentId));
+      thunkAPI.dispatch(noteStore.actions.finishImageUpload(noteId));
       throw error;
     }
   }
@@ -130,13 +130,13 @@ const insertImage = createAsyncThunk(
 //#endregion
 //#region Export
 
-export const documentStoreSelectors = selectors;
-export const documentStoreReducer = documentStore.reducer;
-export const documentStoreActions = {
-  ...documentStore.actions,
-  fetchDocuments,
-  createNewDocument,
-  deleteDocument,
+export const noteStoreSelectors = selectors;
+export const noteStoreReducer = noteStore.reducer;
+export const noteStoreActions = {
+  ...noteStore.actions,
+  fetchNotes,
+  createNewNote,
+  deleteNote,
   deleteFolder,
   insertImage
 };

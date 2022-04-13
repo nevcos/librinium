@@ -1,19 +1,19 @@
 import { memo, MouseEvent, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
-import type { Document } from "../../domain/document/Document";
-import { DocumentName } from "../../domain/document/DocumentName";
-import { documentStoreActions } from "../../store/documentStore";
+import type { Note } from "../../domain/note/Note";
+import { NoteName } from "../../domain/note/NoteName";
+import { noteStoreActions } from "../../store/noteStore";
 
 import { useNavigation } from "../shared/useNavigation";
-import { DocumentIcon } from "./DocumentIcon";
+import { NoteIcon } from "./NoteIcon";
 import * as Styled from "./Sidebar.style";
 
 type Props = {
-  document: Document;
+  note: Note;
 };
 
-export const SidebarNavItemLink = memo(function ({ document }: Props) {
+export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -24,31 +24,31 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
     const newName = window.prompt("Rename", document.name);
     if (newName) {
       const id = document.id;
-      const name = newName as DocumentName;
-      dispatch(documentStoreActions.updateDocumentName({ id, name }));
+      const name = newName as NoteName;
+      dispatch(noteStoreActions.updateNoteName({ id, name }));
     }
-  }, [document]);
+  }, [note]);
 
-  const onClickDeleteDocument = useCallback(
+  const onClickDeleteNote = useCallback(
     (event: MouseEvent) => {
       const isConfirmationBypassed = event.ctrlKey && event.shiftKey;
       const isConfirmed = isConfirmationBypassed || window.confirm(`Delete file ${document.name}?`);
       if (isConfirmed) {
         const folderId = document.folderId; // root file will have this as undefined
         const fileId = document.id;
-        dispatch(documentStoreActions.deleteDocument({ navigation, fileId, folderId }));
+        dispatch(noteStoreActions.deleteNote({ navigation, fileId, folderId }));
       }
     },
-    [document]
+    [note]
   );
 
   return (
-    <Styled.OptionLi key={document.id} className={isActive ? "--active" : ""} data-testid="document">
+    <Styled.OptionLi key={document.id} className={isActive ? "--active" : ""} data-testid="note">
       <Styled.NavLink to={to} onDoubleClick={onDoubleClickRename} data-testid="open">
-        <DocumentIcon type={document.type} />
+        <NoteIcon type={document.type} />
         <span className="label">{document.name}</span>
       </Styled.NavLink>
-      <Styled.DeleteButton onClick={onClickDeleteDocument} data-testid="delete" title="Delete" aria-label="Delete">
+      <Styled.DeleteButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">
         <span className="icon fa-solid fa-xmark" aria-hidden="true" />
       </Styled.DeleteButton>
     </Styled.OptionLi>

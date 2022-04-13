@@ -1,16 +1,16 @@
 import {useParams} from "react-router-dom";
 
 import {useGistSelector} from "../../hook/useGistSelector";
-import {DocumentId} from "../../domain/document/DocumentId";
-import {Document} from "../../domain/document/Document";
-import {documentStoreSelectors} from "../../store/documentStore";
+import {NoteId} from "../../domain/note/NoteId";
+import {Note} from "../../domain/note/Note";
+import {noteStoreSelectors} from "../../store/noteStore";
 
 type Params = {
-  gistId: DocumentId;
+  gistId: NoteId;
 }
 
-export function useActiveGist(): {gistId: DocumentId, gist: Document | null} {
-  const gistId = useParams<Params>().gistId as DocumentId;
-  const gist = useGistSelector<Document | null>(state => documentStoreSelectors.getDocument(state, gistId));
+export function useActiveGist(): {gistId: NoteId, gist: Note | null} {
+  const gistId = useParams<Params>().gistId as NoteId;
+  const gist = useGistSelector<Note | null>(state => noteStoreSelectors.getNote(state, gistId));
   return {gistId, gist};
 }

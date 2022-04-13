@@ -1,25 +1,25 @@
-import type { Document } from "../domain/document/Document";
-import type { DocumentMap } from "../domain/document/DocumentMap";
-import type { DocumentId } from "../domain/document/DocumentId";
+import type { Note } from "../domain/note/Note";
+import type { NoteMap } from "../domain/note/NoteMap";
+import type { NoteId } from "../domain/note/NoteId";
 
 const BASE_URL = "https://my-json-server.typicode.com/nevcos/react-plantuml-ide";
 
-export async function getDocuments(): Promise<DocumentMap> {
-  const response = await fetch(BASE_URL + "/documents");
+export async function getNotes(): Promise<NoteMap> {
+  const response = await fetch(BASE_URL + "/notes");
   return await response.json();
 }
 
-export async function postDocument(document: Document): Promise<void> {
-  const response = await fetch(BASE_URL + "/documents/", {
+export async function postNote(note: Note): Promise<void> {
+  const response = await fetch(BASE_URL + "/notes/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(document)
+    body: JSON.stringify(note)
   });
   return await response.json();
 }
 
-export async function putDocument(id: DocumentId, update: Partial<Document>): Promise<void> {
-  const response = await fetch(BASE_URL + `/documents/${id}/`, {
+export async function putNote(id: NoteId, update: Partial<Note>): Promise<void> {
+  const response = await fetch(BASE_URL + `/notes/${id}/`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(update)

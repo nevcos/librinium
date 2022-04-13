@@ -1,12 +1,12 @@
-import { DocumentContent } from "../domain/document/DocumentContent";
-import { DocumentId } from "../domain/document/DocumentId";
-import { DocumentMap } from "../domain/document/DocumentMap";
-import { DocumentName } from "../domain/document/DocumentName";
+import { NoteContent } from "../domain/note/NoteContent";
+import { NoteId } from "../domain/note/NoteId";
+import { NoteMap } from "../domain/note/NoteMap";
+import { NoteName } from "../domain/note/NoteName";
 import { FolderId } from "../domain/folder/FolderId";
 import { FolderMap } from "../domain/folder/FolderMap";
 import { FolderName } from "../domain/folder/FolderName";
 import { Gist } from "../remoteApi/gitHub/Gist";
-import { getFileTypeFromExtension } from "../domain/document/util";
+import { getFileTypeFromExtension } from "../domain/note/util";
 
 export function getFolderFromGists(gists: Gist[]): FolderMap {
   const folders: FolderMap = {};
@@ -21,8 +21,8 @@ export function getFolderFromGists(gists: Gist[]): FolderMap {
   return folders;
 }
 
-export async function getFilesFromGists(gists: Gist[]): Promise<DocumentMap> {
-  const files: DocumentMap = {};
+export async function getFilesFromGists(gists: Gist[]): Promise<NoteMap> {
+  const files: NoteMap = {};
 
   await Promise.all(
     gists.map(async (gist) => {
@@ -32,11 +32,11 @@ export async function getFilesFromGists(gists: Gist[]): Promise<DocumentMap> {
         Object.keys(gist.files).map(async (key) => {
           const file = gist.files[key];
           const codeRequest = await fetch(file.raw_url);
-          const code = (await codeRequest.text()) as DocumentContent;
+          const code = (await codeRequest.text()) as NoteContent;
 
-          files[key as DocumentId] = {
-            id: file.filename as DocumentId,
-            name: file.filename as DocumentName,
+          files[key as NoteId] = {
+            id: file.filename as NoteId,
+            name: file.filename as NoteName,
             code,
             type: getFileTypeFromExtension(file.filename),
             folderId: folderId

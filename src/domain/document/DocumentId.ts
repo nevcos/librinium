@@ -1,5 +1,5 @@
-export type DocumentId = BrandType<string, "DocumentId">;
+export type NoteId = BrandType<string, "NoteId">;
 
-export function getNextDocumentId(): DocumentId {
-  return String(Date.now()) as DocumentId;
+export function getNextNoteId(): NoteId {
+  return String(Date.now()) as NoteId;
 }

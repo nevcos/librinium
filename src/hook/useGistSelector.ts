@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { DocumentStoreState } from "../domain/documentStoreState/DocumentStoreState";
+import { NoteStoreState } from "../domain/noteStoreState/NoteStoreState";
 import { StoreState } from "../store/StoreState";
 
-export function useGistSelector<Selected>(selector: (state: DocumentStoreState) => Selected): Selected {
+export function useGistSelector<Selected>(selector: (state: NoteStoreState) => Selected): Selected {
   return useSelector((state: StoreState) => selector(state.gist));
 }

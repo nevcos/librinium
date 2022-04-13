@@ -11,6 +11,7 @@ export function registerCodeMirrorInstance(cm: CodeMirror.Editor) {
 export function insertImageInEditor(image: ImageDescriptor) {
   if (!codeMirror) throw new Error("No CodeMirror instance");
 
+  // <img:http://plantuml.com/logo3.png{scale=0.5}>
   const imageDescription = image.alt || "image_description";
   const imageSrc = image.src;
   const imageMarkdown = `![${imageDescription}](${imageSrc})`;

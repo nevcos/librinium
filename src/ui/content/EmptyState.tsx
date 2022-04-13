@@ -1,9 +1,9 @@
 import { useGistSelector } from "../../hook/useGistSelector";
 
-import { documentStoreSelectors } from "../../store/documentStore";
+import { noteStoreSelectors } from "../../store/noteStore";
 
 export function EmptyState(): JSX.Element {
-  const isLoading = useGistSelector(documentStoreSelectors.isLoading);
+  const isLoading = useGistSelector(noteStoreSelectors.isLoading);
 
   return isLoading ? (
     <>
@@ -13,7 +13,7 @@ export function EmptyState(): JSX.Element {
   ) : (
     <>
       <span className="icon fa-solid fa-arrow-left-long" />
-      select or create a document
+      select or create a note
     </>
   );
 }

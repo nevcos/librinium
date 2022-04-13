@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import { documentContentTypeValues } from "../../domain/document/DocumentContentType";
-import { documentStoreSelectors } from "../../store/documentStore";
+import { noteContentTypeValues } from "../../domain/note/NoteContentType";
+import { noteStoreSelectors } from "../../store/noteStore";
 
 import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
 import { Spinner } from "../shared/Spinner";
@@ -14,9 +14,9 @@ import { SidebarNavFolder } from "./SidebarNavFolder";
 import { SidebarNavItemLink } from "./SidebarNavItemLink";
 
 export function Sidebar(): JSX.Element {
-  const isLoading = useGistSelector(documentStoreSelectors.isLoading);
-  const folders = useGistSelector(documentStoreSelectors.getFolders);
-  const documentsWithoutFolder = useGistSelector(documentStoreSelectors.getDocumentsWithoutFolder);
+  const isLoading = useGistSelector(noteStoreSelectors.isLoading);
+  const folders = useGistSelector(noteStoreSelectors.getFolders);
+  const notesWithoutFolder = useGistSelector(noteStoreSelectors.getNotesWithoutFolder);
 
   return (
     <Styled.Container>
@@ -46,13 +46,13 @@ export function Sidebar(): JSX.Element {
             </Styled.ListUl>
 
             <Styled.ListUl className="folder-list">
-              {documentsWithoutFolder.map((document) => (
-                <SidebarNavItemLink document={document} key={document.id} />
+              {notesWithoutFolder.map((note) => (
+                <SidebarNavItemLink note={note} key={document.id} />
               ))}
             </Styled.ListUl>
 
             <Styled.ListUl className="create-list">
-              {documentContentTypeValues.map((type) => (
+              {noteContentTypeValues.map((type) => (
                 <SidebarNavItemCreate type={type} key={type} />
               ))}
             </Styled.ListUl>

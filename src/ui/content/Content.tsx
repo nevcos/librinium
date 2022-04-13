@@ -1,8 +1,8 @@
 import {useCallback, useState} from "react";
 import styled from "styled-components";
 
-import type {Document} from "../../domain/document/Document";
-import {DocumentContentType} from "../../domain/document/DocumentContentType";
+import type {Note} from "../../domain/note/Note";
+import {NoteContentType} from "../../domain/note/NoteContentType";
 
 import {useActiveGist} from "../shared/useActiveGist";
 import {CodeEditor} from "../codeEditor/CodeEditor";
@@ -125,14 +125,14 @@ export function Content(): JSX.Element {
   );
 }
 
-function renderPreview(gist: Document | null): JSX.Element | null {
+function renderPreview(gist: Note | null): JSX.Element | null {
   if (!gist) return null;
   switch (gist.type) {
-    case DocumentContentType.PLANT_UML:
+    case NoteContentType.PLANT_UML:
       return <PreviewPlantUml key={gist.id} />;
-    case DocumentContentType.REMARK:
+    case NoteContentType.REMARK:
       return <PreviewPresentation key={gist.id} />;
-    case DocumentContentType.MARKDOWN:
+    case NoteContentType.MARKDOWN:
     default:
       return <PreviewMarkdown key={gist.id} />;
   }

@@ -1,4 +1,4 @@
-import {createEmptyGistState} from "../documentStoreState/documentStoreStateSelectors";
+import {createEmptyGistState} from "../noteStoreState/noteStoreStateSelectors";
 import {createEmptyState as createEmptyUserState} from "../userStoreState/userStoreStateSelectors";
 import {StoreState} from "../../store/StoreState";
 

@@ -1,6 +1,6 @@
 import {ChangeEvent, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import {documentStoreActions} from "../../store/documentStore";
+import {noteStoreActions} from "../../store/noteStore";
 import {useActiveGist} from "../shared/useActiveGist";
 
 export function Toolbar(): JSX.Element {
@@ -10,7 +10,7 @@ export function Toolbar(): JSX.Element {
   const onSelectedFile = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      dispatch(documentStoreActions.insertImage({documentId: gistId, file}));
+      dispatch(noteStoreActions.insertImage({noteId: gistId, file}));
     }
   }, []);
 

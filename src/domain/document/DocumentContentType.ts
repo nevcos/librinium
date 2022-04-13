@@ -1,13 +1,13 @@
-export enum DocumentContentType {
+export enum NoteContentType {
   PLANT_UML = "PLANT_UML",
   REMARK = "REMARK",
   MARKDOWN = "MARKDOWN"
 }
 
-export const documentContentTypeValues = [DocumentContentType.MARKDOWN, DocumentContentType.PLANT_UML, DocumentContentType.REMARK];
+export const noteContentTypeValues = [NoteContentType.MARKDOWN, NoteContentType.PLANT_UML, NoteContentType.REMARK];
 
-export const labelDocumentContentTypeMap = {
-  [DocumentContentType.MARKDOWN]: "Markdown",
-  [DocumentContentType.PLANT_UML]: "PlantUML",
-  [DocumentContentType.REMARK]: "Remark",
+export const labelNoteContentTypeMap = {
+  [NoteContentType.MARKDOWN]: "Markdown",
+  [NoteContentType.PLANT_UML]: "PlantUML",
+  [NoteContentType.REMARK]: "Remark",
 };

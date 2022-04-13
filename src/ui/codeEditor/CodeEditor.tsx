@@ -8,12 +8,12 @@ import "codemirror/mode/markdown/markdown";
 import "./plantumlMode";
 import "codemirror/lib/codemirror.css";
 
-import type {DocumentContent} from "../../domain/document/DocumentContent";
-import {documentStoreActions} from '../../store/documentStore';
+import type {NoteContent} from "../../domain/note/NoteContent";
+import {noteStoreActions} from '../../store/noteStore';
 
 import {RenderingCounter} from "../shared/RenderingCounter";
 import {useActiveGist} from "../shared/useActiveGist";
-import {DocumentContentType} from "../../domain/document/DocumentContentType";
+import {NoteContentType} from "../../domain/note/NoteContentType";
 import {registerCodeMirrorInstance} from "../../service/codeMirrorService";
 
 const CHANGE_DEBOUNCE_MS = 600;
@@ -42,7 +42,7 @@ export function CodeEditor(): JSX.Element {
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
   const onCodeChange = useCallback(
-    (code: DocumentContent) => dispatch(documentStoreActions.updateDocumentContent({id: gistId, code})),
+    (code: NoteContent) => dispatch(noteStoreActions.updateNoteContent({id: gistId, code})),
     []
   );
 
@@ -58,7 +58,7 @@ export function CodeEditor(): JSX.Element {
     codeMirror.current.on(
       "change",
       debounce(() => {
-        onCodeChange(codeMirror.current?.getValue() as DocumentContent);
+        onCodeChange(codeMirror.current?.getValue() as NoteContent);
       }, CHANGE_DEBOUNCE_MS)
     );
     registerCodeMirrorInstance(codeMirror.current);
@@ -80,7 +80,7 @@ export function CodeEditor(): JSX.Element {
   );
 }
 
-function getEditMode(type: DocumentContentType | undefined) {
-  if (type === DocumentContentType.PLANT_UML) return "plantuml";
+function getEditMode(type: NoteContentType | undefined) {
+  if (type === NoteContentType.PLANT_UML) return "plantuml";
   else return "markdown";
 }

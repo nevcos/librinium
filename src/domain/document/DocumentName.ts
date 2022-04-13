@@ -1,1 +1,1 @@
-export type DocumentName = BrandType<string, "DocumentName">;
+export type NoteName = BrandType<string, "NoteName">;
