@@ -37,8 +37,8 @@ describe("<Sidebar />", () => {
 
     expect(await screen.findByTestId("note")).toBeDefined();
     const note = getNotes(getState().gist)[0];
-    expect(document.type).toBe(type);
-    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/gists/${document.id}`)
+    expect(note.type).toBe(type);
+    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/gists/${note.id}`)
   });
 
   it("should open note when clicking on open link for first note", async () => {

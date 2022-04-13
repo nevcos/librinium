@@ -17,13 +17,13 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const to = `/gists/${document.id}`;
+  const to = `/gists/${note.id}`;
   const isActive = navigation.isActive(to);
 
   const onDoubleClickRename = useCallback(() => {
-    const newName = window.prompt("Rename", document.name);
+    const newName = window.prompt("Rename", note.name);
     if (newName) {
-      const id = document.id;
+      const id = note.id;
       const name = newName as NoteName;
       dispatch(noteStoreActions.updateNoteName({ id, name }));
     }
@@ -32,10 +32,10 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const onClickDeleteNote = useCallback(
     (event: MouseEvent) => {
       const isConfirmationBypassed = event.ctrlKey && event.shiftKey;
-      const isConfirmed = isConfirmationBypassed || window.confirm(`Delete file ${document.name}?`);
+      const isConfirmed = isConfirmationBypassed || window.confirm(`Delete file ${note.name}?`);
       if (isConfirmed) {
-        const folderId = document.folderId; // root file will have this as undefined
-        const fileId = document.id;
+        const folderId = note.folderId; // root file will have this as undefined
+        const fileId = note.id;
         dispatch(noteStoreActions.deleteNote({ navigation, fileId, folderId }));
       }
     },
@@ -43,10 +43,10 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   );
 
   return (
-    <Styled.OptionLi key={document.id} className={isActive ? "--active" : ""} data-testid="note">
+    <Styled.OptionLi key={note.id} className={isActive ? "--active" : ""} data-testid="note">
       <Styled.NavLink to={to} onDoubleClick={onDoubleClickRename} data-testid="open">
-        <NoteIcon type={document.type} />
-        <span className="label">{document.name}</span>
+        <NoteIcon type={note.type} />
+        <span className="label">{note.name}</span>
       </Styled.NavLink>
       <Styled.DeleteButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">
         <span className="icon fa-solid fa-xmark" aria-hidden="true" />

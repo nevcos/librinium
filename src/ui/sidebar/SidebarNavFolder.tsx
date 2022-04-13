@@ -43,7 +43,7 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
       </Styled.FolderTitle>
       <Styled.ListUl className="notes-list">
         {files.map((note) => (
-          <SidebarNavItemLink note={note} key={document.id} />
+          <SidebarNavItemLink note={note} key={note.id} />
         ))}
       </Styled.ListUl>
     </Styled.FolderLi>

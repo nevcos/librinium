@@ -11,11 +11,11 @@ import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
 describe("<CodeEditor />", () => {
   it("should display code editor with the expected code", async () => {
     const note = createNewPlantUml();
-    document.code = "Test->Success" as NoteContent;
+    note.code = "Test->Success" as NoteContent;
     const state = createEmptyState()
     addNote(state.gist, {payload: note});
 
-    renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${document.id}`);
+    renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${note.id}`);
 
     // FIXME: Not working
     // expect(await screen.findByText(document.code)).toBeDefined();

@@ -43,7 +43,7 @@ export function setNotes(state: NoteStoreState, action: Payload<NoteMap>): void 
 
 export function addNote(state: NoteStoreState, action: Payload<Note>): void {
   const note = action.payload;
-  state.notes[document.id] = note;
+  state.notes[note.id] = note;
 }
 
 export function updateNoteContent(
@@ -52,8 +52,8 @@ export function updateNoteContent(
 ): void {
   const { id, code } = action.payload;
   const note = getNote(state, id);
-  if (note && document.code !== code) {
-    document.code = code;
+  if (note && note.code !== code) {
+    note.code = code;
   }
 }
 
@@ -73,7 +73,7 @@ export function updateNoteName(
   const { id, name } = action.payload;
   const note = getNote(state, id);
   if (!note) throw new Error("Note not found");
-  document.name = name;
+  note.name = name;
 }
 
 export function startImageUpload(state: NoteStoreState, action: Payload<NoteId>): void {

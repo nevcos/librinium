@@ -47,7 +47,7 @@ export function Sidebar(): JSX.Element {
 
             <Styled.ListUl className="folder-list">
               {notesWithoutFolder.map((note) => (
-                <SidebarNavItemLink note={note} key={document.id} />
+                <SidebarNavItemLink note={note} key={note.id} />
               ))}
             </Styled.ListUl>
 

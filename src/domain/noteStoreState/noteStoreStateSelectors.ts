@@ -65,12 +65,12 @@ export function getNotes(state: NoteStoreState): Note[] {
 
 export function getNotesByFolder(state: NoteStoreState, folderId: FolderId): Note[] {
   const notes = getNotes(state);
-  return notes.filter((note) => document.folderId === folderId);
+  return notes.filter((note) => note.folderId === folderId);
 }
 
 export function getNotesWithoutFolder(state: NoteStoreState): Note[] {
   const notes = getNotes(state);
-  return notes.filter((note) => !document.folderId);
+  return notes.filter((note) => !note.folderId);
 }
 
 export function getNote(state: NoteStoreState, noteId?: NoteId): Note | null {
