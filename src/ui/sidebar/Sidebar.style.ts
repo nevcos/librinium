@@ -181,14 +181,17 @@ export const NavLink = styled(Link)`
 
 export const DeleteButton = styled.button`
   ${sidebarButtonLink}
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
   display: var(--sidebar-labels-display);
 
   &:hover,
   &:focus {
     background-color: var(--sidebar-delete-active-bg-color);
   }
+`;
+
+export const DeleteFileButton = styled(DeleteButton)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 `;
 
 export const NewButton = styled.button`

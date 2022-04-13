@@ -36,7 +36,7 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
       if (isConfirmed) {
         const folderId = note.folderId; // root file will have this as undefined
         const fileId = note.id;
-        dispatch(noteStoreActions.deleteNote({ navigation, noteId: fileId, folderId }));
+        dispatch(noteStoreActions.deleteNote({ navigation, id: fileId, folderId }));
       }
     },
     [note]
@@ -48,9 +48,9 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
         <NoteIcon type={note.type} />
         <span className="label">{note.name}</span>
       </Styled.NavLink>
-      <Styled.DeleteButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">
+      <Styled.DeleteFileButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">
         <span className="icon fa-solid fa-xmark" aria-hidden="true" />
-      </Styled.DeleteButton>
+      </Styled.DeleteFileButton>
     </Styled.OptionLi>
   );
 });
