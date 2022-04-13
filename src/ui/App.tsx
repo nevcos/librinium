@@ -11,9 +11,9 @@ export function App(): JSX.Element {
 
   return (
     <Routes>
-      <Route path="" element={<Navigate to="/gists/" />} />
-      <Route path="gists" element={<EditorPage />}>
-        <Route path=":gistId" element={<Content />} />
+      <Route path="" element={<Navigate to="/note/" />} />
+      <Route path="note" element={<EditorPage />}>
+        <Route path=":noteId" element={<Content />} />
       </Route>
       <Route path="login" element={<LoginPage />} />
       <Route path="about" element={<AboutPage />} />

@@ -4,7 +4,7 @@ import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
 import type { NoteContent } from "../../domain/note/NoteContent";
 import { CodeEditor } from "./CodeEditor";
-import { createNewPlantUml, createEmptyGistState } from '../../domain/noteStoreState/noteStoreStateSelectors';
+import { createNewPlantUml, createEmptyNoteState } from '../../domain/noteStoreState/noteStoreStateSelectors';
 import { addNote } from '../../domain/noteStoreState/noteStoreStateReducers';
 import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
 
@@ -13,9 +13,9 @@ describe("<CodeEditor />", () => {
     const note = createNewPlantUml();
     note.code = "Test->Success" as NoteContent;
     const state = createEmptyState()
-    addNote(state.gist, {payload: note});
+    addNote(state.note, {payload: note});
 
-    renderWithRoutingAndStore(<CodeEditor />, state, `/gists/${note.id}`);
+    renderWithRoutingAndStore(<CodeEditor />, state, `/note/${note.id}`);
 
     // FIXME: Not working
     // expect(await screen.findByText(document.code)).toBeDefined();

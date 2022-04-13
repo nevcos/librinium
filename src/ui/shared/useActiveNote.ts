@@ -6,11 +6,11 @@ import {Note} from "../../domain/note/Note";
 import {noteStoreSelectors} from "../../store/noteStore";
 
 type Params = {
-  gistId: NoteId;
+  noteId: NoteId;
 }
 
-export function useActiveGist(): {gistId: NoteId, gist: Note | null} {
-  const gistId = useParams<Params>().gistId as NoteId;
-  const gist = useGistSelector<Note | null>(state => noteStoreSelectors.getNote(state, gistId));
-  return {gistId, gist};
+export function useActiveNote(): {noteId: NoteId, note: Note | null} {
+  const noteId = useParams<Params>().noteId as NoteId;
+  const note = useGistSelector<Note | null>(state => noteStoreSelectors.getNote(state, noteId));
+  return {noteId, note};
 }

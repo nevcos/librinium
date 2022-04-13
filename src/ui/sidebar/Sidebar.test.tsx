@@ -7,7 +7,7 @@ import type { NoteId } from "../../domain/note/NoteId";
 import type { NoteName } from "../../domain/note/NoteName";
 import type { NoteContent } from "../../domain/note/NoteContent";
 import {NoteContentType, noteContentTypeValues} from "../../domain/note/NoteContentType";
-import { createEmptyGistState, getNotes } from '../../domain/noteStoreState/noteStoreStateSelectors';
+import { createEmptyNoteState, getNotes } from '../../domain/noteStoreState/noteStoreStateSelectors';
 import { addNote } from "../../domain/noteStoreState/noteStoreStateReducers";
 import { renderWithRoutingAndStore } from '../../test/reactTestUtils';
 
@@ -36,20 +36,20 @@ describe("<Sidebar />", () => {
     await clickFirstElement(`create-${type}`);
 
     expect(await screen.findByTestId("note")).toBeDefined();
-    const note = getNotes(getState().gist)[0];
+    const note = getNotes(getState().note)[0];
     expect(note.type).toBe(type);
-    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/gists/${note.id}`)
+    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/note/${note.id}`)
   });
 
   it("should open note when clicking on open link for first note", async () => {
     const state = createEmptyState();
-    addNote(state.gist, {payload: DOCUMENT_0});
-    addNote(state.gist, {payload: DOCUMENT_1});
+    addNote(state.note, {payload: DOCUMENT_0});
+    addNote(state.note, {payload: DOCUMENT_1});
     renderWithRoutingAndStore(<Sidebar />, state);
 
     await clickNthElement("open", 0);
 
-    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/gists/${DOCUMENT_0.id}`)
+    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/note/${DOCUMENT_0.id}`)
   });
 
   it("should rename when double clicking on select button for first note", async () => {
@@ -57,19 +57,19 @@ describe("<Sidebar />", () => {
     jest.spyOn(global, "prompt").mockReturnValueOnce(newName);
 
     const state = createEmptyState();
-    addNote(state.gist, {payload: DOCUMENT_0});
+    addNote(state.note, {payload: DOCUMENT_0});
     const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("open", 0);
 
-    expect(getNotes(getState().gist)[0]?.name).toBe(newName);
+    expect(getNotes(getState().note)[0]?.name).toBe(newName);
   });
 
   it("should delete note when clicking on delete button for note 1", async () => {
     jest.spyOn(global, "confirm").mockReturnValueOnce(true);
 
     const state = createEmptyState();
-    addNote(state.gist, {payload: DOCUMENT_0});
+    addNote(state.note, {payload: DOCUMENT_0});
     const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("delete", 0);

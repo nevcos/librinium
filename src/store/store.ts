@@ -4,7 +4,7 @@ import { userStoreReducer } from "./userStore";
 
 export const store = configureStore({
   reducer: {
-    gist: noteStoreReducer,
+    note: noteStoreReducer,
     user: userStoreReducer
   }
 });

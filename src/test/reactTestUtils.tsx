@@ -20,7 +20,7 @@ export function renderWithRoutingAndStore(
   componentRoutePath: string = "*",
   renderOptions: {[key: string]: unknown} = {}
 ) {
-  const reducer = {user: userStoreReducer, gist: noteStoreReducer};
+  const reducer = {user: userStoreReducer, note: noteStoreReducer};
   const store = configureStore({ reducer, preloadedState });
 
   function Wrapper({ children }: { children: JSX.Element }) {

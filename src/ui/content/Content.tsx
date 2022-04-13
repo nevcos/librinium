@@ -4,7 +4,7 @@ import styled from "styled-components";
 import type {Note} from "../../domain/note/Note";
 import {NoteContentType} from "../../domain/note/NoteContentType";
 
-import {useActiveGist} from "../shared/useActiveGist";
+import {useActiveNote} from "../shared/useActiveNote";
 import {CodeEditor} from "../codeEditor/CodeEditor";
 import {PreviewPlantUml} from "../previewPlantUml/PreviewPlantUml";
 import {PreviewPresentation} from "../previewRemark/PreviewRemark";
@@ -90,7 +90,7 @@ const Styled_PreviewContent = styled.div`
 `;
 
 export function Content(): JSX.Element {
-  const {gist, gistId} = useActiveGist();
+  const {note, noteId} = useActiveNote();
   const [isPreviewActive, setPreviewActive] = useState(false);
 
   const {isDragging, initDraggable} = useDraggable();
@@ -105,7 +105,7 @@ export function Content(): JSX.Element {
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
 
   return (
-    <Styled_Container key={gistId}>
+    <Styled_Container key={noteId}>
       <Styled_EditorContainer className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_EditorContainer>
@@ -116,7 +116,7 @@ export function Content(): JSX.Element {
                                className={isPreviewActive || isDragging ? "--active" : ""}
                                onMouseOut={onCaptureMouseOut}>
         <Styled_PreviewContent>
-            {renderPreview(gist)}
+            {renderPreview(note)}
         </Styled_PreviewContent>
       </Styled_PreviewContainer>
       <Styled_MouseCapture className={isPreviewActive || isDragging ? "" : "--active"}
@@ -125,15 +125,15 @@ export function Content(): JSX.Element {
   );
 }
 
-function renderPreview(gist: Note | null): JSX.Element | null {
-  if (!gist) return null;
-  switch (gist.type) {
+function renderPreview(note: Note | null): JSX.Element | null {
+  if (!note) return null;
+  switch (note.type) {
     case NoteContentType.PLANT_UML:
-      return <PreviewPlantUml key={gist.id} />;
+      return <PreviewPlantUml key={note.id} />;
     case NoteContentType.REMARK:
-      return <PreviewPresentation key={gist.id} />;
+      return <PreviewPresentation key={note.id} />;
     case NoteContentType.MARKDOWN:
     default:
-      return <PreviewMarkdown key={gist.id} />;
+      return <PreviewMarkdown key={note.id} />;
   }
 }

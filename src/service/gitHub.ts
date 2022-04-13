@@ -21,7 +21,7 @@ export function getFolderFromGists(gists: Gist[]): FolderMap {
   return folders;
 }
 
-export async function getFilesFromGists(gists: Gist[]): Promise<NoteMap> {
+export async function getNotesFromGists(gists: Gist[]): Promise<NoteMap> {
   const files: NoteMap = {};
 
   await Promise.all(

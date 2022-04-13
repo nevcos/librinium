@@ -11,9 +11,9 @@ describe("<PreviewPlantUml />", () => {
     const note = createNewPlantUml()
     note.code = code;
     const state = createEmptyState();
-    addNote(state.gist, {payload: note});
+    addNote(state.note, {payload: note});
 
-    const {renderResult} = renderWithRoutingAndStore(<PreviewPlantUml />, state, `/gists/${note.id}`, "/gists/:gistId");
+    const {renderResult} = renderWithRoutingAndStore(<PreviewPlantUml />, state, `/note/${note.id}`, "/note/:noteId");
     const img = renderResult.container.querySelector("img");
 
     expect(img?.src).toBe("http://www.plantuml.com/plantuml/png/~1UDeBIIqkqRKBBarEJYqk1W0X4GJb");

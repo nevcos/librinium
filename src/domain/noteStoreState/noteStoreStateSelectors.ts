@@ -8,7 +8,7 @@ import { NoteContentType } from "../note/NoteContentType";
 import { Folder } from "../folder/Folder";
 import { FolderId } from "../folder/FolderId";
 
-export function createEmptyGistState(): NoteStoreState {
+export function createEmptyNoteState(): NoteStoreState {
   return {
     isLoading: false,
     isUploadingImage: null,

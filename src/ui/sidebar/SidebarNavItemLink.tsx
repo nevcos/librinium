@@ -17,7 +17,7 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const to = `/gists/${note.id}`;
+  const to = `/note/${note.id}`;
   const isActive = navigation.isActive(to);
 
   const onDoubleClickRename = useCallback(() => {
@@ -36,7 +36,7 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
       if (isConfirmed) {
         const folderId = note.folderId; // root file will have this as undefined
         const fileId = note.id;
-        dispatch(noteStoreActions.deleteNote({ navigation, fileId, folderId }));
+        dispatch(noteStoreActions.deleteNote({ navigation, noteId: fileId, folderId }));
       }
     },
     [note]

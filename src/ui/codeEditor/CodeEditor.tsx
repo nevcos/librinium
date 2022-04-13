@@ -12,7 +12,7 @@ import type {NoteContent} from "../../domain/note/NoteContent";
 import {noteStoreActions} from '../../store/noteStore';
 
 import {RenderingCounter} from "../shared/RenderingCounter";
-import {useActiveGist} from "../shared/useActiveGist";
+import {useActiveNote} from "../shared/useActiveNote";
 import {NoteContentType} from "../../domain/note/NoteContentType";
 import {registerCodeMirrorInstance} from "../../service/codeMirrorService";
 
@@ -32,17 +32,17 @@ const CodeEditorDiv = styled.div`
 `;
 
 export function CodeEditor(): JSX.Element {
-  const {gist, gistId} = useActiveGist();
+  const {note, noteId} = useActiveNote();
   const dispatch = useDispatch();
 
-  const code = gist?.code || "";
-  const type = gist?.type;
+  const code = note?.code || "";
+  const type = note?.type;
 
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
   const onCodeChange = useCallback(
-    (code: NoteContent) => dispatch(noteStoreActions.updateNoteContent({id: gistId, code})),
+    (code: NoteContent) => dispatch(noteStoreActions.updateNoteContent({id: noteId, code})),
     []
   );
 

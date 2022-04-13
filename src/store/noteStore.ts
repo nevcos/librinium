@@ -9,7 +9,7 @@ import { NoteId } from "../domain/note/NoteId";
 import { UseNavigationApi } from "../ui/shared/useNavigation";
 import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
-import { getFilesFromGists, getFolderFromGists } from "../service/gitHub";
+import { getNotesFromGists, getFolderFromGists } from "../service/gitHub";
 import { insertImageInEditor } from "../service/codeMirrorService";
 import { FolderId } from "../domain/folder/FolderId";
 
@@ -19,7 +19,7 @@ export const storeName = "note";
 
 export const noteStore = createSlice({
   name: storeName,
-  initialState: selectors.createEmptyGistState(),
+  initialState: selectors.createEmptyNoteState(),
   reducers
 });
 
@@ -31,9 +31,9 @@ const fetchNotes = createAsyncThunk(`${storeName}/fetchNotes`, async (_, thunkAP
   try {
     const gists = await GitHubApi.getGists();
     const folders = getFolderFromGists(gists);
-    const files = await getFilesFromGists(gists);
+    const notes = await getNotesFromGists(gists);
     thunkAPI.dispatch(noteStore.actions.setFolders(folders));
-    thunkAPI.dispatch(noteStore.actions.setNotes(files));
+    thunkAPI.dispatch(noteStore.actions.setNotes(notes));
   } catch (error) {
     throw error;
     // FIXME
@@ -49,7 +49,7 @@ const createNewNote = createAsyncThunk(
     const newNote = selectors.createNewNote(type);
     try {
       thunkAPI.dispatch(noteStore.actions.addNote(newNote));
-      navigation.navigate(`/gists/${newDocument.id}`, { replace: false });
+      navigation.navigate(`/note/${newNote.id}`, { replace: false });
     } catch (error) {
       throw error;
       // FIXME
@@ -66,18 +66,18 @@ export const putNoteThunk = createAsyncThunk(`${storeName}/putNote`, async (note
 const deleteNote = createAsyncThunk(
   `${storeName}/deleteNote`,
   async (
-    { navigation, fileId, folderId }: { navigation: UseNavigationApi; fileId: NoteId; folderId?: FolderId },
+    { navigation, noteId, folderId }: { navigation: UseNavigationApi; noteId: NoteId; folderId?: FolderId },
     thunkAPI
   ) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
       if (folderId) {
-        thunkAPI.dispatch(noteStore.actions.deleteNote(fileId));
+        thunkAPI.dispatch(noteStore.actions.deleteNote(noteId));
 
-        GitHubApi.deleteGistFile(folderId, fileId);
-        const isActiveRoute = navigation.isActive(`/gists/${fileId}`);
+        GitHubApi.deleteGistFile(folderId, noteId);
+        const isActiveRoute = navigation.isActive(`/note/${noteId}`);
         if (isActiveRoute) {
-          navigation.navigate(`/gists/`, { replace: false });
+          navigation.navigate("/note/", { replace: false });
         }
       }
     } catch (error) {
@@ -100,7 +100,7 @@ const deleteFolder = createAsyncThunk(
 
       // TODO: redirect could be improved
       // - we need to verify if one of the files from the folder being deleted is the active route
-      navigation.navigate(`/gists/`, { replace: false });
+      navigation.navigate(`/note/`, { replace: false });
     } catch (error) {
       throw error;
       // FIXME

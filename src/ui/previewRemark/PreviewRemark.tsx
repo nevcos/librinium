@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import {useActiveGist} from "../shared/useActiveGist";
+import {useActiveNote} from "../shared/useActiveNote";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
@@ -41,8 +41,8 @@ const Container = styled.div`
 `;
 
 export function PreviewPresentation() {
-  const {gist} = useActiveGist();
-  const code = gist?.code || "";
+  const {note} = useActiveNote();
+  const code = note?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
   const currentSlide = useRef<number>();
 
