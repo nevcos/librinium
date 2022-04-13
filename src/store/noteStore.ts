@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { Note } from "../domain/note/Note";
 import type { NoteContentType } from "../domain/note/NoteContentType";
-import * as NotesApi from "../remoteApi/notesApi";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
 import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
@@ -49,7 +48,6 @@ const createNewNote = createAsyncThunk(
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     const newNote = selectors.createNewNote(type);
     try {
-      // await NotesApi.postNote(newNote);
       thunkAPI.dispatch(noteStore.actions.addNote(newNote));
       navigation.navigate(`/gists/${newDocument.id}`, { replace: false });
     } catch (error) {
@@ -62,7 +60,7 @@ const createNewNote = createAsyncThunk(
 );
 
 export const putNoteThunk = createAsyncThunk(`${storeName}/putNote`, async (note: Note, thunkAPI) => {
-  await NotesApi.putNote(document.id, note);
+  // TODO
 });
 
 const deleteNote = createAsyncThunk(
