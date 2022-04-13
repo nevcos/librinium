@@ -125,10 +125,6 @@ export const Nav = styled.nav`
     padding: var(--sidebar-padding);
     padding-top: 0;
   }
-
-  .documents-list {
-    padding-top: var(--input-padding);
-  }
 `;
 
 export const ListUl = styled.ul`
@@ -155,6 +151,8 @@ export const OptionLi = styled.li`
 `;
 
 export const FolderLi = styled.li`
+  scroll-snap-align: start;
+
   display: flex;
   flex-direction: column;
 
@@ -163,6 +161,15 @@ export const FolderLi = styled.li`
 
   &:last-child  {
     padding-bottom: 0;
+  }
+`;
+
+export const FolderTitle = styled.div`
+  display: flex;
+  align-items: center;
+
+  > .label {
+    width: 100%;
   }
 `;
 

@@ -6,6 +6,7 @@ import type { DocumentContent } from "../document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { getDocument } from './documentStoreStateSelectors';
 import { FolderMap } from "../folder/FolderMap";
+import { FolderId } from "../folder/FolderId";
 
 interface Payload<T> {
   payload: T;
@@ -15,6 +16,22 @@ interface Payload<T> {
 
 export function setFolders(state: DocumentStoreState, action: Payload<FolderMap>): void {
   state.folders = action.payload;
+}
+
+export function deleteFolder(state: DocumentStoreState, action: Payload<FolderId>): void {
+  const id = action.payload;
+
+  // delete folder
+  delete state.folders[id];
+
+  // delete folder files
+  let key: DocumentId;
+  for (key in state.documents) {
+    const file = state.documents[key];
+    if (file.folderId === id) {
+      delete state.documents[key];
+    }
+  }
 }
 
 // endregion

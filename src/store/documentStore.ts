@@ -12,6 +12,7 @@ import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
 import { getFilesFromGists, getFolderFromGists } from "../service/gitHub";
 import { insertImageInEditor } from "../service/codeMirrorService";
+import { FolderId } from "../domain/folder/FolderId";
 
 export const storeName = "document";
 
@@ -26,7 +27,7 @@ export const documentStore = createSlice({
 //#endregion
 //#region Thunks
 
-const fetchGists = createAsyncThunk(`${storeName}/fetchGists`, async (_, thunkAPI) => {
+const fetchDocuments = createAsyncThunk(`${storeName}/fetchDocuments`, async (_, thunkAPI) => {
   thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
   try {
     const gists = await GitHubApi.getGists();
@@ -34,19 +35,6 @@ const fetchGists = createAsyncThunk(`${storeName}/fetchGists`, async (_, thunkAP
     const files = await getFilesFromGists(gists);
     thunkAPI.dispatch(documentStore.actions.setFolders(folders));
     thunkAPI.dispatch(documentStore.actions.setDocuments(files));
-  } catch (error) {
-    throw error;
-    // FIXME
-  } finally {
-    thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
-  }
-});
-
-const fetchDocuments = createAsyncThunk(`${storeName}/fetchDocuments`, async (_, thunkAPI) => {
-  thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
-  try {
-    const documents = await DocumentsApi.getDocuments();
-    thunkAPI.dispatch(documentStore.actions.setDocuments(documents));
   } catch (error) {
     throw error;
     // FIXME
@@ -79,13 +67,20 @@ export const putDocumentThunk = createAsyncThunk(`${storeName}/putDocument`, asy
 
 const deleteDocument = createAsyncThunk(
   `${storeName}/deleteDocument`,
-  async ({ navigation, id }: { navigation: UseNavigationApi; id: DocumentId }, thunkAPI) => {
+  async (
+    { navigation, fileId, folderId }: { navigation: UseNavigationApi; fileId: DocumentId; folderId?: FolderId },
+    thunkAPI
+  ) => {
     thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
     try {
-      thunkAPI.dispatch(documentStore.actions.deleteDocument(id));
-      const isActiveRoute = navigation.isActive(`/gists/${id}`);
-      if (isActiveRoute) {
-        navigation.navigate(`/gists/`, { replace: false });
+      if (folderId) {
+        thunkAPI.dispatch(documentStore.actions.deleteDocument(fileId));
+
+        GitHubApi.deleteGistFile(folderId, fileId);
+        const isActiveRoute = navigation.isActive(`/gists/${fileId}`);
+        if (isActiveRoute) {
+          navigation.navigate(`/gists/`, { replace: false });
+        }
       }
     } catch (error) {
       throw error;
@@ -96,18 +91,41 @@ const deleteDocument = createAsyncThunk(
   }
 );
 
-const insertImage = createAsyncThunk(`${storeName}/uploadImage`, async ({documentId, file}: {documentId: DocumentId, file: File}, thunkAPI) => {
-  thunkAPI.dispatch(documentStore.actions.startImageUpload(documentId));
-  try {
-    // const imgurFile = await uploadFile(file);
-    const imgurFile = mockedImage;
-    const imageDescriptor = fromImgurFileToImageDescriptor(imgurFile);
-    insertImageInEditor(imageDescriptor);
-  } catch (error) {
-    thunkAPI.dispatch(documentStore.actions.finishImageUpload(documentId));
-    throw error;
+const deleteFolder = createAsyncThunk(
+  `${storeName}/deleteFolder`,
+  async ({ navigation, id }: { navigation: UseNavigationApi; id: FolderId }, thunkAPI) => {
+    thunkAPI.dispatch(documentStore.actions.setIsLoading(true));
+    try {
+      thunkAPI.dispatch(documentStore.actions.deleteFolder(id));
+
+      GitHubApi.deleteGist(id);
+
+      // TODO: redirect could be improved
+      // - we need to verify if one of the files from the folder being deleted is the active route
+      navigation.navigate(`/gists/`, { replace: false });
+    } catch (error) {
+      throw error;
+      // FIXME
+    } finally {
+      thunkAPI.dispatch(documentStore.actions.setIsLoading(false));
+    }
   }
-});
+);
+const insertImage = createAsyncThunk(
+  `${storeName}/uploadImage`,
+  async ({ documentId, file }: { documentId: DocumentId; file: File }, thunkAPI) => {
+    thunkAPI.dispatch(documentStore.actions.startImageUpload(documentId));
+    try {
+      // const imgurFile = await uploadFile(file);
+      const imgurFile = mockedImage;
+      const imageDescriptor = fromImgurFileToImageDescriptor(imgurFile);
+      insertImageInEditor(imageDescriptor);
+    } catch (error) {
+      thunkAPI.dispatch(documentStore.actions.finishImageUpload(documentId));
+      throw error;
+    }
+  }
+);
 
 //#endregion
 //#region Export
@@ -116,10 +134,10 @@ export const documentStoreSelectors = selectors;
 export const documentStoreReducer = documentStore.reducer;
 export const documentStoreActions = {
   ...documentStore.actions,
-  fetchGists,
   fetchDocuments,
   createNewDocument,
   deleteDocument,
+  deleteFolder,
   insertImage
 };
 
