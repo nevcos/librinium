@@ -14,7 +14,6 @@ const Styled_Grid = styled.div`
   display: grid;
   grid-template-areas: "sidebar content";
   grid-template-columns: fit-content(100%) auto;
-  grid-gap: 0.6rem;
 `;
 
 const Styled_Sidebar = styled.aside`

@@ -1,4 +1,4 @@
-import {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useState} from "react";
 import styled from "styled-components";
 
 import type {Document} from "../../domain/document/Document";
@@ -11,24 +11,21 @@ import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
 import {PreviewMarkdown} from "../previewMarkdown/PreviewMarkdown";
-import {uploadFile} from "../../remoteApi/imgurApi";
+import {uploadFile} from "../../remoteApi/imgur/imgurApi";
+import {Toolbar} from "../toolbar/Toolbar";
 
 const Styled_Container = styled.div`
   position: relative;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
-const Styled_Toolbar = styled.header`
-  background-color: var(--color-gray-lightest);
-`;
-
-const Styled_Editor = styled.section`
-  position: relative;
-  height: 100%;
-  width: 100%;
+const Styled_EditorContainer = styled.section`
+  flex-grow: 1;
   overflow: auto;
-  border-top: 1px solid var(--color-gray-light);
+  border-bottom: 1px solid var(--color-gray-light);
 
   z-index: 2;
   transition: opacity 200ms;
@@ -37,6 +34,19 @@ const Styled_Editor = styled.section`
     pointer-events: none;
     opacity: .5;
   }
+`;
+
+const Styled_ToolbarContainer = styled.menu`
+  flex-shrink: 0;
+
+  // reset UL
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  // code-mirror gutter size which is ... variable
+  padding-left: 30px;
+  background-color: var(--color-gray-lightest);
 `;
 
 const Styled_PreviewContainer = styled.section`
@@ -91,24 +101,17 @@ export function Content(): JSX.Element {
     node && initZoomable(node);
   }, []);
 
-  const onSelectedFile = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      uploadFile(file);
-    }
-  }, []);
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
 
-
   return (
     <Styled_Container key={gistId}>
-      <Styled_Toolbar>
-        <input type="file" onChange={onSelectedFile} />
-      </Styled_Toolbar>
-      <Styled_Editor className={isPreviewActive || isDragging ? "" : "--active"}>
+      <Styled_EditorContainer className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
-      </Styled_Editor>
+      </Styled_EditorContainer>
+      <Styled_ToolbarContainer>
+        <Toolbar />
+      </Styled_ToolbarContainer>
       <Styled_PreviewContainer ref={previewContainerRef}
                                className={isPreviewActive || isDragging ? "--active" : ""}
                                onMouseOut={onCaptureMouseOut}>

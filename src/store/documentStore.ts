@@ -7,6 +7,9 @@ import * as reducers from "../domain/documentStoreState/documentStoreStateReduce
 import * as selectors from "../domain/documentStoreState/documentStoreStateSelectors";
 import {DocumentId} from "../domain/document/DocumentId";
 import {UseNavigationApi} from "../ui/shared/useNavigation";
+import {fromImgurFileToImageDescriptor, uploadFile} from "../remoteApi/imgur/imgurApi";
+import {insertImageInEditor} from "../service/codeMirrorService";
+import {mockedImage} from "../remoteApi/imgur/model/mockedImage";
 
 export const storeName = "document";
 
@@ -69,6 +72,19 @@ const deleteDocument = createAsyncThunk(`${storeName}/deleteDocument`, async ({n
   }
 });
 
+const insertImage = createAsyncThunk(`${storeName}/uploadImage`, async ({documentId, file}: {documentId: DocumentId, file: File}, thunkAPI) => {
+  thunkAPI.dispatch(documentStore.actions.startImageUpload(documentId));
+  try {
+    // const imgurFile = await uploadFile(file);
+    const imgurFile = mockedImage;
+    const imageDescriptor = fromImgurFileToImageDescriptor(imgurFile);
+    insertImageInEditor(imageDescriptor);
+  } catch (error) {
+    thunkAPI.dispatch(documentStore.actions.finishImageUpload(documentId));
+    throw error;
+  }
+});
+
 //#endregion
 //#region Export
 
@@ -78,7 +94,8 @@ export const documentStoreActions = {
   ...documentStore.actions,
   fetchDocuments,
   createNewDocument,
-  deleteDocument
+  deleteDocument,
+  insertImage
 };
 
 //#endregion

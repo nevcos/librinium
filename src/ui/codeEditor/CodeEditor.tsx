@@ -14,6 +14,7 @@ import {documentStoreActions} from '../../store/documentStore';
 import {RenderingCounter} from "../shared/RenderingCounter";
 import {useActiveGist} from "../shared/useActiveGist";
 import {DocumentContentType} from "../../domain/document/DocumentContentType";
+import {registerCodeMirrorInstance} from "../../service/codeMirrorService";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -60,6 +61,7 @@ export function CodeEditor(): JSX.Element {
         onCodeChange(codeMirror.current?.getValue() as DocumentContent);
       }, CHANGE_DEBOUNCE_MS)
     );
+    registerCodeMirrorInstance(codeMirror.current);
   }, [type]);
 
   useLayoutEffect(() => {

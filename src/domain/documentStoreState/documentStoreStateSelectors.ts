@@ -9,6 +9,7 @@ import { DocumentContentType } from "../document/DocumentContentType";
 export function createEmptyGistState(): DocumentStoreState {
   return {
     isLoading: false,
+    isUploadingImage: null,
     error: null,
     documents: {}
   };

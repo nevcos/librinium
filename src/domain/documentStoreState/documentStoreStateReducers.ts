@@ -5,6 +5,7 @@ import type { DocumentId } from "../document/DocumentId";
 import type { DocumentContent } from "../document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { getDocument } from './documentStoreStateSelectors';
+import {ImageDescriptor} from "../image/Image";
 
 interface Payload<T> { payload: T; }
 
@@ -39,4 +40,12 @@ export function updateDocumentName(state: DocumentStoreState, action: Payload<{i
   const document = getDocument(state, id);
   if (!document) throw new Error("Document not found");
   document.name = name;
+}
+
+export function startImageUpload(state: DocumentStoreState, action: Payload<DocumentId>): void {
+  state.isUploadingImage = action.payload;
+}
+
+export function finishImageUpload(state: DocumentStoreState, action: Payload<DocumentId>): void {
+  state.isUploadingImage = null;
 }
