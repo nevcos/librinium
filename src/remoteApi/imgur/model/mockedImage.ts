@@ -1,0 +1,32 @@
+import { ImgurFile } from "./ImgurFile";
+
+export const mockedImage: ImgurFile = {
+  id: "eHMV6HN",
+  title: null,
+  description: null,
+  datetime: 1649804726,
+  type: "image\/png",
+  animated: false,
+  width: 200,
+  height: 300,
+  size: 96041,
+  views: 0,
+  bandwidth: 0,
+  vote: null,
+  favorite: false,
+  nsfw: null,
+  section: null,
+  account_url: null,
+  account_id: 0,
+  is_ad: false,
+  in_most_viral: false,
+  has_sound: false,
+  tags: [],
+  ad_type: 0,
+  ad_url: "",
+  edited: "0",
+  in_gallery: false,
+  deletehash: "8yIjnLIvnmZ3se0",
+  name: "",
+  link: "https://picsum.photos/200/300"
+};

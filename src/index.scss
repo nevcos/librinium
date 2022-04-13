@@ -3,6 +3,8 @@
   --color-secondary: #d45500;
   --color-white: white;
   --color-white-rgb: 255, 255, 255;
+  --color-gray-lightest: #f7f7f7;
+  --color-gray-light: #ddd;
   --color-gray-dark: #333;
   --color-gray-dark-rgb: 51, 51, 51;
   --color-black: #000;
@@ -19,7 +21,7 @@
 
   --scroll-color: var(--color-black);
   --scroll-size: 1.3em;
-  
+
   --sidebar-width: 250px;
   --sidebar-max-width: 500px;
   --sidebar-min-width: 200px;
@@ -32,7 +34,7 @@
   --sidebar-item-hover-bg-color: rgba(var(--color-black-rgb), .3);
   --sidebar-item-selected-bg-color: rgba(var(--color-black-rgb), .8);
   --sidebar-delete-active-bg-color: var(--color-secondary);
-  
+
   padding: 0;
   margin: 0;
   font-family: var(--font-default-family);

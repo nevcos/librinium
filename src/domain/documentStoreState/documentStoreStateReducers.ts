@@ -4,7 +4,7 @@ import type { Document } from "../document/Document";
 import type { DocumentId } from "../document/DocumentId";
 import type { DocumentContent } from "../document/DocumentContent";
 import type { DocumentStoreState } from "./DocumentStoreState";
-import { getDocument } from "./documentStoreStateSelectors";
+import { getDocument } from './documentStoreStateSelectors';
 import { FolderMap } from "../folder/FolderMap";
 
 interface Payload<T> {
@@ -57,6 +57,14 @@ export function updateDocumentName(
   const document = getDocument(state, id);
   if (!document) throw new Error("Document not found");
   document.name = name;
+}
+
+export function startImageUpload(state: DocumentStoreState, action: Payload<DocumentId>): void {
+  state.isUploadingImage = action.payload;
+}
+
+export function finishImageUpload(state: DocumentStoreState, action: Payload<DocumentId>): void {
+  state.isUploadingImage = null;
 }
 
 // endregion

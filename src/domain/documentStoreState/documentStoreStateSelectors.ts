@@ -11,6 +11,7 @@ import { FolderId } from "../folder/FolderId";
 export function createEmptyGistState(): DocumentStoreState {
   return {
     isLoading: false,
+    isUploadingImage: null,
     error: null,
     documents: {},
     folders: {}
