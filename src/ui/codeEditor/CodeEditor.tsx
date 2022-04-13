@@ -36,7 +36,7 @@ export function CodeEditor(): JSX.Element {
   const dispatch = useDispatch();
 
   // TODO: Gists with empty content are deleted
-  const code = note?.code || "file can't be empty";
+  const code = note?.code || "";
   const type = note?.type;
   const folderId = note?.folderId;
 
