@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { documentStoreActions } from "../../store/documentStore";
 
 import { Sidebar } from "../sidebar/Sidebar";
-import { EmptyState } from '../content/EmptyState';
+import { EmptyState } from "../content/EmptyState";
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -48,7 +48,7 @@ export function EditorPage() {
   const outlet = useOutlet();
 
   useEffect(() => {
-    dispatch(documentStoreActions.fetchDocuments());
+    dispatch(documentStoreActions.fetchGists());
   }, []);
 
   return (

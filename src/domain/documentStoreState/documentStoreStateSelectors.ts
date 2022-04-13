@@ -5,12 +5,15 @@ import type { DocumentContent } from "../document/DocumentContent";
 import type { Document } from "../document/Document";
 import type { DocumentStoreState } from "./DocumentStoreState";
 import { DocumentContentType } from "../document/DocumentContentType";
+import { Folder } from "../folder/Folder";
+import { FolderId } from "../folder/FolderId";
 
 export function createEmptyGistState(): DocumentStoreState {
   return {
     isLoading: false,
     error: null,
-    documents: {}
+    documents: {},
+    folders: {}
   };
 }
 
@@ -59,7 +62,21 @@ export function getDocuments(state: DocumentStoreState): Document[] {
   return Object.values(state.documents);
 }
 
+export function getDocumentsByFolder(state: DocumentStoreState, folderId: FolderId): Document[] {
+  const documents = getDocuments(state);
+  return documents.filter((document) => document.folderId === folderId);
+}
+
+export function getDocumentsWithoutFolder(state: DocumentStoreState): Document[] {
+  const documents = getDocuments(state);
+  return documents.filter((document) => !document.folderId);
+}
+
 export function getDocument(state: DocumentStoreState, documentId?: DocumentId): Document | null {
   if (!documentId) return null;
   return state.documents[documentId] || null;
+}
+
+export function getFolders(state: DocumentStoreState): Folder[] {
+  return Object.values(state.folders);
 }

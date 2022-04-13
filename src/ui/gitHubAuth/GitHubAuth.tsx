@@ -1,5 +1,5 @@
 import { useUserSelector } from "../../hook/useUserSelector";
-import { GITHUB_AUTH_ENDPOINT } from "../../remoteApi/githubApi";
+import { GITHUB_AUTH_ENDPOINT } from "../../remoteApi/gitHub/gitHubApi";
 
 export function GitHubAuth(): JSX.Element {
   const isAuth = useUserSelector((state) => state.isAuth);

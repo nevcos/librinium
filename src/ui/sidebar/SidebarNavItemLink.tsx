@@ -1,11 +1,11 @@
 import { memo, MouseEvent, useCallback } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 import type { Document } from "../../domain/document/Document";
 import { DocumentName } from "../../domain/document/DocumentName";
 import { documentStoreActions } from "../../store/documentStore";
 
-import {useNavigation} from "../shared/useNavigation";
+import { useNavigation } from "../shared/useNavigation";
 import { DocumentIcon } from "./DocumentIcon";
 import * as Styled from "./Sidebar.style";
 
@@ -34,7 +34,7 @@ export const SidebarNavItemLink = memo(function ({ document }: Props) {
       const isConfirmed = isConfirmationBypassed || window.confirm(`Delete ${document.name}?`);
       if (isConfirmed) {
         const id = document.id;
-        dispatch(documentStoreActions.deleteDocument({navigation, id}));
+        dispatch(documentStoreActions.deleteDocument({ navigation, id }));
       }
     },
     [document]
