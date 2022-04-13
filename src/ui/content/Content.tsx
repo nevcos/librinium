@@ -82,15 +82,11 @@ export function Content(): JSX.Element {
 
   const previewContainerRef = useCallback(node => {
     node && initDraggable(node);
-  }, []);
-
-  const previewContentRef = useCallback(node => {
     node && initZoomable(node);
   }, []);
 
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
-
 
   return (
     <Styled_Container key={gistId}>
@@ -100,7 +96,7 @@ export function Content(): JSX.Element {
       <Styled_PreviewContainer ref={previewContainerRef}
                                className={isPreviewActive || isDragging ? "--active" : ""}
                                onMouseOut={onCaptureMouseOut}>
-        <Styled_PreviewContent ref={previewContentRef}>
+        <Styled_PreviewContent>
             {renderPreview(gist)}
         </Styled_PreviewContent>
       </Styled_PreviewContainer>

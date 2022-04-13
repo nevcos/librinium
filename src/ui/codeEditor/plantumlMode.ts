@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import CodeMirror from "codemirror";
 
 /*
@@ -6,11 +8,11 @@ import CodeMirror from "codemirror";
  */
 CodeMirror.defineMode("plantuml", function(config, parserConfig) {
 
-    var debug = function() {
+    let debug = function() {
         return false;
     }
 
-    var parseType = function(stream) {
+    let parseType = function(stream) {
         if (stream.match(/void/)) {
             return "keyword";
         }
@@ -29,7 +31,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
         return null;
     }
 
-    var matchColors = function(stream, state) {
+    let matchColors = function(stream, state) {
         if (stream.match(/Blue/)){
             return "atom";
         }
@@ -51,61 +53,61 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
         return undefined;
     };
 
-    var isMethod = function(stream) {
-        var i = 0;
-        var readSoFar = "";
+    let isMethod = function(stream) {
+        let i = 0;
+        let readSoFar = "";
         while (true) {
             if (stream.eol()){
                 stream.backUp(i);
                 return false;
-            };
+            }
             if (stream.peek() === '(') {
                 stream.backUp(i);
                 return true;
             }
             i += 1;
             readSoFar = readSoFar + stream.next();
-        };
+        }
     };
 
-    var restOfLine = function(stream) {
-        var i = 0;
-        var readSoFar = "";
+    let restOfLine = function(stream) {
+        let i = 0;
+        let readSoFar = "";
         while (true) {
             if (stream.eol()){
                 stream.backUp(i);
                 return readSoFar;
-            };
+            }
             i += 1;
             readSoFar = readSoFar + stream.next();
-        };
+        }
     };
 
-    var hasTypeAfter = function(stream) {
-        var i = 0;
-        var readSoFar = "";
+    let hasTypeAfter = function(stream) {
+        let i = 0;
+        let readSoFar = "";
         while (true) {
             if (stream.eol()){
                 stream.backUp(i);
                 return false;
-            };
+            }
             if (stream.peek() === ':') {
                 stream.backUp(i);
                 return true;
             }
             i += 1;
             readSoFar = readSoFar + stream.next();
-        };
+        }
     };
 
-    var isAlphaNum = function(c) {
+    let isAlphaNum = function(c) {
         // only letters change
-        var isLetter = c.toUpperCase() != c.toLowerCase();
+        let isLetter = c.toUpperCase() != c.toLowerCase();
         return (c >= '0' && c <= '9') || isLetter;
     };
 
-    var matchAny = function(readSoFar, keywords) {
-        var index;
+    let matchAny = function(readSoFar, keywords) {
+        let index;
         for (index = 0; index < keywords.length; ++index) {
             if (keywords[index] === readSoFar) {
                 return true;
@@ -114,9 +116,9 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
         return false;
     };
 
-    var keywords = function(stream, keywords) {
-        var i = 0;
-        var readSoFar = "";
+    let keywords = function(stream, keywords) {
+        let i = 0;
+        let readSoFar = "";
         while (true) {
             if (matchAny(readSoFar, keywords) && (stream.eol() || !stream.peek() || !isAlphaNum(stream.peek())))  {
                 return true;
@@ -124,17 +126,17 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
             if (stream.eol() || !stream.peek() || stream.peek()===' ' || stream.peek()==='\t'){
                 stream.backUp(i);
                 return false;
-            };
+            }
             readSoFar = readSoFar + stream.next();
             i += 1;
-        };
+        }
     };
 
     // The problem is that it should keep looking for other longer matches
     // for example: '()-' and '()--', as it match the first one it should keep going
-    var operators = function(stream, keywords) {
-        var i = 0;
-        var readSoFar = "";
+    let operators = function(stream, keywords) {
+        let i = 0;
+        let readSoFar = "";
         while (true) {
             if (matchAny(readSoFar, keywords) && (stream.eol() || !stream.peek() || isAlphaNum(stream.peek()) || stream.peek()===' ' || stream.peek()==='\t'))  {
                 return true;
@@ -142,10 +144,10 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
             if (stream.eol() || !stream.peek() || stream.peek()===' ' || stream.peek()==='\t'){
                 stream.backUp(i);
                 return false;
-            };
+            }
             readSoFar = readSoFar + stream.next();
             i += 1;
-        };
+        }
     };
 
     return {
@@ -434,7 +436,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                     state.name = "class def"
                     return null;
                 }
-                var pt = parseType(stream);
+                let pt = parseType(stream);
                 if (pt){
                     state.name = "class def attribute after type";
                     return pt;
@@ -452,7 +454,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                     return "def";
                 }
                 if (stream.match(/:/)) {
-                    state.name = "class def attribute var type";
+                    state.name = "class def attribute let type";
                     return "operator";
                 }
             } else if (state.name === "class def attribute after type"){
@@ -463,7 +465,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                 if (stream.match(/[A-Za-z_]+/)) {
                     return "def";
                 }
-            } else if (state.name === "class def attribute var type"){
+            } else if (state.name === "class def attribute let type"){
                 if (stream.sol()){
                     state.name = "class def"
                     return null;
@@ -495,7 +497,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                     state.name = "class def"
                     return null;
                 }
-                var pt = parseType(stream);
+                let pt = parseType(stream);
                 if (pt){
                     return pt;
                 }
@@ -520,7 +522,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                     state.name = "class def"
                     return null;
                 }
-                var pt = parseType(stream);
+                let pt = parseType(stream);
                 if (pt){
                     return pt;
                 }
@@ -545,7 +547,7 @@ CodeMirror.defineMode("plantuml", function(config, parserConfig) {
                 if (stream.match(/,/)) {
                     return null;
                 }
-                var pt = parseType(stream);
+                let pt = parseType(stream);
                 if (pt){
                     return pt;
                 }
