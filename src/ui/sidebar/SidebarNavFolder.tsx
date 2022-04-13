@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, MouseEvent, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { Folder } from "../../domain/folder/Folder";
