@@ -60,6 +60,7 @@ const Styled_MouseCapture = styled.div`
   right: 0;
   bottom: 0;
   width: 50%;
+  // border-left: 3px solid var(--color-gray-lightest);
 
   z-index: 3;
   cursor: move;

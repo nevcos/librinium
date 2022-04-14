@@ -82,7 +82,15 @@ export function CodeEditor(): JSX.Element {
   );
 }
 
-function getEditMode(type: NoteContentType | undefined) {
-  if (type === NoteContentType.PLANT_UML) return "plantuml";
-  else return "markdown";
+function getEditMode(type: NoteContentType | undefined): string | undefined {
+  switch (type) {
+    case NoteContentType.PLANT_UML:
+      return "plantuml"
+    case NoteContentType.MARKDOWN:
+    case NoteContentType.REMARK:
+      return "markdown"
+    case NoteContentType.TEXT:
+    default:
+      return undefined;
+  }
 }
