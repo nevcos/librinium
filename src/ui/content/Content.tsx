@@ -11,7 +11,6 @@ import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
 import {PreviewMarkdown} from "../previewMarkdown/PreviewMarkdown";
-import {uploadFile} from "../../remoteApi/imgur/imgurApi";
 import {Toolbar} from "../toolbar/Toolbar";
 
 const Styled_Container = styled.div`
@@ -23,7 +22,8 @@ const Styled_Container = styled.div`
 `;
 
 const Styled_EditorContainer = styled.section`
-  flex-grow: 1;
+  width: 100%;
+  height: 100%;
   overflow: auto;
   border-bottom: 1px solid var(--color-gray-light);
 
@@ -34,19 +34,6 @@ const Styled_EditorContainer = styled.section`
     pointer-events: none;
     opacity: .5;
   }
-`;
-
-const Styled_ToolbarContainer = styled.menu`
-  flex-shrink: 0;
-
-  // reset UL
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  // code-mirror gutter size which is ... variable
-  padding-left: 30px;
-  background-color: var(--color-gray-lightest);
 `;
 
 const Styled_PreviewContainer = styled.section`
@@ -109,9 +96,7 @@ export function Content(): JSX.Element {
       <Styled_EditorContainer className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_EditorContainer>
-      <Styled_ToolbarContainer>
-        <Toolbar />
-      </Styled_ToolbarContainer>
+      <Toolbar />
       <Styled_PreviewContainer ref={previewContainerRef}
                                className={isPreviewActive || isDragging ? "--active" : ""}
                                onMouseOut={onCaptureMouseOut}>

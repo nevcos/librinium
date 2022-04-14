@@ -84,7 +84,7 @@ export function Sidebar(): JSX.Element {
           <span className="icon fa-solid fa-wand-magic-sparkles" aria-hidden="true" /> double click a name to rename
         </div>
         <div>
-          <span className="icon fa-solid fa-wand-magic-sparkles" aria-hidden="true" /> <kbd>ctrl</kbd> + mouse wheel to
+          <span className="icon fa-solid fa-magnifying-glass" aria-hidden="true" /> <kbd>ctrl</kbd> + mouse wheel to
           zoom preview
         </div>
         <div>
