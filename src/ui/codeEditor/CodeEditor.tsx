@@ -1,5 +1,5 @@
-import {useCallback, useLayoutEffect, useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import { useCallback, useLayoutEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import CodeMirror from "codemirror";
 import debounce from "lodash.debounce";
 import styled from "styled-components";
@@ -8,13 +8,13 @@ import "codemirror/mode/markdown/markdown";
 import "./plantumlMode";
 import "codemirror/lib/codemirror.css";
 
-import type {NoteContent} from "../../domain/note/NoteContent";
-import {noteStoreActions} from '../../store/noteStore';
+import type { NoteContent } from "../../domain/note/NoteContent";
+import { noteStoreActions } from "../../store/noteStore";
 
-import {RenderingCounter} from "../shared/RenderingCounter";
-import {useActiveNote} from "../shared/useActiveNote";
-import {NoteContentType} from "../../domain/note/NoteContentType";
-import {registerCodeMirrorInstance} from "../../service/codeMirrorService";
+import { RenderingCounter } from "../shared/RenderingCounter";
+import { useActiveNote } from "../shared/useActiveNote";
+import { NoteContentType } from "../../domain/note/NoteContentType";
+import { registerCodeMirrorInstance } from "../../service/codeMirrorService";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -32,17 +32,19 @@ const CodeEditorDiv = styled.div`
 `;
 
 export function CodeEditor(): JSX.Element {
-  const {note, noteId} = useActiveNote();
+  const { note, noteId } = useActiveNote();
   const dispatch = useDispatch();
 
+  // TODO: Gists with empty content are deleted
   const code = note?.code || "";
   const type = note?.type;
+  const folderId = note?.folderId;
 
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
   const onCodeChange = useCallback(
-    (code: NoteContent) => dispatch(noteStoreActions.updateNoteContent({id: noteId, code})),
+    (code: NoteContent) => dispatch(noteStoreActions.updateNote({ id: noteId, code, folderId })),
     []
   );
 
