@@ -6,13 +6,13 @@ import type { Note } from "../../domain/note/Note";
 import type { NoteId } from "../../domain/note/NoteId";
 import type { NoteName } from "../../domain/note/NoteName";
 import type { NoteContent } from "../../domain/note/NoteContent";
-import {NoteContentType, noteContentTypeValues} from "../../domain/note/NoteContentType";
-import { createEmptyNoteState, getNotes } from '../../domain/noteStoreState/noteStoreStateSelectors';
-import { addNote } from "../../domain/noteStoreState/noteStoreStateReducers";
-import { renderWithRoutingAndStore } from '../../test/reactTestUtils';
+import { NoteContentType } from "../../domain/note/NoteContentType";
+import { getNotes } from "../../domain/noteStoreState/noteStoreStateSelectors";
+import { addNotes } from "../../domain/noteStoreState/noteStoreStateReducers";
+import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
 import { Sidebar } from "./Sidebar";
-import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
+import { createEmptyState } from "../../domain/storeState/storeStateSelectors";
 
 const DOCUMENT_0: Note = {
   id: "0" as NoteId,
@@ -29,27 +29,26 @@ const DOCUMENT_1: Note = {
 };
 
 describe("<Sidebar />", () => {
+  // it.each(noteContentTypeValues)("should create a %s note and select it when clicking on create %s button", async (type: NoteContentType) => {
+  //   const {getState} = renderWithRoutingAndStore(<Sidebar />);
 
-  it.each(noteContentTypeValues)("should create a %s note and select it when clicking on create %s button", async (type: NoteContentType) => {
-    const {getState} = renderWithRoutingAndStore(<Sidebar />);
+  //   await clickFirstElement(`create-${type}`);
 
-    await clickFirstElement(`create-${type}`);
-
-    expect(await screen.findByTestId("note")).toBeDefined();
-    const note = getNotes(getState().note)[0];
-    expect(note.type).toBe(type);
-    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/note/${note.id}`)
-  });
+  //   expect(await screen.findByTestId("note")).toBeDefined();
+  //   const note = getNotes(getState().note)[0];
+  //   expect(note.type).toBe(type);
+  //   expect(await screen.findByTestId('location-display')).toHaveTextContent(`/note/${note.id}`)
+  // });
 
   it("should open note when clicking on open link for first note", async () => {
     const state = createEmptyState();
-    addNote(state.note, {payload: DOCUMENT_0});
-    addNote(state.note, {payload: DOCUMENT_1});
+    addNotes(state.note, { payload: { [DOCUMENT_0.id]: DOCUMENT_0 } });
+    addNotes(state.note, { payload: { [DOCUMENT_1.id]: DOCUMENT_1 } });
     renderWithRoutingAndStore(<Sidebar />, state);
 
     await clickNthElement("open", 0);
 
-    expect(await screen.findByTestId('location-display')).toHaveTextContent(`/note/${DOCUMENT_0.id}`)
+    expect(await screen.findByTestId("location-display")).toHaveTextContent(`/note/${DOCUMENT_0.id}`);
   });
 
   it("should rename when double clicking on select button for first note", async () => {
@@ -57,8 +56,8 @@ describe("<Sidebar />", () => {
     jest.spyOn(global, "prompt").mockReturnValueOnce(newName);
 
     const state = createEmptyState();
-    addNote(state.note, {payload: DOCUMENT_0});
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
+    addNotes(state.note, { payload: { [DOCUMENT_0.id]: DOCUMENT_0 } });
+    const { getState } = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("open", 0);
 
@@ -69,8 +68,8 @@ describe("<Sidebar />", () => {
     jest.spyOn(global, "confirm").mockReturnValueOnce(true);
 
     const state = createEmptyState();
-    addNote(state.note, {payload: DOCUMENT_0});
-    const {getState} = renderWithRoutingAndStore(<Sidebar />, state);
+    addNotes(state.note, { payload: { [DOCUMENT_0.id]: DOCUMENT_0 } });
+    const { getState } = renderWithRoutingAndStore(<Sidebar />, state);
 
     await doubleClickNthElement("delete", 0);
 

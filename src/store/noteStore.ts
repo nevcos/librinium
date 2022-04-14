@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import type { NoteContentType } from "../domain/note/NoteContentType";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
 import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
@@ -12,6 +11,11 @@ import { getNotesFromGists, getFolderFromGists } from "../service/gitHub";
 import { insertImageInEditor } from "../service/codeMirrorService";
 import { FolderId } from "../domain/folder/FolderId";
 import { NoteContent } from "../domain/note/NoteContent";
+import { NoteName } from "../domain/note/NoteName";
+import { Note } from "../domain/note/Note";
+import { getFileTypeFromExtension } from "../domain/note/util";
+import { FolderName } from "../domain/folder/FolderName";
+import { NoteMap } from "../domain/note/NoteMap";
 
 export const storeName = "note";
 
@@ -32,8 +36,8 @@ const fetchNotes = createAsyncThunk(`${storeName}/fetchNotes`, async (_, thunkAP
     const gists = await GitHubApi.getGists();
     const folders = getFolderFromGists(gists);
     const notes = await getNotesFromGists(gists);
-    thunkAPI.dispatch(noteStore.actions.setFolders(folders));
-    thunkAPI.dispatch(noteStore.actions.setNotes(notes));
+    thunkAPI.dispatch(noteStore.actions.addFolders(folders));
+    thunkAPI.dispatch(noteStore.actions.addNotes(notes));
   } catch (error) {
     throw error;
     // FIXME
@@ -42,13 +46,33 @@ const fetchNotes = createAsyncThunk(`${storeName}/fetchNotes`, async (_, thunkAP
   }
 });
 
-const createNewNote = createAsyncThunk(
-  `${storeName}/postNote`,
-  async ({ navigation, type }: { navigation: UseNavigationApi; type: NoteContentType }, thunkAPI) => {
+const createNote = createAsyncThunk(
+  `${storeName}/createNote`,
+  async (
+    { navigation, filename, folderId }: { navigation: UseNavigationApi; filename: NoteName; folderId: FolderId },
+    thunkAPI
+  ) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
-    const newNote = selectors.createNewNote(type);
+
+    const newNoteId = filename as unknown as NoteId;
+    const newNote: Note = {
+      id: newNoteId,
+      name: filename,
+      type: getFileTypeFromExtension(filename),
+      code: "# hello from librinium" as NoteContent, // new Gist files are required to have content
+      folderId
+    };
+    const newNoteMap: NoteMap = { [newNoteId]: newNote };
+
     try {
-      thunkAPI.dispatch(noteStore.actions.addNote(newNote));
+      thunkAPI.dispatch(noteStore.actions.addNotes(newNoteMap));
+
+      if (newNote.folderId) {
+        GitHubApi.updateGist(newNote.folderId, newNote.name, newNote.code);
+      } else {
+        // TODO
+      }
+
       navigation.navigate(`/note/${newNote.id}`, { replace: false });
     } catch (error) {
       throw error;
@@ -89,6 +113,7 @@ const updateNote = createAsyncThunk(
     }
   }
 );
+
 const deleteNote = createAsyncThunk(
   `${storeName}/deleteNote`,
   async ({ navigation, id, folderId }: { navigation: UseNavigationApi; id: NoteId; folderId?: FolderId }, thunkAPI) => {
@@ -114,6 +139,23 @@ const deleteNote = createAsyncThunk(
     }
   }
 );
+
+const createFolder = createAsyncThunk(`${storeName}/createFolder`, async ({ name }: { name: FolderName }, thunkAPI) => {
+  thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
+
+  try {
+    const gist = [await GitHubApi.createGist(name)];
+    const folders = getFolderFromGists(gist);
+    const notes = await getNotesFromGists(gist);
+    thunkAPI.dispatch(noteStore.actions.addFolders(folders));
+    thunkAPI.dispatch(noteStore.actions.addNotes(notes));
+  } catch (error) {
+    throw error;
+    // FIXME
+  } finally {
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
+  }
+});
 
 const deleteFolder = createAsyncThunk(
   `${storeName}/deleteFolder`,
@@ -160,8 +202,9 @@ export const noteStoreReducer = noteStore.reducer;
 export const noteStoreActions = {
   ...noteStore.actions,
   fetchNotes,
-  createNewNote,
+  createNote,
   updateNote,
+  createFolder,
   deleteNote,
   deleteFolder,
   insertImage

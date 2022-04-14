@@ -18,23 +18,6 @@ export function createEmptyNoteState(): NoteStoreState {
   };
 }
 
-export function createNewNote(type: NoteContentType): Note {
-  const id = getNextNoteId();
-  switch (type) {
-    case NoteContentType.PLANT_UML:
-      return createNewPlantUml();
-    case NoteContentType.REMARK:
-      return createNewRemark();
-    default:
-      return {
-        id,
-        name: `New Note` as NoteName,
-        code: `New->Note` as NoteContent,
-        type
-      };
-  }
-}
-
 export function createNewPlantUml(): Note {
   const id = getNextNoteId();
   return {

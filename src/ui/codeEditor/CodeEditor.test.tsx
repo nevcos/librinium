@@ -4,16 +4,16 @@ import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
 import type { NoteContent } from "../../domain/note/NoteContent";
 import { CodeEditor } from "./CodeEditor";
-import { createNewPlantUml, createEmptyNoteState } from '../../domain/noteStoreState/noteStoreStateSelectors';
-import { addNote } from '../../domain/noteStoreState/noteStoreStateReducers';
-import {createEmptyState} from "../../domain/storeState/storeStateSelectors";
+import { createNewPlantUml } from "../../domain/noteStoreState/noteStoreStateSelectors";
+import { addNotes } from "../../domain/noteStoreState/noteStoreStateReducers";
+import { createEmptyState } from "../../domain/storeState/storeStateSelectors";
 
 describe("<CodeEditor />", () => {
   it("should display code editor with the expected code", async () => {
     const note = createNewPlantUml();
     note.code = "Test->Success" as NoteContent;
-    const state = createEmptyState()
-    addNote(state.note, {payload: note});
+    const state = createEmptyState();
+    addNotes(state.note, { payload: { [note.id]: note } });
 
     renderWithRoutingAndStore(<CodeEditor />, state, `/note/${note.id}`);
 

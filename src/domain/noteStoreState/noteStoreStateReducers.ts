@@ -4,18 +4,31 @@ import type { Note } from "../note/Note";
 import type { NoteId } from "../note/NoteId";
 import type { NoteContent } from "../note/NoteContent";
 import type { NoteStoreState } from "./NoteStoreState";
-import { getNote } from './noteStoreStateSelectors';
+import { getNote } from "./noteStoreStateSelectors";
 import { FolderMap } from "../folder/FolderMap";
 import { FolderId } from "../folder/FolderId";
+import { Folder } from "../folder/Folder";
 
 interface Payload<T> {
   payload: T;
 }
 
+// endregion
+// region common
+
+export function setIsLoading(state: NoteStoreState, action: Payload<boolean>): void {
+  state.isLoading = action.payload;
+}
+
 // region Folders
 
-export function setFolders(state: NoteStoreState, action: Payload<FolderMap>): void {
-  state.folders = action.payload;
+export function addFolders(state: NoteStoreState, action: Payload<FolderMap>): void {
+  const folders = action.payload;
+  let key: FolderId;
+  for (key in folders) {
+    const folder = folders[key] as Folder;
+    state.folders[key] = folder;
+  }
 }
 
 export function deleteFolder(state: NoteStoreState, action: Payload<FolderId>): void {
@@ -37,19 +50,16 @@ export function deleteFolder(state: NoteStoreState, action: Payload<FolderId>): 
 // endregion
 // region Notes
 
-export function setNotes(state: NoteStoreState, action: Payload<NoteMap>): void {
-  state.notes = action.payload;
+export function addNotes(state: NoteStoreState, action: Payload<NoteMap>): void {
+  const notes = action.payload;
+  let key: NoteId;
+  for (key in notes) {
+    const note = notes[key] as Note;
+    state.notes[key] = note;
+  }
 }
 
-export function addNote(state: NoteStoreState, action: Payload<Note>): void {
-  const note = action.payload;
-  state.notes[note.id] = note;
-}
-
-export function updateNoteContent(
-  state: NoteStoreState,
-  action: Payload<{ id: NoteId; code: NoteContent }>
-): void {
+export function updateNoteContent(state: NoteStoreState, action: Payload<{ id: NoteId; code: NoteContent }>): void {
   const { id, code } = action.payload;
   const note = getNote(state, id);
   if (note && note.code !== code) {
@@ -62,19 +72,15 @@ export function deleteNote(state: NoteStoreState, action: Payload<NoteId>): void
   delete state.notes[id];
 }
 
-export function setIsLoading(state: NoteStoreState, action: Payload<boolean>): void {
-  state.isLoading = action.payload;
-}
-
-export function updateNoteName(
-  state: NoteStoreState,
-  action: Payload<{ id: NoteId; name: NoteName }>
-): void {
+export function updateNoteName(state: NoteStoreState, action: Payload<{ id: NoteId; name: NoteName }>): void {
   const { id, name } = action.payload;
   const note = getNote(state, id);
   if (!note) throw new Error("Note not found");
   note.name = name;
 }
+
+// endregion
+// region image
 
 export function startImageUpload(state: NoteStoreState, action: Payload<NoteId>): void {
   state.isUploadingImage = action.payload;

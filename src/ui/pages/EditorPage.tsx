@@ -34,14 +34,6 @@ const Styled_Content = styled.div`
   overflow: hidden;
 `;
 
-const Styled_EmptyState = styled.div`
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-  color: #ccc;
-`;
-
 export function EditorPage() {
   const dispatch = useDispatch();
   const outlet = useOutlet();
@@ -55,15 +47,7 @@ export function EditorPage() {
       <Styled_Sidebar>
         <Sidebar />
       </Styled_Sidebar>
-      <Styled_Content>
-        {outlet ? (
-          outlet
-        ) : (
-          <Styled_EmptyState>
-            <EmptyState />
-          </Styled_EmptyState>
-        )}
-      </Styled_Content>
+      <Styled_Content>{outlet ? outlet : <EmptyState />}</Styled_Content>
     </Styled_Grid>
   );
 }

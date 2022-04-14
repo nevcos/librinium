@@ -5,3 +5,7 @@ export function createEmptyState(): UserStoreState {
     isAuth: false
   };
 }
+
+export function isAuth(state: UserStoreState): boolean {
+  return state.isAuth;
+}

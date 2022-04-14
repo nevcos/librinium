@@ -7,7 +7,7 @@ import { FolderId } from "../folder/FolderId";
 export interface Note {
   id: NoteId;
   name: NoteName;
-  code: NoteContent;
+  code?: NoteContent;
   type: NoteContentType;
   folderId?: FolderId;
 }

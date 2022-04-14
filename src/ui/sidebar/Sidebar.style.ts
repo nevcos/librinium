@@ -26,6 +26,24 @@ export const sidebarButtonLink = css`
   }
 `;
 
+export const Icon = styled.span`
+  font-size: var(--icon-size);
+  width: 15px;
+  text-align: center;
+`;
+
+// Auth
+
+export const AuthText = styled.p`
+  padding: calc(var(--sidebar-padding) * 2);
+`;
+
+export const AuthLink = styled.a`
+  display: block;
+  padding-top: 1rem;
+  color: var(--color-secondary);
+`;
+
 // Container
 
 export const Container = styled.div`
@@ -177,6 +195,16 @@ export const NavLink = styled(Link)`
   ${sidebarButtonLink}
   text-decoration: none;
   width: 100%;
+`;
+
+export const DefaultIconButton = styled.button`
+  ${sidebarButtonLink}
+  display: var(--sidebar-labels-display);
+
+  &:hover,
+  &:focus {
+    background-color: var(--sidebar-delete-active-bg-color);
+  }
 `;
 
 export const DeleteButton = styled.button`

@@ -1,22 +1,36 @@
 import { Link } from "react-router-dom";
 
-import { noteContentTypeValues } from "../../domain/note/NoteContentType";
-import { noteStoreSelectors } from "../../store/noteStore";
+import { noteStoreActions, noteStoreSelectors } from "../../store/noteStore";
 
-import { GitHubAuth } from "../gitHubAuth/GitHubAuth";
+import { GitHubAuth } from "./GitHubAuth";
 import { Spinner } from "../shared/Spinner";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import logoPath from "./assets/logo.svg";
 import * as Styled from "./Sidebar.style";
-import { SidebarNavItemCreate } from "./SidebarNavItemCreate";
 import { useGistSelector } from "../../hook/useGistSelector";
 import { SidebarNavFolder } from "./SidebarNavFolder";
 import { SidebarNavItemLink } from "./SidebarNavItemLink";
+import { useCallback, MouseEvent } from "react";
+import { FolderName } from "../../domain/folder/FolderName";
+import { useDispatch } from "react-redux";
+import { useUserSelector } from "../../hook/useUserSelector";
+import { userStoreSelectors } from "../../store/userStore";
 
 export function Sidebar(): JSX.Element {
+  const dispatch = useDispatch();
+
+  const isAuth = useUserSelector(userStoreSelectors.isAuth);
   const isLoading = useGistSelector(noteStoreSelectors.isLoading);
   const folders = useGistSelector(noteStoreSelectors.getFolders);
   const notesWithoutFolder = useGistSelector(noteStoreSelectors.getNotesWithoutFolder);
+
+  const onClickCreateFolder = useCallback((event: MouseEvent) => {
+    const name = prompt("Please enter the folder name") as FolderName;
+
+    if (name) {
+      dispatch(noteStoreActions.createFolder({ name }));
+    }
+  }, []);
 
   return (
     <Styled.Container>
@@ -51,11 +65,16 @@ export function Sidebar(): JSX.Element {
               ))}
             </Styled.ListUl>
 
-            <Styled.ListUl className="create-list">
-              {noteContentTypeValues.map((type) => (
-                <SidebarNavItemCreate type={type} key={type} />
-              ))}
-            </Styled.ListUl>
+            {isAuth && (
+              <Styled.ListUl className="create-list">
+                <Styled.OptionLi>
+                  <Styled.NewButton onClick={onClickCreateFolder}>
+                    <Styled.Icon className="fa fa-solid fa-folder" title="Create new folder" aria-hidden="true" />
+                    <span className="label">new folder ...</span>
+                  </Styled.NewButton>
+                </Styled.OptionLi>
+              </Styled.ListUl>
+            )}
           </>
         )}
       </Styled.Nav>
