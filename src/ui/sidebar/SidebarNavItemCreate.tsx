@@ -1,7 +1,7 @@
 import { memo, useCallback } from "react";
 import { useDispatch } from 'react-redux';
 
-import { NoteContentType, labelNoteContentTypeMap } from "../../domain/note/NoteContentType";
+import { NoteContentType, noteContentTypesInfo } from "../../domain/note/NoteContentType";
 import { noteStoreActions } from "../../store/noteStore";
 
 import {useNavigation} from "../shared/useNavigation";
@@ -23,7 +23,7 @@ export const SidebarNavItemCreate = memo(function ({ type }: Props) {
     <Styled.OptionLi>
       <Styled.NewButton onClick={onClickCreate} data-testid={`create-${type}`}>
         <NoteIcon type={type} />
-        <span className="label">new {labelNoteContentTypeMap[type]} ...</span>
+        <span className="label">new {noteContentTypesInfo[type].label} ...</span>
       </Styled.NewButton>
     </Styled.OptionLi>
   );
