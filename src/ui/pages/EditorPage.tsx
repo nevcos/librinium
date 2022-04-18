@@ -11,6 +11,7 @@ import { EmptyState } from "../content/EmptyState";
 const Styled_Grid = styled.div`
   background-color: white;
   height: 100%;
+  overflow: hidden;
   display: grid;
   grid-template-areas: "sidebar content";
   grid-template-columns: fit-content(100%) auto;
@@ -22,9 +23,9 @@ const Styled_Sidebar = styled.aside`
 
   overflow: hidden;
   width: var(--sidebar-width);
-  max-width: var(--sidebar-max-width);
-  min-width: var(--sidebar-min-width);
-  resize: var(--sidebar-resize);
+  max-width: var(--sidebar-width-max);
+  min-width: var(--sidebar-width-min);
+  resize: horizontal;
 `;
 
 const Styled_Content = styled.div`

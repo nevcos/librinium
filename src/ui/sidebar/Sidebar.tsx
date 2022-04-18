@@ -36,9 +36,9 @@ export function Sidebar(): JSX.Element {
     <Styled.Container>
       <RenderingCounter />
       <Styled.Header>
-        <Styled.ToggleButton aria-label="Expand / Collapse menu" title="Expand / Collapse menu">
-          <span className="icon fa-solid fa-bars" aria-hidden="true" />
-        </Styled.ToggleButton>
+        {/*<Styled.ToggleButton aria-label="Expand / Collapse menu" title="Expand / Collapse menu">*/}
+        {/*  <span className="icon fa-solid fa-bars" aria-hidden="true" />*/}
+        {/*</Styled.ToggleButton>*/}
         <Styled.Logo src={logoPath} alt="librinium" />
         <Styled.Search>
           <span className="icon fa-solid fa-search" aria-hidden="true" />
@@ -69,7 +69,7 @@ export function Sidebar(): JSX.Element {
               <Styled.ListUl className="create-list">
                 <Styled.OptionLi>
                   <Styled.NewButton onClick={onClickCreateFolder}>
-                    <Styled.Icon className="fa fa-solid fa-folder" title="Create new folder" aria-hidden="true" />
+                    <Styled.Icon className="fa fa-solid fa-plus" title="Create new folder" aria-hidden="true" />
                     <span className="label">new folder ...</span>
                   </Styled.NewButton>
                 </Styled.OptionLi>

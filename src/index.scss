@@ -21,13 +21,13 @@
 
   --scroll-color: var(--color-black);
   --scroll-size: 1.3em;
+  --scroll-size-minimized: .7em;
 
   --sidebar-width: 250px;
-  --sidebar-max-width: 500px;
-  --sidebar-min-width: 200px;
+  --sidebar-width-minimized: 50px;
+  --sidebar-width-max: 500px;
+  --sidebar-width-min: 200px;
   --sidebar-padding: .6rem;
-  --sidebar-resize: horizontal;
-  --sidebar-labels-display: initial;
   --sidebar-bg-color: var(--color-brand);
   --sidebar-content-color: var(--color-white);
   --sidebar-content-dimmed-color: rgba(var(--color-white-rgb), .5);
@@ -39,17 +39,6 @@
   margin: 0;
   font-family: var(--font-default-family);
   font-size: var(--font-default-size);
-}
-
-@media (max-width: 800px) {
-    :root {
-      --sidebar-width: 50px;
-      --sidebar-max-width: 50px;
-      --sidebar-min-width: 50px;
-      --sidebar-resize: none;
-      --sidebar-labels-display: none;
-      --scroll-size: .7em;
-    }
 }
 
 html, body, #root {

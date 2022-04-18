@@ -74,6 +74,7 @@ export const ToggleButton = styled.button`
 
 export const Logo = styled.img`
   vertical-align: middle;
+  margin-left: var(--sidebar-padding);
   display: var(--sidebar-labels-display);
 `;
 
@@ -149,22 +150,23 @@ export const ListUl = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-
-  display: grid;
-  grid-gap: 0.2rem;
 `;
 
 export const OptionLi = styled.li`
   display: flex;
   border-radius: var(--input-border-radius);
   scroll-snap-align: start;
+  overflow-x: hidden;
+  opacity: .7;
 
   &:hover {
     background-color: var(--sidebar-item-hover-bg-color);
+    opacity: 1;
   }
 
   &.--active {
     background-color: var(--sidebar-item-selected-bg-color);
+    opacity: 1;
   }
 `;
 
@@ -175,9 +177,10 @@ export const FolderLi = styled.li`
   flex-direction: column;
 
   padding: var(--input-padding);
+  padding-right: 0;
   padding-top: 0;
 
-  &:last-child  {
+  &:last-child {
     padding-bottom: 0;
   }
 `;
@@ -186,8 +189,17 @@ export const FolderTitle = styled.div`
   display: flex;
   align-items: center;
 
+  > .icon {
+    font-size: var(--icon-size);
+  }
+
   > .label {
-    width: 100%;
+    flex-grow: 1;
+    margin-left: var(--sidebar-padding);
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `;
 
@@ -195,11 +207,14 @@ export const NavLink = styled(Link)`
   ${sidebarButtonLink}
   text-decoration: none;
   width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const DefaultIconButton = styled.button`
   ${sidebarButtonLink}
-  display: var(--sidebar-labels-display);
 
   &:hover,
   &:focus {
@@ -209,7 +224,6 @@ export const DefaultIconButton = styled.button`
 
 export const DeleteButton = styled.button`
   ${sidebarButtonLink}
-  display: var(--sidebar-labels-display);
 
   &:hover,
   &:focus {
@@ -235,5 +249,4 @@ export const Footer = styled.footer`
   padding: 1rem 1.2rem;
   font-size: var(--font-small-size);
   color: var(--sidebar-content-dimmed-color);
-  display: var(--sidebar-labels-display);
 `;

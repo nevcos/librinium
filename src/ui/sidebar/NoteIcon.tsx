@@ -1,8 +1,8 @@
 import { memo } from "react";
 
-import {ContentTypeName} from "../../contentType/domain/ContentTypeName";
+import { ContentTypeName } from "../../contentType/domain/ContentTypeName";
 import * as Styled from "./Sidebar.style";
-import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
+import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
 
 const UNKNOWN_TYPE_ICON_CLASS = "file-circle-question";
 const UNKNOWN_TYPE_TITLE = "Unknown type";

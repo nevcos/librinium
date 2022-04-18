@@ -47,6 +47,7 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
   return files.length ? (
     <Styled.FolderLi key={folder.id}>
       <Styled.FolderTitle>
+        <span className="icon fa-solid fa-folder" aria-hidden="true" />
         <span className="label">{folder.name}</span>
         <Styled.DefaultIconButton onClick={onClickCreateNote} title="Create Note" aria-label="Create Note">
           <span className="icon fa-solid fa-plus" aria-hidden="true" />
