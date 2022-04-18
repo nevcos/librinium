@@ -15,7 +15,9 @@ import { NoteName } from "../domain/note/NoteName";
 import { Note } from "../domain/note/Note";
 import { getFileTypeFromExtension } from "../domain/note/util";
 import { FolderName } from "../domain/folder/FolderName";
-import { NoteMap } from "../domain/note/NoteMap";
+import { Gist } from "../remoteApi/gitHub/Gist";
+import { NotePatch } from "../domain/note/NotePatch";
+import { GistFile } from "../remoteApi/gitHub/GistFile";
 
 export const storeName = "note";
 
@@ -54,21 +56,20 @@ const createNote = createAsyncThunk(
   ) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
 
-    const newNoteId = filename as unknown as NoteId;
     const newNote: Note = {
-      id: newNoteId,
+      id: filename as unknown as NoteId,
       name: filename,
       type: getFileTypeFromExtension(filename),
       code: "# hello from librinium" as NoteContent, // new Gist files are required to have content
       folderId
     };
-    const newNoteMap: NoteMap = { [newNoteId]: newNote };
 
     try {
-      thunkAPI.dispatch(noteStore.actions.addNotes(newNoteMap));
+      thunkAPI.dispatch(noteStore.actions.addNotes({ [newNote.id]: newNote }));
 
       if (newNote.folderId) {
-        GitHubApi.updateGist(newNote.folderId, newNote.name, newNote.code);
+        // treating the new note as a patch here because it's actually a patch from a Gists point of view
+        GitHubApi.updateGist(newNote.folderId, convertNotePatchToGistPatch(newNote));
       } else {
         // TODO
       }
@@ -83,25 +84,31 @@ const createNote = createAsyncThunk(
   }
 );
 
-const updateNote = createAsyncThunk(
-  `${storeName}/updateNote`,
-  async (
-    {
-      id,
-      code,
-      folderId
-    }: {
-      id: NoteId;
-      code: NoteContent;
-      folderId?: FolderId;
-    },
-    thunkAPI
-  ) => {
+const updateNote = createAsyncThunk(`${storeName}/updateNote`, async ({ patch }: { patch: NotePatch }, thunkAPI) => {
+  thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
+  try {
+    if (patch.folderId) {
+      thunkAPI.dispatch(noteStore.actions.updateNote(patch));
+      GitHubApi.updateGist(patch.folderId, convertNotePatchToGistPatch(patch));
+    } else {
+      // TODO
+    }
+  } catch (error) {
+    throw error;
+    // FIXME
+  } finally {
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
+  }
+});
+
+const updateNoteName = createAsyncThunk(
+  `${storeName}/updateNoteName`,
+  async ({ patch }: { patch: NotePatch }, thunkAPI) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
-      if (folderId) {
-        thunkAPI.dispatch(noteStore.actions.updateNoteContent({ id, code }));
-        GitHubApi.updateGist(folderId, id, code);
+      if (patch.folderId) {
+        thunkAPI.dispatch(noteStore.actions.updateNote(patch));
+        GitHubApi.updateGist(patch.folderId, convertNotePatchToGistPatch(patch));
       } else {
         // TODO
       }
@@ -204,10 +211,26 @@ export const noteStoreActions = {
   fetchNotes,
   createNote,
   updateNote,
+  updateNoteName,
   createFolder,
   deleteNote,
   deleteFolder,
   insertImage
 };
+
+//#endregion
+//#region Utils
+
+function convertNotePatchToGistPatch(patch: Partial<Note> & { id: NoteId }): Partial<Gist> {
+  const id = patch.id as string;
+  const file: Partial<GistFile> = {};
+
+  if (patch.name) file.filename = patch.name;
+  if (patch.code) file.content = patch.code;
+
+  const payload: Partial<Gist> = { files: { [id]: file } };
+
+  return payload;
+}
 
 //#endregion

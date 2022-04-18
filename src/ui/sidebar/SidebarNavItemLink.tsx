@@ -21,11 +21,9 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const isActive = navigation.isActive(to);
 
   const onDoubleClickRename = useCallback(() => {
-    const newName = window.prompt("Rename", note.name);
-    if (newName) {
-      const id = note.id;
-      const name = newName as NoteName;
-      dispatch(noteStoreActions.updateNoteName({ id, name }));
+    const name = window.prompt("Rename", note.name) as NoteName;
+    if (name) {
+      dispatch(noteStoreActions.updateNoteName({ patch: { id: note.id, name, folderId: note.folderId } }));
     }
   }, [note]);
 

@@ -44,7 +44,7 @@ export function CodeEditor(): JSX.Element {
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
   const onCodeChange = useCallback(
-    (code: NoteContent) => dispatch(noteStoreActions.updateNote({ id: noteId, code, folderId })),
+    (code: NoteContent) => dispatch(noteStoreActions.updateNote({ patch: { id: noteId, code, folderId } })),
     []
   );
 
