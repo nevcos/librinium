@@ -1,13 +1,12 @@
 import type { NoteMap } from "../note/NoteMap";
-import type { NoteName } from "../note/NoteName";
 import type { Note } from "../note/Note";
 import type { NoteId } from "../note/NoteId";
-import type { NoteContent } from "../note/NoteContent";
 import type { NoteStoreState } from "./NoteStoreState";
 import { getNote } from "./noteStoreStateSelectors";
 import { FolderMap } from "../folder/FolderMap";
 import { FolderId } from "../folder/FolderId";
 import { Folder } from "../folder/Folder";
+import { NotePatch } from "../note/NotePatch";
 
 interface Payload<T> {
   payload: T;
@@ -59,24 +58,15 @@ export function addNotes(state: NoteStoreState, action: Payload<NoteMap>): void 
   }
 }
 
-export function updateNoteContent(state: NoteStoreState, action: Payload<{ id: NoteId; code: NoteContent }>): void {
-  const { id, code } = action.payload;
-  const note = getNote(state, id);
-  if (note && note.code !== code) {
-    note.code = code;
-  }
+export function updateNote(state: NoteStoreState, action: Payload<NotePatch>): void {
+  const patch = action.payload;
+  const updatedNote = { ...getNote(state, patch.id), ...patch } as Note;
+  state.notes[patch.id] = updatedNote;
 }
 
 export function deleteNote(state: NoteStoreState, action: Payload<NoteId>): void {
   const id = action.payload;
   delete state.notes[id];
-}
-
-export function updateNoteName(state: NoteStoreState, action: Payload<{ id: NoteId; name: NoteName }>): void {
-  const { id, name } = action.payload;
-  const note = getNote(state, id);
-  if (!note) throw new Error("Note not found");
-  note.name = name;
 }
 
 // endregion
