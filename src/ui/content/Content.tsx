@@ -2,16 +2,13 @@ import {useCallback, useState} from "react";
 import styled from "styled-components";
 
 import type {Note} from "../../domain/note/Note";
-import {NoteContentType} from "../../domain/note/NoteContentType";
 
 import {useActiveNote} from "../shared/useActiveNote";
 import {CodeEditor} from "../codeEditor/CodeEditor";
-import {PreviewPlantUml} from "../previewPlantUml/PreviewPlantUml";
-import {PreviewPresentation} from "../previewRemark/PreviewRemark";
 import {useZoomable} from "./useZoomable";
 import {useDraggable} from "./useDraggable";
-import {PreviewMarkdown} from "../previewMarkdown/PreviewMarkdown";
 import {Toolbar} from "../toolbar/Toolbar";
+import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
 
 const Styled_Container = styled.div`
   position: relative;
@@ -113,13 +110,10 @@ export function Content(): JSX.Element {
 
 function renderPreview(note: Note | null): JSX.Element | null {
   if (!note) return null;
-  switch (note.type) {
-    case NoteContentType.PLANT_UML:
-      return <PreviewPlantUml key={note.id} />;
-    case NoteContentType.REMARK:
-      return <PreviewPresentation key={note.id} />;
-    case NoteContentType.MARKDOWN:
-    default:
-      return <PreviewMarkdown key={note.id} />;
-  }
+
+  const contentType = getContentTypePluginByName(note.type);
+  const PreviewComponent = contentType?.previewComponent;
+  if (!PreviewComponent) return null;
+
+  return <PreviewComponent note={note}/>;
 }

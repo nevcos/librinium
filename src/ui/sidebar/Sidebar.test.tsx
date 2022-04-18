@@ -6,26 +6,26 @@ import type { Note } from "../../domain/note/Note";
 import type { NoteId } from "../../domain/note/NoteId";
 import type { NoteName } from "../../domain/note/NoteName";
 import type { NoteContent } from "../../domain/note/NoteContent";
-import { NoteContentType } from "../../domain/note/NoteContentType";
 import { getNotes } from "../../domain/noteStoreState/noteStoreStateSelectors";
 import { addNotes } from "../../domain/noteStoreState/noteStoreStateReducers";
+import { createEmptyState } from "../../domain/storeState/storeStateSelectors";
+import { ContentTypeName } from "../../contentType/domain/ContentTypeName";
 import { renderWithRoutingAndStore } from "../../test/reactTestUtils";
 
 import { Sidebar } from "./Sidebar";
-import { createEmptyState } from "../../domain/storeState/storeStateSelectors";
 
 const DOCUMENT_0: Note = {
   id: "0" as NoteId,
   name: "note0" as NoteName,
   code: "code0" as NoteContent,
-  type: NoteContentType.PLANT_UML
+  type: "PlantUML" as ContentTypeName
 };
 
 const DOCUMENT_1: Note = {
   id: "1" as NoteId,
   name: "note1" as NoteName,
   code: "code1" as NoteContent,
-  type: NoteContentType.PLANT_UML
+  type: "PlantUML" as ContentTypeName
 };
 
 describe("<Sidebar />", () => {

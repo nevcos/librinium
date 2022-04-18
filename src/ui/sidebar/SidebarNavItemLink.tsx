@@ -45,7 +45,7 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   return (
     <Styled.OptionLi key={note.id} className={isActive ? "--active" : ""} data-testid="note">
       <Styled.NavLink to={to} onDoubleClick={onDoubleClickRename} data-testid="open">
-        <NoteIcon type={note.type} />
+        <NoteIcon contentTypeName={note.type} />
         <span className="label">{note.name}</span>
       </Styled.NavLink>
       <Styled.DeleteFileButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">

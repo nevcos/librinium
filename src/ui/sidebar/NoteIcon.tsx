@@ -1,20 +1,19 @@
 import { memo } from "react";
+
+import {ContentTypeName} from "../../contentType/domain/ContentTypeName";
 import * as Styled from "./Sidebar.style";
-import { NoteContentType } from "../../domain/note/NoteContentType";
+import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
 
-const iconByType = {
-  [NoteContentType.PLANT_UML]: { title: "PlantUML diagram", className: "icon fa-solid fa-diagram-project" },
-  [NoteContentType.REMARK]: { title: "Remark presentation", className: "icon fa-solid fa-chalkboard" },
-  [NoteContentType.MARKDOWN]: { title: "Markdown note", className: "icon fa-solid fa-file-lines" }
-};
-
-const defaultIcon = { title: "Note", className: "icon fa-solid fa-file" };
+const UNKNOWN_TYPE_ICON_CLASS = "file-circle-question";
+const UNKNOWN_TYPE_TITLE = "Unknown type";
 
 interface Props {
-  type: NoteContentType;
+  contentTypeName: ContentTypeName;
 }
 
-export const NoteIcon = memo(function ({ type }: Props) {
-  const { title, className } = iconByType[type] || defaultIcon;
-  return <Styled.Icon className={className} title={title} aria-hidden="true" />;
+export const NoteIcon = memo(function ({ contentTypeName }: Props) {
+  const contentType = getContentTypePluginByName(contentTypeName);
+  const iconClassName = contentType?.iconClassName || UNKNOWN_TYPE_ICON_CLASS;
+  const iconTitle = contentType?.name || UNKNOWN_TYPE_TITLE;
+  return <Styled.Icon className={"icon" + iconClassName} title={iconTitle} aria-hidden="true" />;
 });

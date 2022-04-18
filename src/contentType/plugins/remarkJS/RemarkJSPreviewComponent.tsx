@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
+import {memo, useEffect, useRef} from "react";
 import styled from "styled-components";
-
-import {useActiveNote} from "../shared/useActiveNote";
+import {Note} from "../../../domain/note/Note";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
@@ -40,8 +39,7 @@ const Container = styled.div`
   }
 `;
 
-export function PreviewPresentation() {
-  const {note} = useActiveNote();
+export const RemarkJSPreviewComponent = memo(function({note}: {note: Note}) {
   const code = note?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
   const currentSlide = useRef<number>();
@@ -60,4 +58,4 @@ export function PreviewPresentation() {
   }, [code]);
 
   return <Container ref={container} />;
-}
+});
