@@ -1,12 +1,13 @@
+import type {ContentTypeName} from "../../contentType/domain/ContentTypeName";
 import type { NoteId } from "../note/NoteId";
-import { getNextNoteId } from "../note/NoteId";
-import type { NoteName } from "../note/NoteName";
-import type { NoteContent } from "../note/NoteContent";
 import type { Note } from "../note/Note";
+import type {NoteName} from "../note/NoteName";
+import {getNextNoteId} from "../note/NoteId";
+import type {NoteContent} from "../note/NoteContent";
 import type { NoteStoreState } from "./NoteStoreState";
-import { NoteContentType } from "../note/NoteContentType";
-import { Folder } from "../folder/Folder";
-import { FolderId } from "../folder/FolderId";
+import type { Folder } from "../folder/Folder";
+import type { FolderId } from "../folder/FolderId";
+import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
 
 export function createEmptyNoteState(): NoteStoreState {
   return {
@@ -18,24 +19,12 @@ export function createEmptyNoteState(): NoteStoreState {
   };
 }
 
-export function createNewPlantUml(): Note {
+export function createEmptyNote(type: ContentTypeName = "Text" as ContentTypeName): Note {
+  const contentTypePlugin = getContentTypePluginByName(type);
   const id = getNextNoteId();
-  return {
-    id,
-    name: `New Diagram` as NoteName,
-    code: `New->Diagram` as NoteContent,
-    type: NoteContentType.PLANT_UML
-  };
-}
-
-export function createNewRemark(): Note {
-  const id = getNextNoteId();
-  return {
-    id,
-    name: `New Presentation` as NoteName,
-    code: `# Slide 1\n* Item 1\n* Item 2\n---\n# Slide 2` as NoteContent,
-    type: NoteContentType.REMARK
-  };
+  const name = `New ${contentTypePlugin?.name || type}` as NoteName;
+  const code = (contentTypePlugin?.emptyTemplate?.() || "") as NoteContent;
+  return { id, name, code,  type };
 }
 
 export function isLoading(state: NoteStoreState): boolean {

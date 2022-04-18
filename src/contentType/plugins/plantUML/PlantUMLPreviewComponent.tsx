@@ -1,15 +1,15 @@
+import {memo} from "react";
 import styled from "styled-components";
 
-import { buildPlantUmlUrl } from "../../service/plantUml";
-import { RenderingCounter } from "../shared/RenderingCounter";
-import {useActiveNote} from "../shared/useActiveNote";
+import { buildPlantUmlUrl } from "../../../service/plantUml";
+import { RenderingCounter } from "../../../ui/shared/RenderingCounter";
+import {Note} from "../../../domain/note/Note";
 
 const PlantUmlPreviewDiv = styled.div`
   text-align: center;
 `;
 
-export function PreviewPlantUml(): JSX.Element {
-  const {note} = useActiveNote();
+export const PlantUMLPreviewComponent = memo(function ({note}: {note: Note}): JSX.Element {
   const src = note ? buildPlantUmlUrl(note.code) : "";
 
   return (
@@ -20,4 +20,4 @@ export function PreviewPlantUml(): JSX.Element {
       </PlantUmlPreviewDiv>
     </>
   );
-}
+});

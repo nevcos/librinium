@@ -1,11 +1,11 @@
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import CodeMirror from "codemirror";
-import debounce from "lodash.debounce";
+import { debounce } from "lodash";
 import styled from "styled-components";
 
 import "codemirror/mode/markdown/markdown";
-import "./plantumlMode";
+import "../../contentType/plugins/plantUML/plantUMLCodeMirrorMode";
 import "codemirror/lib/codemirror.css";
 
 import type { NoteContent } from "../../domain/note/NoteContent";
@@ -13,8 +13,8 @@ import { noteStoreActions } from "../../store/noteStore";
 
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { useActiveNote } from "../shared/useActiveNote";
-import { NoteContentType } from "../../domain/note/NoteContentType";
 import { registerCodeMirrorInstance } from "../../service/codeMirrorService";
+import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
 
 const CHANGE_DEBOUNCE_MS = 600;
 
@@ -55,7 +55,7 @@ export function CodeEditor(): JSX.Element {
       lineWrapping: true,
       lineNumbers: true,
       value: code || "",
-      mode: getEditMode(type)
+      mode: getContentTypePluginByName(type)?.codeMirrorMode || "null"
     });
     codeMirror.current.on(
       "change",
@@ -80,17 +80,4 @@ export function CodeEditor(): JSX.Element {
       <CodeEditorDiv ref={elementRef} />
     </>
   );
-}
-
-function getEditMode(type: NoteContentType | undefined): string | undefined {
-  switch (type) {
-    case NoteContentType.PLANT_UML:
-      return "plantuml"
-    case NoteContentType.MARKDOWN:
-    case NoteContentType.REMARK:
-      return "markdown"
-    case NoteContentType.TEXT:
-    default:
-      return undefined;
-  }
 }

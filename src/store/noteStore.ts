@@ -13,11 +13,11 @@ import { FolderId } from "../domain/folder/FolderId";
 import { NoteContent } from "../domain/note/NoteContent";
 import { NoteName } from "../domain/note/NoteName";
 import { Note } from "../domain/note/Note";
-import { getFileTypeFromExtension } from "../domain/note/util";
 import { FolderName } from "../domain/folder/FolderName";
 import { Gist } from "../remoteApi/gitHub/Gist";
 import { NotePatch } from "../domain/note/NotePatch";
 import { GistFile } from "../remoteApi/gitHub/GistFile";
+import { determineContentTypeName } from "../contentType/ContentTypeService";
 
 export const storeName = "note";
 
@@ -59,7 +59,7 @@ const createNote = createAsyncThunk(
     const newNote: Note = {
       id: filename as unknown as NoteId,
       name: filename,
-      type: getFileTypeFromExtension(filename),
+      type: determineContentTypeName(filename),
       code: "# hello from librinium" as NoteContent, // new Gist files are required to have content
       folderId
     };

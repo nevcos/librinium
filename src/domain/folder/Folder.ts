@@ -1,5 +1,5 @@
-import { FolderId } from "./FolderId";
-import { FolderName } from "./FolderName";
+import type { FolderId } from "./FolderId";
+import type { FolderName } from "./FolderName";
 
 export interface Folder {
   id: FolderId;

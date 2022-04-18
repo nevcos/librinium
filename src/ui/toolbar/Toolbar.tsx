@@ -1,9 +1,10 @@
 import {ChangeEvent, useCallback} from "react";
 import {useDispatch} from "react-redux";
+import styled, {css} from "styled-components";
+
+import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
 import {noteStoreActions} from "../../store/noteStore";
 import {useActiveNote} from "../shared/useActiveNote";
-import styled, {css} from "styled-components";
-import { noteContentTypesInfo } from "../../domain/note/NoteContentType";
 
 const Styled_Container = styled.div`
   position: fixed;
@@ -60,9 +61,9 @@ export function Toolbar(): JSX.Element {
 
   const isDisabled = !note;
   const disabledClassName = isDisabled ? "--disabled" : "";
-  const contentTypeInfo = note ? noteContentTypesInfo[note?.type] : undefined;
-  const documentationLinkHref = contentTypeInfo?.docsUrl;
-  const documentationLinkTitle = contentTypeInfo ? `${contentTypeInfo.label} documentation` : "";
+  const contentTypePlugin = getContentTypePluginByName(note?.type);
+  const documentationLinkHref = contentTypePlugin?.docsUrl;
+  const documentationLinkTitle = contentTypePlugin ? `${contentTypePlugin.name} documentation` : "";
 
   return <Styled_Container>
     <Styled_List>

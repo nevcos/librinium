@@ -6,7 +6,7 @@ import { FolderId } from "../domain/folder/FolderId";
 import { FolderMap } from "../domain/folder/FolderMap";
 import { FolderName } from "../domain/folder/FolderName";
 import { Gist } from "../remoteApi/gitHub/Gist";
-import { getFileTypeFromExtension } from "../domain/note/util";
+import {determineContentTypeName} from "../contentType/ContentTypeService";
 
 export function getFolderFromGists(gists: Gist[]): FolderMap {
   const folders: FolderMap = {};
@@ -38,7 +38,7 @@ export async function getNotesFromGists(gists: Gist[]): Promise<NoteMap> {
             id: file.filename as NoteId,
             name: file.filename as NoteName,
             code,
-            type: getFileTypeFromExtension(file.filename),
+            type: determineContentTypeName(file.filename as NoteName),
             folderId: folderId
           };
         })
