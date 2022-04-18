@@ -1,14 +1,13 @@
-import { useEffect, useRef } from "react";
+import {memo, useEffect, useRef} from "react";
 import styled from "styled-components";
 import { marked } from "marked";
 
-import {useActiveNote} from "../shared/useActiveNote";
+import {Note} from "../../../domain/note/Note";
 
 const Container = styled.div`
 `;
 
-export function PreviewMarkdown() {
-  const {note} = useActiveNote();
+export const MarkdownPreviewComponent = memo(function ({note}: {note: Note}) {
   const code = note?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
 
@@ -18,4 +17,4 @@ export function PreviewMarkdown() {
   }, [code]);
 
   return <Container ref={container} />;
-}
+});
