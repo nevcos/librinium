@@ -1,3 +1,4 @@
+import React from "react";
 import {ImageDescriptor} from "../../domain/image/Image";
 import {Note} from "../../domain/note/Note";
 import {ContentTypeName} from "./ContentTypeName";
@@ -10,6 +11,7 @@ export interface CodeFragment {
 }
 
 export interface ContentTypePlugin {
+  isDefault?: boolean;
   name: ContentTypeName,
   description?: string;
   iconClassName?: string;
@@ -17,6 +19,6 @@ export interface ContentTypePlugin {
   fileExtensions: string[];
   codeMirrorMode: string;
   imageCodeFragmentBuilder(image: ImageDescriptor): CodeFragment;
-  previewComponent?: (props: {note: Note}) => JSX.Element;
+  previewComponent?: React.ComponentType<{note: Note}>;
   emptyTemplate?: () => NoteContent;
 }

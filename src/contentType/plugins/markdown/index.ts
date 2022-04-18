@@ -1,12 +1,12 @@
-import {ContentTypePlugin} from "../../domain/ContentTypePlugin";
+import {NoteContent} from "../../../domain/note/NoteContent";
+import {ContentTypeName} from "../../domain/ContentTypeName";
+import {registerContentTypePlugin} from "../../ContentTypeService";
 import {MarkdownPreviewComponent} from "./MarkdownPreviewComponent";
 import {markdownImageCodeFragmentBuilder} from "./markdownImageCodeFragmentBuilder";
-import {ContentTypeName} from "../../domain/ContentTypeName";
 
 import "codemirror/mode/markdown/markdown";
-import {NoteContent} from "../../../domain/note/NoteContent";
 
-export default <ContentTypePlugin> {
+registerContentTypePlugin({
   name: "Markdown" as ContentTypeName,
   iconClassName: "fa-solid fa-file-lines",
   docsUrl: "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet",
@@ -15,4 +15,4 @@ export default <ContentTypePlugin> {
   previewComponent: MarkdownPreviewComponent,
   imageCodeFragmentBuilder: markdownImageCodeFragmentBuilder,
   emptyTemplate: () => "# New document\n\nVeni, vidi, vici" as NoteContent
-}
+});

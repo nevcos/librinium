@@ -1,9 +1,10 @@
-import {ContentTypePlugin} from "../../domain/ContentTypePlugin";
-import {textImageCodeFragmentBuilder} from "./textImageCodeFragmentBuilder";
-import {ContentTypeName} from "../../domain/ContentTypeName";
 import {NoteContent} from "../../../domain/note/NoteContent";
+import {ContentTypeName} from "../../domain/ContentTypeName";
+import {registerContentTypePlugin} from "../../ContentTypeService";
+import {textImageCodeFragmentBuilder} from "./textImageCodeFragmentBuilder";
 
-export default <ContentTypePlugin> {
+registerContentTypePlugin({
+  isDefault: true,
   name: "Text" as ContentTypeName,
   iconClassName: "fa-solid fa-file",
   // "" matches everything
@@ -11,4 +12,4 @@ export default <ContentTypePlugin> {
   codeMirrorMode: "null",
   imageCodeFragmentBuilder: textImageCodeFragmentBuilder,
   emptyTemplate: () => "New text" as NoteContent
-}
+});

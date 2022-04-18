@@ -2,31 +2,27 @@ import {keyBy} from "lodash";
 
 import {ContentTypePlugin} from "./domain/ContentTypePlugin";
 
-import markdownPlugin from "./plugins/markdown";
-import plantUMLPlugin from "./plugins/plantUML";
-import remarkJSPlugin from "./plugins/remarkJS";
-import textPlugin from "./plugins/text";
 import {ContentTypeName} from "./domain/ContentTypeName";
 import {NoteName} from "../domain/note/NoteName";
 
-export const contentTypes: ContentTypePlugin[] = [
-  markdownPlugin,
-  plantUMLPlugin,
-  remarkJSPlugin,
-  textPlugin
-];
+let contentTypes: ContentTypePlugin[] = [];
+export function registerContentTypePlugin(plugin: ContentTypePlugin) {
+  contentTypes.push(plugin);
+}
 
-const defaultContentType = textPlugin;
+export function getDefaultContentTypePlugin(): ContentTypePlugin {
+  return contentTypes.find(plugin => plugin.isDefault) || contentTypes[0];
+}
 
-const contentTypesByName = keyBy(contentTypes, ct => ct.name);
 export function getContentTypePluginByName(name: ContentTypeName | undefined): ContentTypePlugin | undefined {
   if (!name) return undefined;
+  const contentTypesByName = keyBy(contentTypes, ct => ct.name);
   return contentTypesByName[name];
 }
 
-const contentTypesByCodeMirrorMode = keyBy(contentTypes, ct => ct.codeMirrorMode);
 export function getContentTypePluginByCodeMirrorMode(codeMirrorMode: string): ContentTypePlugin | undefined {
   if (!codeMirrorMode) return undefined;
+  const contentTypesByCodeMirrorMode = keyBy(contentTypes, ct => ct.codeMirrorMode);
   return contentTypesByCodeMirrorMode[codeMirrorMode];
 }
 
@@ -39,5 +35,5 @@ export function getContentTypePluginByNoteName(noteName: NoteName | undefined): 
 
 export function determineContentTypeName(noteName: NoteName): ContentTypeName {
   const compatibleContentType = getContentTypePluginByNoteName(noteName);
-  return compatibleContentType?.name || defaultContentType.name;
+  return compatibleContentType?.name || getDefaultContentTypePlugin().name;
 }
