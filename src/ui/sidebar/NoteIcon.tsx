@@ -15,5 +15,5 @@ export const NoteIcon = memo(function ({ contentTypeName }: Props) {
   const contentType = getContentTypePluginByName(contentTypeName);
   const iconClassName = contentType?.iconClassName || UNKNOWN_TYPE_ICON_CLASS;
   const iconTitle = contentType?.name || UNKNOWN_TYPE_TITLE;
-  return <Styled.Icon className={"icon" + iconClassName} title={iconTitle} aria-hidden="true" />;
+  return <Styled.Icon className={"icon " + iconClassName} title={iconTitle} aria-hidden="true" />;
 });

@@ -6,7 +6,7 @@ import {ContentTypeName} from "./domain/ContentTypeName";
 import {NoteName} from "../domain/note/NoteName";
 
 let contentTypes: ContentTypePlugin[] = [];
-export function registerContentTypePlugin(plugin: ContentTypePlugin) {
+export function registerContentTypePlugin(plugin: ContentTypePlugin): void {
   contentTypes.push(plugin);
 }
 
