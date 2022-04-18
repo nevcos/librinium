@@ -14,10 +14,10 @@ import { NoteContent } from "../domain/note/NoteContent";
 import { NoteName } from "../domain/note/NoteName";
 import { Note } from "../domain/note/Note";
 import { FolderName } from "../domain/folder/FolderName";
-import { Gist } from "../remoteApi/gitHub/Gist";
 import { NotePatch } from "../domain/note/NotePatch";
 import { GistFile } from "../remoteApi/gitHub/GistFile";
 import { determineContentTypeName } from "../contentType/ContentTypeService";
+import { GistPatch } from "../remoteApi/gitHub/GistPatch";
 
 export const storeName = "note";
 
@@ -222,14 +222,14 @@ export const noteStoreActions = {
 //#endregion
 //#region Utils
 
-function convertNotePatchToGistPatch(patch: Partial<Note> & { id: NoteId }): Partial<Gist> {
+function convertNotePatchToGistPatch(patch: NotePatch): GistPatch {
   const id = patch.id as string;
   const file: Partial<GistFile> = {};
 
   if (patch.name) file.filename = patch.name;
   if (patch.code) file.content = patch.code;
 
-  const payload: Partial<Gist> = { files: { [id]: file } };
+  const payload: GistPatch = { files: { [id]: file } };
 
   return payload;
 }
