@@ -31,7 +31,7 @@ export async function getNotesFromGists(gists: Gist[]): Promise<NoteMap> {
       await Promise.all(
         Object.keys(gist.files).map(async (key) => {
           const file = gist.files[key];
-          const id = getNoteId(file.filename, folderId);
+          const id = getNoteId(folderId, file.filename as NoteName);
 
           const codeRequest = await fetch(file.raw_url);
           const code = (await codeRequest.text()) as NoteContent;

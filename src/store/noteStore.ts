@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
 import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
-import { getNoteId, NoteId } from "../domain/note/NoteId";
+import { getNoteId, getNoteNameFromNoteId, NoteId } from "../domain/note/NoteId";
 import { UseNavigationApi } from "../ui/shared/useNavigation";
 import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
@@ -57,7 +57,7 @@ const createNote = createAsyncThunk(
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
 
     const newNote: Note = {
-      id: getNoteId(filename, folderId),
+      id: getNoteId(folderId, filename),
       name: filename,
       type: determineContentTypeName(filename),
       code: "# hello from librinium" as NoteContent, // new Gist files are required to have content
@@ -223,7 +223,7 @@ export const noteStoreActions = {
 //#region Utils
 
 function convertNotePatchToGistPatch(patch: NotePatch): GistPatch {
-  const id = patch.id as string;
+  const id = getNoteNameFromNoteId(patch.id);
   const file: Partial<GistFile> = {};
 
   if (patch.name) file.filename = patch.name;
