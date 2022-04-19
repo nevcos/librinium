@@ -130,7 +130,7 @@ const deleteNote = createAsyncThunk(
       if (folderId) {
         thunkAPI.dispatch(noteStore.actions.deleteNote(id));
 
-        GitHubApi.deleteGistFile(folderId, id);
+        GitHubApi.deleteGistFile(folderId, getNoteNameFromNoteId(id));
 
         const isActiveRoute = navigation.isActive(`/note/${id}`);
         if (isActiveRoute) {
