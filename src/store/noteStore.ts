@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
 import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
-import { NoteId } from "../domain/note/NoteId";
+import { getNoteId, NoteId } from "../domain/note/NoteId";
 import { UseNavigationApi } from "../ui/shared/useNavigation";
 import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
@@ -57,7 +57,7 @@ const createNote = createAsyncThunk(
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
 
     const newNote: Note = {
-      id: filename as unknown as NoteId,
+      id: getNoteId(filename, folderId),
       name: filename,
       type: determineContentTypeName(filename),
       code: "# hello from librinium" as NoteContent, // new Gist files are required to have content

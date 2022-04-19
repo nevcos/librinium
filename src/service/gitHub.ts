@@ -1,12 +1,12 @@
 import { NoteContent } from "../domain/note/NoteContent";
-import { NoteId } from "../domain/note/NoteId";
+import { getNoteId, NoteId } from "../domain/note/NoteId";
 import { NoteMap } from "../domain/note/NoteMap";
 import { NoteName } from "../domain/note/NoteName";
 import { FolderId } from "../domain/folder/FolderId";
 import { FolderMap } from "../domain/folder/FolderMap";
 import { FolderName } from "../domain/folder/FolderName";
 import { Gist } from "../remoteApi/gitHub/Gist";
-import {determineContentTypeName} from "../contentType/ContentTypeService";
+import { determineContentTypeName } from "../contentType/ContentTypeService";
 
 export function getFolderFromGists(gists: Gist[]): FolderMap {
   const folders: FolderMap = {};
@@ -31,11 +31,13 @@ export async function getNotesFromGists(gists: Gist[]): Promise<NoteMap> {
       await Promise.all(
         Object.keys(gist.files).map(async (key) => {
           const file = gist.files[key];
+          const id = getNoteId(file.filename, folderId);
+
           const codeRequest = await fetch(file.raw_url);
           const code = (await codeRequest.text()) as NoteContent;
 
-          files[key as NoteId] = {
-            id: file.filename as NoteId,
+          files[id] = {
+            id,
             name: file.filename as NoteName,
             code,
             type: determineContentTypeName(file.filename as NoteName),
