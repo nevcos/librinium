@@ -7,11 +7,9 @@ import { useGistSelector } from "../../hook/useGistSelector";
 import { noteStoreActions, noteStoreSelectors } from "../../store/noteStore";
 import { useNavigation } from "../shared/useNavigation";
 
-import * as Styled from "./Sidebar.style";
-import { SidebarNavItemLink } from "./SidebarNavItemLink";
+import { SidebarNavLink } from "./SidebarNavLink";
 import styled from "styled-components";
-import { SidebarNavItem } from "./shared/SidebarNavItem";
-import { NoteIcon } from "../shared/NoteIcon";
+import { SidebarNavItem } from "./navItem/SidebarNavItem";
 import { Icon } from "../shared/Icon";
 
 type Props = {
@@ -96,7 +94,7 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
       />
       <Styled_NotesList>
         {files.map((note) => (
-          <SidebarNavItemLink note={note} key={note.id} />
+          <SidebarNavLink note={note} key={note.id} />
         ))}
       </Styled_NotesList>
     </Styled_FolderLi>
