@@ -18,18 +18,18 @@ export const sidebarButtonLink = css`
 
   &:not(:disabled) {
     cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &[aria-expanded=true]{
+      background-color: var(--sidebar-item-hover-bg-color);
+    }
   }
 
   > .label {
     margin-left: var(--sidebar-padding);
     display: var(--sidebar-labels-display);
   }
-`;
-
-export const Icon = styled.span`
-  font-size: var(--icon-size);
-  width: 15px;
-  text-align: center;
 `;
 
 // Auth
@@ -157,7 +157,7 @@ export const OptionLi = styled.li`
   border-radius: var(--input-border-radius);
   scroll-snap-align: start;
   overflow-x: hidden;
-  opacity: .7;
+  opacity: 0.7;
 
   &:hover {
     background-color: var(--sidebar-item-hover-bg-color);
@@ -167,39 +167,6 @@ export const OptionLi = styled.li`
   &.--active {
     background-color: var(--sidebar-item-selected-bg-color);
     opacity: 1;
-  }
-`;
-
-export const FolderLi = styled.li`
-  scroll-snap-align: start;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: var(--input-padding);
-  padding-right: 0;
-  padding-top: 0;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-`;
-
-export const FolderTitle = styled.div`
-  display: flex;
-  align-items: center;
-
-  > .icon {
-    font-size: var(--icon-size);
-  }
-
-  > .label {
-    flex-grow: 1;
-    margin-left: var(--sidebar-padding);
-
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
   }
 `;
 

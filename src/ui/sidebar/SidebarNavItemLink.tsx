@@ -6,8 +6,10 @@ import { NoteName } from "../../domain/note/NoteName";
 import { noteStoreActions } from "../../store/noteStore";
 
 import { useNavigation } from "../shared/useNavigation";
-import { NoteIcon } from "./NoteIcon";
 import * as Styled from "./Sidebar.style";
+import { SidebarNavItem } from "./shared/SidebarNavItem";
+import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
+import { NoteIcon } from "../shared/NoteIcon";
 
 type Props = {
   note: Note;
@@ -20,7 +22,7 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
   const to = `/note/${note.id}`;
   const isActive = navigation.isActive(to);
 
-  const onDoubleClickRename = useCallback(() => {
+  const onClickRenameNote = useCallback(() => {
     const newName = window.prompt("Rename", note.name);
     if (newName) {
       const id = note.id;
@@ -29,28 +31,28 @@ export const SidebarNavItemLink = memo(function ({ note }: Props) {
     }
   }, [note]);
 
-  const onClickDeleteNote = useCallback(
-    (event: MouseEvent) => {
-      const isConfirmationBypassed = event.ctrlKey && event.shiftKey;
-      const isConfirmed = isConfirmationBypassed || window.confirm(`Delete file ${note.name}?`);
-      if (isConfirmed) {
-        const folderId = note.folderId; // root file will have this as undefined
-        const fileId = note.id;
-        dispatch(noteStoreActions.deleteNote({ navigation, id: fileId, folderId }));
-      }
-    },
-    [note]
-  );
+  const onClickDeleteNote = useCallback(() => {
+    const isConfirmed = window.confirm(`Delete file ${note.name}?`);
+    if (isConfirmed) {
+      const folderId = note.folderId; // root file will have this as undefined
+      const fileId = note.id;
+      dispatch(noteStoreActions.deleteNote({ navigation, id: fileId, folderId }));
+    }
+  }, [note]);
+
+  const contentTypePlugin = getContentTypePluginByName(note.type);
 
   return (
     <Styled.OptionLi key={note.id} className={isActive ? "--active" : ""} data-testid="note">
-      <Styled.NavLink to={to} onDoubleClick={onDoubleClickRename} data-testid="open">
-        <NoteIcon contentTypeName={note.type} />
-        <span className="label">{note.name}</span>
-      </Styled.NavLink>
-      <Styled.DeleteFileButton onClick={onClickDeleteNote} data-testid="delete" title="Delete" aria-label="Delete">
-        <span className="icon fa-solid fa-xmark" aria-hidden="true" />
-      </Styled.DeleteFileButton>
+      <SidebarNavItem
+        to={to}
+        icon={<NoteIcon contentTypeName={note.type}/>}
+        label={note.name}
+        items={[
+          { label: "Rename...", onClick: onClickRenameNote, iconClassName: "fa-solid fa-i-cursor" },
+          { label: "Delete...", onClick: onClickDeleteNote, iconClassName: "fa-solid fa-xmark" }
+        ]}
+      />
     </Styled.OptionLi>
   );
 });

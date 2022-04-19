@@ -15,6 +15,7 @@ import { FolderName } from "../../domain/folder/FolderName";
 import { useDispatch } from "react-redux";
 import { useUserSelector } from "../../hook/useUserSelector";
 import { userStoreSelectors } from "../../store/userStore";
+import {Icon} from "../shared/Icon";
 
 export function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ export function Sidebar(): JSX.Element {
               <Styled.ListUl className="create-list">
                 <Styled.OptionLi>
                   <Styled.NewButton onClick={onClickCreateFolder}>
-                    <Styled.Icon className="fa fa-solid fa-plus" title="Create new folder" aria-hidden="true" />
+                    <Icon className="fa fa-solid fa-plus" title="Create new folder" />
                     <span className="label">new folder ...</span>
                   </Styled.NewButton>
                 </Styled.OptionLi>
