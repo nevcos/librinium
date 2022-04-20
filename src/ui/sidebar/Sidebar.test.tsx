@@ -46,7 +46,7 @@ describe("<Sidebar />", () => {
     addNotes(state.note, { payload: { [DOCUMENT_1.id]: DOCUMENT_1 } });
     renderWithRoutingAndStore(<Sidebar />, state);
 
-    await clickNthElement("open", 0);
+    await clickNthElement("nav-item-link", 0);
 
     expect(await screen.findByTestId("location-display")).toHaveTextContent(`/note/${DOCUMENT_0.id}`);
   });
@@ -59,7 +59,8 @@ describe("<Sidebar />", () => {
     addNotes(state.note, { payload: { [DOCUMENT_0.id]: DOCUMENT_0 } });
     const { getState } = renderWithRoutingAndStore(<Sidebar />, state);
 
-    await doubleClickNthElement("open", 0);
+    await clickFirstElement("nav-item-menu");
+    await clickFirstElement("rename-note");
 
     expect(getNotes(getState().note)[0]?.name).toBe(newName);
   });
@@ -71,7 +72,8 @@ describe("<Sidebar />", () => {
     addNotes(state.note, { payload: { [DOCUMENT_0.id]: DOCUMENT_0 } });
     const { getState } = renderWithRoutingAndStore(<Sidebar />, state);
 
-    await doubleClickNthElement("delete", 0);
+    await clickFirstElement("nav-item-menu");
+    await clickFirstElement("delete-note");
 
     // FIXME: Not working...
     // expect(getNotes(getState().length).toBe(0);
@@ -86,12 +88,5 @@ async function clickNthElement(testId: string, index: number): Promise<void> {
   const elements = await screen.findAllByTestId<HTMLElement>(testId);
   act(() => {
     fireEvent.click(elements[index]);
-  });
-}
-
-async function doubleClickNthElement(testId: string, index: number): Promise<void> {
-  const elements = await screen.findAllByTestId<HTMLElement>(testId);
-  act(() => {
-    fireEvent.doubleClick(elements[index]);
   });
 }

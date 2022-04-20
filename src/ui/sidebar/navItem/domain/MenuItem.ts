@@ -1,4 +1,4 @@
-import {MouseEvent} from "react";
+import { MouseEvent } from "react";
 
 export interface MenuItem {
   iconClassName?: string;
@@ -6,4 +6,5 @@ export interface MenuItem {
   label: string;
   onClick: (event: MouseEvent) => unknown;
   disabled?: boolean;
+  dataTestId?: string;
 }

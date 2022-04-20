@@ -159,7 +159,7 @@ export function Sidebar(): JSX.Element {
         <Styled_Logo src={logoPath} alt="librinium" />
         <Styled_Search>
           <span className="icon fa-solid fa-search" aria-hidden="true" />
-          <input type="search" placeholder="search..." />
+          <input type="search" placeholder="filter..." />
         </Styled_Search>
       </Styled_Header>
 
@@ -173,7 +173,7 @@ export function Sidebar(): JSX.Element {
             {!! folders.length && (
               <Styled_FolderList>
                 {folders.map((folder) => (
-                  <SidebarNavFolder key={folder.id} folder={folder} />
+                  <SidebarNavFolder folder={folder} key={folder.id} />
                 ))}
               </Styled_FolderList>
             )}

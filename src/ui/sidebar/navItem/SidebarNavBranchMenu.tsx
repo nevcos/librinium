@@ -39,6 +39,7 @@ export const SidebarMenuItemMenu = memo(({ items, onToggle, ...rest }: Props) =>
         aria-controls={open ? "long-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
+        data-testid="nav-item-menu"
         onClick={openMenu}
         {...rest}
       >
@@ -54,22 +55,21 @@ export const SidebarMenuItemMenu = memo(({ items, onToggle, ...rest }: Props) =>
         }}
       >
         {items.map((item, key) => (
-          <>
-            <MuiMenuItem
-              onClick={(event) => {
-                closeMenu();
-                item.onClick(event);
-              }}
-              key={key}
-            >
-              {item.iconClassName && (
-                <MuiListItemIcon>
-                  <span className={item.iconClassName} aria-hidden="true" />
-                </MuiListItemIcon>
-              )}
-              <MuiListItemText>{item.label}</MuiListItemText>
-            </MuiMenuItem>
-          </>
+          <MuiMenuItem
+            onClick={(event) => {
+              closeMenu();
+              item.onClick(event);
+            }}
+            key={key}
+            data-testid={item.dataTestId}
+          >
+            {item.iconClassName && (
+              <MuiListItemIcon>
+                <span className={item.iconClassName} aria-hidden="true" />
+              </MuiListItemIcon>
+            )}
+            <MuiListItemText>{item.label}</MuiListItemText>
+          </MuiMenuItem>
         ))}
       </MuiMenu>
     </>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { MenuItem } from "./domain/MenuItem";
 import { SidebarMenuItemMenu } from "./SidebarNavBranchMenu";
 import { sidebarButtonLink } from "../styled/sidebarButtonLink";
-import {MouseEventHandler, useCallback, useState} from "react";
+import { MouseEventHandler, useCallback, useState } from "react";
 import { sidebarInput } from "../styled/sidebarInput";
 
 const Styled_NavItem = styled.div`
@@ -103,12 +103,12 @@ export function SidebarNavBranch({ to, onClick, isActive, icon, label, menu, chi
     <li {...rest}>
       <Styled_NavItem className={activeClass + " " + disabledClass + " " + menuOpenClass}>
         {to ? (
-          <Styled_InnerActionLink to={to} onClick={onClick} data-test-id="nav-item-link">
+          <Styled_InnerActionLink to={to} onClick={onClick} data-testid="nav-item-link">
             {icon}
             {label ? <span>{label}</span> : <em>(no name)</em>}
           </Styled_InnerActionLink>
         ) : (
-          <Styled_InnerActionButton onClick={onClick} disabled={isDisabled} data-test-id="nav-item-button">
+          <Styled_InnerActionButton onClick={onClick} disabled={isDisabled} data-testid="nav-item-button">
             {icon}
             {label ? <span>{label}</span> : <em>(no name)</em>}
           </Styled_InnerActionButton>
