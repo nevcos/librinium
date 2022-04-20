@@ -22,11 +22,9 @@ export const SidebarNavLink = memo(function ({ note }: Props) {
     {
       label: "Rename...",
       onClick: () => {
-        const newName = window.prompt("Rename", note.name);
-        if (newName) {
-          const id = note.id;
-          const name = newName as NoteName;
-          dispatch(noteStoreActions.updateNoteName({ id, name }));
+        const name = window.prompt("Rename", note.name) as NoteName;
+        if (name) {
+          dispatch(noteStoreActions.updateNoteName({ patch: { id: note.id, name, folderId: note.folderId } }));
         }
       },
       iconClassName: "fa-solid fa-i-cursor",

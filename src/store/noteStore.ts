@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as GitHubApi from "../remoteApi/gitHub/gitHubApi";
 import * as reducers from "../domain/noteStoreState/noteStoreStateReducers";
 import * as selectors from "../domain/noteStoreState/noteStoreStateSelectors";
-import { NoteId } from "../domain/note/NoteId";
+import { getNoteId, getNoteNameFromNoteId, NoteId } from "../domain/note/NoteId";
 import { UseNavigationApi } from "../ui/shared/useNavigation";
 import { fromImgurFileToImageDescriptor } from "../remoteApi/imgur/imgurApi";
 import { mockedImage } from "../remoteApi/imgur/model/mockedImage";
@@ -14,8 +14,10 @@ import { NoteContent } from "../domain/note/NoteContent";
 import { NoteName } from "../domain/note/NoteName";
 import { Note } from "../domain/note/Note";
 import { FolderName } from "../domain/folder/FolderName";
-import { NoteMap } from "../domain/note/NoteMap";
-import {determineContentTypeName} from "../contentType/ContentTypeService";
+import { NotePatch } from "../domain/note/NotePatch";
+import { GistFile } from "../remoteApi/gitHub/GistFile";
+import { determineContentTypeName } from "../contentType/ContentTypeService";
+import { GistPatch } from "../remoteApi/gitHub/GistPatch";
 
 export const storeName = "note";
 
@@ -54,21 +56,20 @@ const createNote = createAsyncThunk(
   ) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
 
-    const newNoteId = filename as unknown as NoteId;
     const newNote: Note = {
-      id: newNoteId,
+      id: getNoteId(folderId, filename),
       name: filename,
       type: determineContentTypeName(filename),
       code: "# hello from librinium" as NoteContent, // new Gist files are required to have content
       folderId
     };
-    const newNoteMap: NoteMap = { [newNoteId]: newNote };
 
     try {
-      thunkAPI.dispatch(noteStore.actions.addNotes(newNoteMap));
+      thunkAPI.dispatch(noteStore.actions.addNotes({ [newNote.id]: newNote }));
 
       if (newNote.folderId) {
-        GitHubApi.updateGist(newNote.folderId, newNote.name, newNote.code);
+        // treating the new note as a patch here because it's actually a patch from a Gists point of view
+        GitHubApi.updateGist(newNote.folderId, convertNotePatchToGistPatch(newNote));
       } else {
         // TODO
       }
@@ -83,25 +84,32 @@ const createNote = createAsyncThunk(
   }
 );
 
-const updateNote = createAsyncThunk(
-  `${storeName}/updateNote`,
-  async (
-    {
-      id,
-      code,
-      folderId
-    }: {
-      id: NoteId;
-      code: NoteContent;
-      folderId?: FolderId;
-    },
-    thunkAPI
-  ) => {
+const updateNote = createAsyncThunk(`${storeName}/updateNote`, async ({ patch }: { patch: NotePatch }, thunkAPI) => {
+  thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
+  try {
+    if (patch.folderId) {
+      thunkAPI.dispatch(noteStore.actions.updateNote(patch));
+      GitHubApi.updateGist(patch.folderId, convertNotePatchToGistPatch(patch));
+    } else {
+      // TODO
+    }
+  } catch (error) {
+    throw error;
+    // FIXME
+  } finally {
+    thunkAPI.dispatch(noteStore.actions.setIsLoading(false));
+  }
+});
+
+const updateNoteName = createAsyncThunk(
+  `${storeName}/updateNoteName`,
+  async ({ patch }: { patch: NotePatch }, thunkAPI) => {
     thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
     try {
-      if (folderId) {
-        thunkAPI.dispatch(noteStore.actions.updateNoteContent({ id, code }));
-        GitHubApi.updateGist(folderId, id, code);
+      thunkAPI.dispatch(noteStore.actions.updateNote(patch));
+
+      if (patch.folderId) {
+        GitHubApi.updateGist(patch.folderId, convertNotePatchToGistPatch(patch));
       } else {
         // TODO
       }
@@ -122,7 +130,7 @@ const deleteNote = createAsyncThunk(
       if (folderId) {
         thunkAPI.dispatch(noteStore.actions.deleteNote(id));
 
-        GitHubApi.deleteGistFile(folderId, id);
+        GitHubApi.deleteGistFile(folderId, getNoteNameFromNoteId(id));
 
         const isActiveRoute = navigation.isActive(`/note/${id}`);
         if (isActiveRoute) {
@@ -204,10 +212,26 @@ export const noteStoreActions = {
   fetchNotes,
   createNote,
   updateNote,
+  updateNoteName,
   createFolder,
   deleteNote,
   deleteFolder,
   insertImage
 };
+
+//#endregion
+//#region Utils
+
+function convertNotePatchToGistPatch(patch: NotePatch): GistPatch {
+  const id = getNoteNameFromNoteId(patch.id);
+  const file: Partial<GistFile> = {};
+
+  if (patch.name) file.filename = patch.name;
+  if (patch.code) file.content = patch.code;
+
+  const payload: GistPatch = { files: { [id]: file } };
+
+  return payload;
+}
 
 //#endregion
