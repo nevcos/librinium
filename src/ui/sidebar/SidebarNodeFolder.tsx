@@ -1,27 +1,26 @@
 import { memo, MouseEvent } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 
-import { Folder } from "../../domain/folder/Folder";
 import { NoteName } from "../../domain/note/NoteName";
-import { useGistSelector } from "../../hook/useGistSelector";
-import { noteStoreActions, noteStoreSelectors } from "../../store/noteStore";
-import {useConst} from "../shared/useConst";
+import { noteStoreActions } from "../../store/noteStore";
+import { useConst } from "../shared/useConst";
 import { useNavigation } from "../shared/useNavigation";
 
-import { SidebarNavLink } from "./SidebarNavLink";
 import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
-import {MenuItem} from "./navItem/domain/MenuItem";
+import { MenuItem } from "./navItem/domain/MenuItem";
 import { Icon } from "../shared/Icon";
+import { FilesNode, isFolder } from "../../domain/noteStoreState/FilesNode";
+import { Folder } from "../../domain/folder/Folder";
+import { SidebarNodeNote } from "./SidebarNodeNote";
 
 type Props = {
   folder: Folder;
+  children: FilesNode[];
 };
 
-export const SidebarNavFolder = memo(function ({ folder }: Props) {
+export const SidebarNodeFolder = memo(function ({ folder, children }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const files = useGistSelector((state) => noteStoreSelectors.getNotesByFolder(state, folder.id));
 
   const menuOptions = useConst<MenuItem[]>(() => [
     {
@@ -33,7 +32,7 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
         }
       },
       iconClassName: "fa-solid fa-plus",
-      dataTestId: "create-folder-note",
+      dataTestId: "create-folder-note"
     },
     {
       label: "Delete Folder...",
@@ -46,20 +45,24 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
         }
       },
       iconClassName: "fa-solid fa-xmark",
-      dataTestId: "delete-folder",
+      dataTestId: "delete-folder"
     }
   ]);
 
-  return files.length ? (
+  return children.length ? (
     <SidebarNavBranch
       icon={<Icon className="fa-solid fa-folder" title="Folder" />}
       label={folder.name}
       menu={menuOptions}
       key={folder.id}
       data-testid="folder"
-      children={files.map((note) => (
-        <SidebarNavLink note={note} key={note.id} />
-      ))}
+      children={children.map((child) => {
+        return isFolder(child.value) ? (
+          <SidebarNodeFolder folder={child.value} children={child.children} key={child.value.id} />
+        ) : (
+          <SidebarNodeNote note={child.value} key={child.value.id} />
+        );
+      })}
     />
   ) : null;
 });

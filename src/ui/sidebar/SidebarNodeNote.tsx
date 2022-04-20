@@ -15,7 +15,7 @@ type Props = {
   note: Note;
 };
 
-export const SidebarNavLink = memo(function ({ note }: Props) {
+export const SidebarNodeNote = memo(function ({ note }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const menuOptions = useConst<MenuItem[]>(() => [

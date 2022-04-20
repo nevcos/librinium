@@ -1,4 +1,4 @@
-import { useCallback, MouseEvent } from "react";
+import { useCallback, MouseEvent, useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -15,9 +15,10 @@ import { Icon } from "../shared/Icon";
 import { sidebarInput } from "./styled/sidebarInput";
 import logoPath from "./assets/logo.svg";
 import { GitHubAuth } from "./GitHubAuth";
-import { SidebarNavFolder } from "./SidebarNavFolder";
-import { SidebarNavLink } from "./SidebarNavLink";
+import { SidebarNodeFolder } from "./SidebarNodeFolder";
 import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
+import { SidebarNodeNote } from "./SidebarNodeNote";
+import { isFolder } from "../../domain/noteStoreState/FilesNode";
 
 // Container
 
@@ -100,7 +101,7 @@ const Styled_PlainList = styled.ul`
   margin: 0;
 `;
 
-const Styled_FolderList = styled(Styled_PlainList)`
+const Styled_FilesList = styled(Styled_PlainList)`
   padding: var(--sidebar-padding);
   overflow: hidden;
   overflow-y: auto;
@@ -135,11 +136,15 @@ const Styled_Footer = styled.footer`
 
 export function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState("");
 
   const isAuth = useUserSelector(userStoreSelectors.isAuth);
   const isLoading = useGistSelector(noteStoreSelectors.isLoading);
-  const folders = useGistSelector(noteStoreSelectors.getFolders);
-  const notesWithoutFolder = useGistSelector(noteStoreSelectors.getNotesWithoutFolder);
+  const filesTree = useGistSelector((state) => noteStoreSelectors.getFilesTree(state, filter));
+
+  const onFiltering = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  }, []);
 
   const onClickCreateFolder = useCallback((event: MouseEvent) => {
     const name = prompt("Please enter the folder name") as FolderName;
@@ -159,7 +164,7 @@ export function Sidebar(): JSX.Element {
         <Styled_Logo src={logoPath} alt="librinium" />
         <Styled_Search>
           <span className="icon fa-solid fa-search" aria-hidden="true" />
-          <input type="search" placeholder="filter..." />
+          <input type="search" placeholder="filter..." onChange={onFiltering} />
         </Styled_Search>
       </Styled_Header>
 
@@ -170,21 +175,15 @@ export function Sidebar(): JSX.Element {
           <Spinner />
         ) : (
           <>
-            {!! folders.length && (
-              <Styled_FolderList>
-                {folders.map((folder) => (
-                  <SidebarNavFolder folder={folder} key={folder.id} />
-                ))}
-              </Styled_FolderList>
-            )}
-
-            {!! notesWithoutFolder.length && (
-              <Styled_FolderList>
-                {notesWithoutFolder.map((note) => (
-                  <SidebarNavLink note={note} key={note.id} />
-                ))}
-              </Styled_FolderList>
-            )}
+            <Styled_FilesList>
+              {filesTree.children?.map((child) => {
+                return isFolder(child.value) ? (
+                  <SidebarNodeFolder folder={child.value} children={child.children} key={child.value.id} />
+                ) : (
+                  <SidebarNodeNote note={child.value} key={child.value.id} />
+                );
+              })}
+            </Styled_FilesList>
 
             {isAuth && (
               <Styled_CreateList>
