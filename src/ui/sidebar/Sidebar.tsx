@@ -4,21 +4,20 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { noteStoreActions, noteStoreSelectors } from "../../store/noteStore";
-import { Spinner } from "../shared/Spinner";
-import { RenderingCounter } from "../shared/RenderingCounter";
+import { userStoreSelectors } from "../../store/userStore";
 import { useGistSelector } from "../../hook/useGistSelector";
 import { FolderName } from "../../domain/folder/FolderName";
 import { useUserSelector } from "../../hook/useUserSelector";
-import { userStoreSelectors } from "../../store/userStore";
+import { Spinner } from "../shared/Spinner";
+import { RenderingCounter } from "../shared/RenderingCounter";
 import { Icon } from "../shared/Icon";
 
-import { sidebarButtonLink } from "./styled/sidebarButtonLink";
 import { sidebarInput } from "./styled/sidebarInput";
 import logoPath from "./assets/logo.svg";
 import { GitHubAuth } from "./GitHubAuth";
 import { SidebarNavFolder } from "./SidebarNavFolder";
 import { SidebarNavLink } from "./SidebarNavLink";
-import { SidebarNavItem } from "./navItem/SidebarNavItem";
+import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
 
 // Container
 
@@ -93,37 +92,37 @@ const Styled_Nav = styled.nav`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  > .folder-list {
-    padding: var(--sidebar-padding);
-    overflow: hidden;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-padding: var(--sidebar-padding);
-
-    &::-webkit-scrollbar {
-      width: var(--scroll-size);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--scroll-color);
-      border-radius: var(--input-border-radius);
-    }
-  }
-
-  > .create-list {
-    flex-shrink: 0;
-    padding: var(--sidebar-padding);
-    padding-top: 0;
-    font-style: italic;
-    color: var(--sidebar-content-dimmed-color);
-  }
 `;
 
-const Styled_ListUl = styled.ul`
+const Styled_PlainList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+`;
+
+const Styled_FolderList = styled(Styled_PlainList)`
+  padding: var(--sidebar-padding);
+  overflow: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-padding: var(--sidebar-padding);
+
+  &::-webkit-scrollbar {
+    width: var(--scroll-size);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-color);
+    border-radius: var(--input-border-radius);
+  }
+`;
+
+const Styled_CreateList = styled(Styled_PlainList)`
+  flex-shrink: 0;
+  padding: var(--sidebar-padding);
+  padding-top: 0;
+  font-style: italic;
+  color: var(--sidebar-content-dimmed-color);
 `;
 
 // Footer
@@ -171,26 +170,30 @@ export function Sidebar(): JSX.Element {
           <Spinner />
         ) : (
           <>
-            <Styled_ListUl className="folder-list">
-              {folders.map((folder) => (
-                <SidebarNavFolder key={folder.id} folder={folder} />
-              ))}
-            </Styled_ListUl>
+            {!! folders.length && (
+              <Styled_FolderList>
+                {folders.map((folder) => (
+                  <SidebarNavFolder key={folder.id} folder={folder} />
+                ))}
+              </Styled_FolderList>
+            )}
 
-            <Styled_ListUl className="folder-list">
-              {notesWithoutFolder.map((note) => (
-                <SidebarNavLink note={note} key={note.id} />
-              ))}
-            </Styled_ListUl>
+            {!! notesWithoutFolder.length && (
+              <Styled_FolderList>
+                {notesWithoutFolder.map((note) => (
+                  <SidebarNavLink note={note} key={note.id} />
+                ))}
+              </Styled_FolderList>
+            )}
 
             {isAuth && (
-              <Styled_ListUl className="create-list">
-                <SidebarNavItem
+              <Styled_CreateList>
+                <SidebarNavBranch
                   label="Create new folder..."
                   onClick={onClickCreateFolder}
                   icon={<Icon className="fa-solid fa-plus" title="Folder" />}
                 />
-              </Styled_ListUl>
+              </Styled_CreateList>
             )}
           </>
         )}

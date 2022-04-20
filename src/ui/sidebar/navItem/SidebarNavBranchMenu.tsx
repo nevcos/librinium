@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, MouseEvent, useCallback, useState } from "react";
 import MuiMenu from "@mui/material/Menu";
 import MuiMenuItem from "@mui/material/MenuItem";
 import MuiListItemIcon from "@mui/material/ListItemIcon";
@@ -11,17 +11,21 @@ import { MenuItem } from "./domain/MenuItem";
 
 interface Props {
   items: MenuItem[];
+  onToggle: (open: boolean) => unknown;
+  [key: string]: unknown;
 }
 
-export const SidebarMenuItemMenu = memo((props: Props) => {
+export const SidebarMenuItemMenu = memo(({ items, onToggle, ...rest }: Props) => {
   const btnId = useGenerateRandomId();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const openMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    onToggle(true);
     setAnchorEl(event.currentTarget);
   }, []);
   const closeMenu = useCallback(() => {
+    onToggle(false);
     setAnchorEl(null);
   }, []);
 
@@ -36,6 +40,7 @@ export const SidebarMenuItemMenu = memo((props: Props) => {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={openMenu}
+        {...rest}
       >
         <Icon className="icon fa-solid fa-ellipsis-vertical" title="Menu" />
       </SidebarButton>
@@ -48,7 +53,7 @@ export const SidebarMenuItemMenu = memo((props: Props) => {
           "aria-labelledby": btnId
         }}
       >
-        {props.items.map((item, key) => (
+        {items.map((item, key) => (
           <>
             <MuiMenuItem
               onClick={(event) => {

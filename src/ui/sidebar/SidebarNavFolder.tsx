@@ -9,7 +9,7 @@ import { useNavigation } from "../shared/useNavigation";
 
 import { SidebarNavLink } from "./SidebarNavLink";
 import styled from "styled-components";
-import { SidebarNavItem } from "./navItem/SidebarNavItem";
+import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
 import { Icon } from "../shared/Icon";
 
 type Props = {
@@ -49,12 +49,6 @@ export const Styled_FolderLi = styled.li`
   }
 `;
 
-export const Styled_NotesList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
 export const SidebarNavFolder = memo(function ({ folder }: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -80,23 +74,19 @@ export const SidebarNavFolder = memo(function ({ folder }: Props) {
     }
   }, [folder]);
 
-  // TODO: should we show empty folders?
-
   return files.length ? (
-    <Styled_FolderLi key={folder.id} data-testid="folder">
-      <SidebarNavItem
-        icon={<Icon className="fa-solid fa-folder" title="Folder" />}
-        label={folder.name}
-        items={[
-          { label: "Create Note...", onClick: onClickCreateNote, iconClassName: "fa-solid fa-plus" },
-          { label: "Delete Folder...", onClick: onClickDeleteFolder, iconClassName: "fa-solid fa-xmark" }
-        ]}
-      />
-      <Styled_NotesList>
-        {files.map((note) => (
-          <SidebarNavLink note={note} key={note.id} />
-        ))}
-      </Styled_NotesList>
-    </Styled_FolderLi>
+    <SidebarNavBranch
+      icon={<Icon className="fa-solid fa-folder" title="Folder" />}
+      label={folder.name}
+      menu={[
+        { label: "Create Note...", onClick: onClickCreateNote, iconClassName: "fa-solid fa-plus" },
+        { label: "Delete Folder...", onClick: onClickDeleteFolder, iconClassName: "fa-solid fa-xmark" }
+      ]}
+      key={folder.id}
+      data-testid="folder"
+      children={files.map((note) => (
+        <SidebarNavLink note={note} key={note.id} />
+      ))}
+    />
   ) : null;
 });

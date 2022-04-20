@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Styled_Icon = styled.span`
   font-size: var(--icon-size);
+  display: inline-block;
   width: 0.8em;
   text-align: center;
 `;
