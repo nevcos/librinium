@@ -7,6 +7,7 @@ import { noteStoreActions } from "../../store/noteStore";
 
 import { Sidebar } from "../sidebar/Sidebar";
 import { EmptyState } from "../content/EmptyState";
+import { userStoreActions } from "../../store/userStore";
 
 const Styled_Grid = styled.div`
   background-color: white;
@@ -40,6 +41,7 @@ export function EditorPage() {
   const outlet = useOutlet();
 
   useEffect(() => {
+    dispatch(userStoreActions.fetchUser());
     dispatch(noteStoreActions.fetchNotes());
   }, []);
 

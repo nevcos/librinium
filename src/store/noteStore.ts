@@ -203,6 +203,21 @@ const insertImage = createAsyncThunk(
 );
 
 //#endregion
+//#region Utils
+
+function convertNotePatchToGistPatch(patch: NotePatch): GistPatch {
+  const id = getNoteNameFromNoteId(patch.id);
+  const file: Partial<GistFile> = {};
+
+  if (patch.name) file.filename = patch.name;
+  if (patch.code) file.content = patch.code;
+
+  const payload: GistPatch = { files: { [id]: file } };
+
+  return payload;
+}
+
+//#endregion
 //#region Export
 
 export const noteStoreSelectors = selectors;
@@ -218,20 +233,5 @@ export const noteStoreActions = {
   deleteFolder,
   insertImage
 };
-
-//#endregion
-//#region Utils
-
-function convertNotePatchToGistPatch(patch: NotePatch): GistPatch {
-  const id = getNoteNameFromNoteId(patch.id);
-  const file: Partial<GistFile> = {};
-
-  if (patch.name) file.filename = patch.name;
-  if (patch.code) file.content = patch.code;
-
-  const payload: GistPatch = { files: { [id]: file } };
-
-  return payload;
-}
 
 //#endregion

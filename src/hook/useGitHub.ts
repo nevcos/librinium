@@ -18,7 +18,7 @@ export const useGithub = () => {
       console.info("tryToGetSetToken() - already stored");
 
       // update store
-      dispatch(userStoreActions.setAuth(true));
+      dispatch(userStoreActions.patch({ isAuth: true }));
 
       return;
     }
@@ -37,7 +37,7 @@ export const useGithub = () => {
       cleanUrl();
 
       // update store
-      dispatch(userStoreActions.setAuth(!!token));
+      dispatch(userStoreActions.patch({ isAuth: !!token }));
 
       console.info("tryToGetSetToken() - success");
     }

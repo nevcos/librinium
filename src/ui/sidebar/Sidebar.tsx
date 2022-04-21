@@ -12,6 +12,7 @@ import { Spinner } from "../shared/Spinner";
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { Icon } from "../shared/Icon";
 
+import { User } from "./User";
 import { sidebarInput } from "./styled/sidebarInput";
 import logoPath from "./assets/logo.svg";
 import { GitHubAuth } from "./GitHubAuth";
@@ -162,6 +163,9 @@ export function Sidebar(): JSX.Element {
         {/*  <span className="icon fa-solid fa-bars" aria-hidden="true" />*/}
         {/*</Styled_ToggleButton>*/}
         <Styled_Logo src={logoPath} alt="librinium" />
+      
+        <User></User>
+
         <Styled_Search>
           <span className="icon fa-solid fa-search" aria-hidden="true" />
           <input type="search" placeholder="filter..." onChange={onFiltering} />
