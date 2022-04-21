@@ -29,7 +29,7 @@ const Styled_PreviewContainer = styled.section`
   border-inline-start: var(--border-light);
 `;
 
-export function ContentWithSidePreview(): JSX.Element {
+export function ContentSplitPreview(): JSX.Element {
   return (
     <Styled_Container>
       <Styled_EditorContainer>

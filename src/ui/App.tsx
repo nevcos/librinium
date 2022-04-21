@@ -4,8 +4,7 @@ import { useGithub } from "../hook/useGitHub";
 import { LoginPage } from "./pages/LoginPage";
 import { AboutPage } from "./pages/AboutPage";
 import { EditorPage } from "./pages/EditorPage";
-import { ContentWithMergedPreview } from "./content/ContentWithMergedPreview";
-import { ContentWithSidePreview } from "./content/ContentWithSidePreview";
+import {Content} from "./content/Content";
 
 export function App(): JSX.Element {
   useGithub();
@@ -13,11 +12,8 @@ export function App(): JSX.Element {
   return (
     <Routes>
       <Route path="" element={<Navigate to="/note/" />} />
-      <Route path="note2" element={<EditorPage />}>
-        <Route path=":noteId" element={<ContentWithMergedPreview />} />
-      </Route>
       <Route path="note" element={<EditorPage />}>
-        <Route path=":noteId" element={<ContentWithSidePreview />} />
+        <Route path=":noteId" element={<Content />} />
       </Route>
       <Route path="login" element={<LoginPage />} />
       <Route path="about" element={<AboutPage />} />

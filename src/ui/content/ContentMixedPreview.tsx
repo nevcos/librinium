@@ -72,7 +72,7 @@ const Styled_PreviewContent = styled.div`
   padding: var(--padd);
 `;
 
-export function ContentWithMergedPreview(): JSX.Element {
+export function ContentMixedPreview(): JSX.Element {
   const [isPreviewActive, setPreviewActive] = useState(false);
 
   const { isDragging, initDraggable } = useDraggable();
