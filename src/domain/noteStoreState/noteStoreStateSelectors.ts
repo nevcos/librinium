@@ -76,14 +76,11 @@ export function getFilesTree(state: NoteStoreState, filter?: string): FilesNode 
 function filterTree(tree: FilesNode, filter: string): boolean {
   filter = normalizeTextForSearch(filter);
 
-  // Test node children
-  if (tree.children.length) {
-    tree.children = tree.children.filter((tree) => filterTree(tree, filter));
-    if (tree.children.length) return true;
-  }
+  const nameMatches = normalizeTextForSearch(tree.value.name).includes(filter);
+  if (nameMatches) return true;
 
-  // Otherwise test node value
-  return normalizeTextForSearch(tree.value.name).includes(filter);
+  tree.children = tree.children.filter((tree) => filterTree(tree, filter));
+  return !! tree.children.length;
 }
 
 function normalizeTextForSearch(text: string): string {

@@ -49,7 +49,7 @@ export const SidebarNodeFolder = memo(function ({ folder, children }: Props) {
     }
   ]);
 
-  return children.length ? (
+  return (
     <SidebarNavBranch
       icon={<Icon className="fa-solid fa-folder" title="Folder" />}
       label={folder.name}
@@ -64,5 +64,5 @@ export const SidebarNodeFolder = memo(function ({ folder, children }: Props) {
         );
       })}
     />
-  ) : null;
+  );
 });
