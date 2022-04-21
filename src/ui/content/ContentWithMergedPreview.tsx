@@ -1,14 +1,11 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import type {Note} from "../../domain/note/Note";
-
-import {useActiveNote} from "../shared/useActiveNote";
-import {CodeEditor} from "../codeEditor/CodeEditor";
-import {useZoomable} from "./useZoomable";
-import {useDraggable} from "./useDraggable";
-import {Toolbar} from "../toolbar/Toolbar";
-import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
+import { CodeEditor } from "../codeEditor/CodeEditor";
+import { useZoomable } from "./useZoomable";
+import { useDraggable } from "./useDraggable";
+import { Toolbar } from "../toolbar/Toolbar";
+import { Preview } from "./Preview";
 
 const Styled_Container = styled.div`
   position: relative;
@@ -29,7 +26,7 @@ const Styled_EditorContainer = styled.section`
 
   &:not(.--active) {
     pointer-events: none;
-    opacity: .5;
+    opacity: 0.5;
   }
 `;
 
@@ -47,7 +44,7 @@ const Styled_PreviewContainer = styled.section`
 
   &:not(.--active) {
     pointer-events: none;
-    opacity: .6;
+    opacity: 0.6;
   }
 `;
 
@@ -72,16 +69,16 @@ const Styled_PreviewContent = styled.div`
   right: 0;
   width: 60%;
   height: 100%;
+  padding: var(--padd);
 `;
 
-export function Content(): JSX.Element {
-  const {note, noteId} = useActiveNote();
+export function ContentWithMergedPreview(): JSX.Element {
   const [isPreviewActive, setPreviewActive] = useState(false);
 
-  const {isDragging, initDraggable} = useDraggable();
-  const {initZoomable} = useZoomable();
+  const { isDragging, initDraggable } = useDraggable();
+  const { initZoomable } = useZoomable();
 
-  const previewContainerRef = useCallback(node => {
+  const previewContainerRef = useCallback((node) => {
     node && initDraggable(node);
     node && initZoomable(node);
   }, []);
@@ -90,30 +87,25 @@ export function Content(): JSX.Element {
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
 
   return (
-    <Styled_Container key={noteId}>
+    <Styled_Container>
       <Styled_EditorContainer className={isPreviewActive || isDragging ? "" : "--active"}>
         <CodeEditor />
       </Styled_EditorContainer>
       <Toolbar />
-      <Styled_PreviewContainer ref={previewContainerRef}
-                               className={isPreviewActive || isDragging ? "--active" : ""}
-                               onMouseOut={onCaptureMouseOut}>
+      <Styled_PreviewContainer
+        ref={previewContainerRef}
+        className={isPreviewActive || isDragging ? "--active" : ""}
+        onMouseOut={onCaptureMouseOut}
+      >
         <Styled_PreviewContent>
-            {renderPreview(note)}
+          <Preview />
         </Styled_PreviewContent>
       </Styled_PreviewContainer>
-      <Styled_MouseCapture className={isPreviewActive || isDragging ? "" : "--active"}
-                           onMouseOver={onCaptureMouseOver} aria-hidden="true" />
+      <Styled_MouseCapture
+        className={isPreviewActive || isDragging ? "" : "--active"}
+        onMouseOver={onCaptureMouseOver}
+        aria-hidden="true"
+      />
     </Styled_Container>
   );
-}
-
-function renderPreview(note: Note | null): JSX.Element | null {
-  if (!note) return null;
-
-  const contentType = getContentTypePluginByName(note.type);
-  const PreviewComponent = contentType?.previewComponent;
-  if (!PreviewComponent) return null;
-
-  return <PreviewComponent note={note}/>;
 }

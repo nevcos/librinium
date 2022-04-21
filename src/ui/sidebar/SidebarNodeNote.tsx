@@ -6,10 +6,10 @@ import { NoteName } from "../../domain/note/NoteName";
 import { noteStoreActions } from "../../store/noteStore";
 
 import { useNavigation } from "../shared/useNavigation";
-import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
+import { SidebarNavBranch } from "./navBranch/SidebarNavBranch";
 import { NoteIcon } from "../shared/NoteIcon";
 import { useConst } from "../shared/useConst";
-import { MenuItem } from "./navItem/domain/MenuItem";
+import { MenuItem } from "./navBranch/domain/MenuItem";
 
 type Props = {
   note: Note;

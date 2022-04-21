@@ -6,8 +6,8 @@ import { noteStoreActions } from "../../store/noteStore";
 import { useConst } from "../shared/useConst";
 import { useNavigation } from "../shared/useNavigation";
 
-import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
-import { MenuItem } from "./navItem/domain/MenuItem";
+import { SidebarNavBranch } from "./navBranch/SidebarNavBranch";
+import { MenuItem } from "./navBranch/domain/MenuItem";
 import { Icon } from "../shared/Icon";
 import { FilesNode, isFolder } from "../../domain/noteStoreState/FilesNode";
 import { Folder } from "../../domain/folder/Folder";

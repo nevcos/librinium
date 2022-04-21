@@ -16,7 +16,7 @@ import { sidebarInput } from "./styled/sidebarInput";
 import logoPath from "./assets/logo.svg";
 import { GitHubAuth } from "./GitHubAuth";
 import { SidebarNodeFolder } from "./SidebarNodeFolder";
-import { SidebarNavBranch } from "./navItem/SidebarNavBranch";
+import { SidebarNavBranch } from "./navBranch/SidebarNavBranch";
 import { SidebarNodeNote } from "./SidebarNodeNote";
 import { isFolder } from "../../domain/noteStoreState/FilesNode";
 

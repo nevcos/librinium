@@ -1,4 +1,4 @@
-import { memo, MouseEvent, useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import MuiMenu from "@mui/material/Menu";
 import MuiMenuItem from "@mui/material/MenuItem";
 import MuiListItemIcon from "@mui/material/ListItemIcon";

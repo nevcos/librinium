@@ -1,10 +1,10 @@
-import {ChangeEvent, useCallback} from "react";
-import {useDispatch} from "react-redux";
-import styled, {css} from "styled-components";
+import { ChangeEvent, MouseEvent, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import styled, { css } from "styled-components";
 
-import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
-import {noteStoreActions} from "../../store/noteStore";
-import {useActiveNote} from "../shared/useActiveNote";
+import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
+import { noteStoreActions } from "../../store/noteStore";
+import { useActiveNote } from "../shared/useActiveNote";
 
 const Styled_Container = styled.div`
   position: fixed;
@@ -30,7 +30,7 @@ export const toolbarInput = css`
   text-align: left;
   padding: var(--input-padding);
   color: inherit;
-  opacity: .5;
+  opacity: 0.5;
 
   &:not(:disabled):not(.--disabled):not(a:not([href])) {
     opacity: 1;
@@ -49,14 +49,18 @@ const Styled_Item = styled.li`
 `;
 
 export function Toolbar(): JSX.Element {
-  const dispatch = useDispatch()
-  const {noteId, note} = useActiveNote();
+  const dispatch = useDispatch();
+  const { noteId, note } = useActiveNote();
 
   const onSelectedFile = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      dispatch(noteStoreActions.insertImage({noteId, file}));
+      dispatch(noteStoreActions.insertImage({ noteId, file }));
     }
+  }, []);
+
+  const onSwitchPreviewMode = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    // TBD
   }, []);
 
   const isDisabled = !note;
@@ -65,19 +69,26 @@ export function Toolbar(): JSX.Element {
   const documentationLinkHref = contentTypePlugin?.docsUrl;
   const documentationLinkTitle = contentTypePlugin ? `${contentTypePlugin.name} documentation` : "";
 
-  return <Styled_Container>
-    <Styled_List>
-      <Styled_Item>
-        <label tabIndex={0} title="Insert image" aria-label="Insert image" className={disabledClassName}>
-          <input type="file" onChange={onSelectedFile} accept="image/*" hidden disabled={isDisabled} />
-          <span className="icon fa-solid fa-image" aria-hidden="true" />
-        </label>
-      </Styled_Item>
-      <Styled_Item>
-        <a href={documentationLinkHref} target="_blank" title={documentationLinkTitle}>
-          <span className="icon fa-solid fa-circle-question" aria-hidden="true" />
-        </a>
-      </Styled_Item>
-    </Styled_List>
-  </Styled_Container>;
+  return (
+    <Styled_Container>
+      <Styled_List>
+        <Styled_Item>
+          <label tabIndex={0} title="Insert image" aria-label="Insert image" className={disabledClassName}>
+            <input type="file" onChange={onSelectedFile} accept="image/*" hidden disabled={isDisabled} />
+            <span className="icon fa-solid fa-image" aria-hidden="true" />
+          </label>
+        </Styled_Item>
+        <Styled_Item>
+          <a href={documentationLinkHref} target="_blank" title={documentationLinkTitle}>
+            <span className="icon fa-solid fa-circle-question" aria-hidden="true" />
+          </a>
+        </Styled_Item>
+        <Styled_Item>
+          <button title="Switch preview mode" aria-label="Switch preview mode" onClick={onSwitchPreviewMode}>
+            <span className="icon fa-solid fa-table-columns" aria-hidden="true" />
+          </button>
+        </Styled_Item>
+      </Styled_List>
+    </Styled_Container>
+  );
 }
