@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { useGistSelector } from "../../hook/useGistSelector";
 import { useUserSelector } from "../../hook/useUserSelector";
 

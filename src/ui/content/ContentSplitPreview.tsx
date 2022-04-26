@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 import { CodeEditor } from "../codeEditor/CodeEditor";
 import { Toolbar } from "../toolbar/Toolbar";

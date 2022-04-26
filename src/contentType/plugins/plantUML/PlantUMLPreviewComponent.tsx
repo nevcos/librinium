@@ -1,5 +1,5 @@
 import { memo } from "react";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 import { buildPlantUmlUrl } from "../../../service/plantUml";
 import { RenderingCounter } from "../../../ui/shared/RenderingCounter";

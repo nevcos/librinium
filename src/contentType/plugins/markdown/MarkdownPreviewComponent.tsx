@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from "react";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { marked } from "marked";
 
 import { Note } from "../../../domain/note/Note";

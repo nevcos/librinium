@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import CodeMirror from "codemirror";
 import { debounce } from "lodash";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/markdown/markdown";

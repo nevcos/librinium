@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 const RenderingCounterContainer = styled.div`
   position: relative;

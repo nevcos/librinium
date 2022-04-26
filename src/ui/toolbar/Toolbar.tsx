@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components/macro";
+import styled, { css } from "styled-components";
 
 import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
 import { noteStoreActions } from "../../store/noteStore";
