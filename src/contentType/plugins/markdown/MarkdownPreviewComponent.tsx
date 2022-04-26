@@ -1,13 +1,12 @@
-import {memo, useEffect, useRef} from "react";
-import styled from "styled-components";
+import { memo, useEffect, useRef } from "react";
+import styled from "styled-components/macro";
 import { marked } from "marked";
 
-import {Note} from "../../../domain/note/Note";
+import { Note } from "../../../domain/note/Note";
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
-export const MarkdownPreviewComponent = memo(function ({note}: {note: Note}) {
+export const MarkdownPreviewComponent = memo(function ({ note }: { note: Note }) {
   const code = note?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
 

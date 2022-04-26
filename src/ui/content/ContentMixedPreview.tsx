@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import { CodeEditor } from "../codeEditor/CodeEditor";
 import { useZoomable } from "./useZoomable";
 import { useDraggable } from "./useDraggable";
 import { Toolbar } from "../toolbar/Toolbar";
-import { Preview } from "./Preview";
+import { Preview } from "../preview/Preview";
 
 const Styled_Container = styled.div`
   position: relative;
@@ -18,15 +18,16 @@ const Styled_Container = styled.div`
 const Styled_EditorContainer = styled.section`
   width: 100%;
   height: 100%;
-  overflow: auto;
-  border-bottom: 1px solid var(--color-gray-light);
+  position: relative;
 
-  z-index: 2;
-  transition: opacity 200ms;
+  > .editor {
+    z-index: 2;
+    transition: opacity 200ms;
 
-  &:not(.--active) {
-    pointer-events: none;
-    opacity: 0.5;
+    &:not(.--active) {
+      pointer-events: none;
+      opacity: 0.5;
+    }
   }
 `;
 
@@ -86,26 +87,21 @@ export function ContentMixedPreview(): JSX.Element {
   const onCaptureMouseOver = useCallback(() => setPreviewActive(true), []);
   const onCaptureMouseOut = useCallback(() => setPreviewActive(false), []);
 
+  const editorActiveClass = isPreviewActive || isDragging ? "" : "--active";
+  const previewActiveClass = isPreviewActive || isDragging ? "--active" : "";
+
   return (
     <Styled_Container>
-      <Styled_EditorContainer className={isPreviewActive || isDragging ? "" : "--active"}>
-        <CodeEditor />
+      <Styled_EditorContainer>
+        <CodeEditor className={"editor " + editorActiveClass} />
+        <Toolbar />
       </Styled_EditorContainer>
-      <Toolbar />
-      <Styled_PreviewContainer
-        ref={previewContainerRef}
-        className={isPreviewActive || isDragging ? "--active" : ""}
-        onMouseOut={onCaptureMouseOut}
-      >
+      <Styled_PreviewContainer ref={previewContainerRef} className={previewActiveClass} onMouseOut={onCaptureMouseOut}>
         <Styled_PreviewContent>
           <Preview />
         </Styled_PreviewContent>
       </Styled_PreviewContainer>
-      <Styled_MouseCapture
-        className={isPreviewActive || isDragging ? "" : "--active"}
-        onMouseOver={onCaptureMouseOver}
-        aria-hidden="true"
-      />
+      <Styled_MouseCapture className={editorActiveClass} onMouseOver={onCaptureMouseOver} aria-hidden="true" />
     </Styled_Container>
   );
 }

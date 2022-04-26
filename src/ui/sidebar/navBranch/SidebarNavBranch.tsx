@@ -1,5 +1,5 @@
 import { To } from "react-router";
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components/macro";
 import { Link } from "react-router-dom";
 
 import { MenuItem } from "./domain/MenuItem";

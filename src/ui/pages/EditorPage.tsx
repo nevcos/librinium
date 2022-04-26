@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useOutlet } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import { noteStoreActions } from "../../store/noteStore";
 

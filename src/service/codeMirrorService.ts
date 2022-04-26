@@ -5,14 +5,21 @@ import {
   getContentTypePluginByCodeMirrorMode
 } from "../contentType/ContentTypeService";
 
-let codeMirror: CodeMirror.Editor;
+let codeMirror: CodeMirror.Editor | undefined;
 
 export function registerCodeMirrorInstance(cm: CodeMirror.Editor) {
   codeMirror = cm;
 }
 
+export function unregisterCodeMirrorInstance(cm: CodeMirror.Editor) {
+  if (codeMirror === cm) {
+    codeMirror = undefined;
+  }
+}
+
 export function insertImageInEditor(image: ImageDescriptor): void {
   if (!codeMirror) throw new Error("No CodeMirror instance");
+
   const doc = codeMirror.getDoc();
   const codeMirrorMode = doc.getMode()?.name || "null";
 

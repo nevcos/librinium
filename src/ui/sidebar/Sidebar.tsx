@@ -1,6 +1,6 @@
 import { useCallback, MouseEvent, useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 
 import { noteStoreActions, noteStoreSelectors } from "../../store/noteStore";

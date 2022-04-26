@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import { CodeEditor } from "../codeEditor/CodeEditor";
 import { Toolbar } from "../toolbar/Toolbar";
-import { Preview } from "./Preview";
+import { Preview } from "../preview/Preview";
 
 const Styled_Container = styled.div`
   height: 100%;
@@ -17,6 +17,7 @@ const Styled_EditorContainer = styled.section`
   flex-grow: 1;
   width: 50%;
   overflow: auto;
+  position: relative;
 `;
 
 const Styled_PreviewContainer = styled.section`
@@ -34,8 +35,8 @@ export function ContentSplitPreview(): JSX.Element {
     <Styled_Container>
       <Styled_EditorContainer>
         <CodeEditor />
+        <Toolbar />
       </Styled_EditorContainer>
-      <Toolbar />
       <Styled_PreviewContainer>
         <Preview />
       </Styled_PreviewContainer>

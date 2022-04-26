@@ -1,27 +1,27 @@
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import CodeMirror from "codemirror";
 import { debounce } from "lodash";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
+import "codemirror/lib/codemirror.css";
 import "codemirror/mode/markdown/markdown";
 import "../../contentType/plugins/plantUML/plantUMLCodeMirrorMode";
-import "codemirror/lib/codemirror.css";
 
 import type { NoteContent } from "../../domain/note/NoteContent";
 import { noteStoreActions } from "../../store/noteStore";
 
 import { RenderingCounter } from "../shared/RenderingCounter";
 import { useActiveNote } from "../shared/useActiveNote";
-import { registerCodeMirrorInstance } from "../../service/codeMirrorService";
-import {getContentTypePluginByName} from "../../contentType/ContentTypeService";
+import { registerCodeMirrorInstance, unregisterCodeMirrorInstance } from "../../service/codeMirrorService";
+import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
+import { NoteId } from "../../domain/note/NoteId";
 
-const CHANGE_DEBOUNCE_MS = 600;
+const CHANGE_DEBOUNCE_MS = 1400;
 
-const CodeEditorDiv = styled.div`
+const Styled_CodeEditor = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
 
   // Override
   > .CodeMirror {
@@ -31,53 +31,70 @@ const CodeEditorDiv = styled.div`
   }
 `;
 
-export function CodeEditor(): JSX.Element {
+export function CodeEditor(props: { [key: string]: unknown }): JSX.Element {
   const { note, noteId } = useActiveNote();
   const dispatch = useDispatch();
 
-  // TODO: Gists with empty content are deleted
-  const code = note?.code || "";
   const type = note?.type;
   const folderId = note?.folderId;
 
   const elementRef = useRef<HTMLDivElement | null>(null);
   const codeMirror = useRef<CodeMirror.Editor | null>(null);
 
-  const onCodeChange = useCallback(
-    (code: NoteContent) => dispatch(noteStoreActions.updateNote({ patch: { id: noteId, code, folderId } })),
-    []
-  );
+  const getEditorCode = () => (codeMirror.current?.getValue() || "") as NoteContent;
 
+  // Create + manage CodeMirror instance
   useLayoutEffect(() => {
     if (codeMirror.current || !elementRef.current) return;
 
     codeMirror.current = CodeMirror(elementRef.current, {
       lineWrapping: true,
       lineNumbers: true,
-      value: code || "",
+      value: note?.code || "",
       mode: getContentTypePluginByName(type)?.codeMirrorMode || "null"
     });
-    codeMirror.current.on(
-      "change",
-      debounce(() => {
-        onCodeChange(codeMirror.current?.getValue() as NoteContent);
-      }, CHANGE_DEBOUNCE_MS)
-    );
-    registerCodeMirrorInstance(codeMirror.current);
-  }, [type]);
 
-  useLayoutEffect(() => {
-    if (codeMirror.current) {
-      if (code !== codeMirror.current.getValue()) {
-        codeMirror.current.setValue(code || "");
+    const debouncedOnEditorCodeChanged = debounce((noteId: NoteId, content: NoteContent) => {
+      console.debug("CodeEditor.debouncedOnEditorCodeChanged", { noteId, content });
+      dispatch(noteStoreActions.updateNote({ patch: { id: noteId, code: content, folderId } }));
+    }, CHANGE_DEBOUNCE_MS);
+
+    const onChangeCallback = () => {
+      if (!codeMirror.current) return;
+      // Need to send current state, otherwise it'll use the wrong state (when a new noteId is selected)
+      debouncedOnEditorCodeChanged(noteId, getEditorCode());
+    };
+
+    codeMirror.current.on("change", onChangeCallback);
+    registerCodeMirrorInstance(codeMirror.current);
+
+    return () => {
+      if (!codeMirror.current) return;
+
+      unregisterCodeMirrorInstance(codeMirror.current);
+      codeMirror.current.off("change", onChangeCallback);
+      codeMirror.current = null;
+
+      if (elementRef.current) {
+        // If contents are not explicitly destroyed, they will be reused when re-initializing CodeMirror
+        elementRef.current.innerHTML = "";
+      }
+    };
+  }, [noteId]);
+
+  // Update CodeMirror with updated code from store
+  useEffect(() => {
+    if (codeMirror.current && note?.code) {
+      if (note?.code !== getEditorCode()) {
+        codeMirror.current.setValue(note?.code);
       }
     }
-  }, [code]);
+  }, [note?.code]);
 
   return (
     <>
       <RenderingCounter />
-      <CodeEditorDiv ref={elementRef} />
+      <Styled_CodeEditor ref={elementRef} {...props} />
     </>
   );
 }

@@ -1,15 +1,15 @@
-import {memo, useEffect, useRef} from "react";
-import styled from "styled-components";
-import {Note} from "../../../domain/note/Note";
+import { memo, useEffect, useRef } from "react";
+import styled from "styled-components/macro";
+import { Note } from "../../../domain/note/Note";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const remark: any;
 
 interface RemarkSlide {
-    getSlideIndex(): number;
-    notes: string;
-    properties: Map<string, string>;
-    content: string;
+  getSlideIndex(): number;
+  notes: string;
+  properties: Map<string, string>;
+  content: string;
 }
 
 const Container = styled.div`
@@ -39,7 +39,7 @@ const Container = styled.div`
   }
 `;
 
-export const RemarkJSPreviewComponent = memo(function({note}: {note: Note}) {
+export const RemarkJSPreviewComponent = memo(function ({ note }: { note: Note }) {
   const code = note?.code || "";
   const container = useRef<HTMLDivElement | null>(null);
   const currentSlide = useRef<number>();

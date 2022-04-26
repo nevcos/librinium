@@ -13,7 +13,7 @@ registerContentTypePlugin({
   name: PlantUMLContentTypeName,
   iconClassName: "fa-solid fa-diagram-project",
   docsUrl: "https://plantuml.com/sitemap-language-specification",
-  fileExtensions: ["pu"],
+  fileExtensions: ["puml", "pu"],
   codeMirrorMode: "plantuml",
   previewComponent: PlantUMLPreviewComponent,
   previewModes: [PreviewMode.MIXED, PreviewMode.SPLIT],

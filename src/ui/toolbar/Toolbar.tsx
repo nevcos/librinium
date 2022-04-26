@@ -1,13 +1,13 @@
 import { ChangeEvent, MouseEvent, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components/macro";
 
 import { getContentTypePluginByName } from "../../contentType/ContentTypeService";
 import { noteStoreActions } from "../../store/noteStore";
 import { useActiveNote } from "../shared/useActiveNote";
 
 const Styled_Container = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 2em;
   right: 2em;
   z-index: 10;

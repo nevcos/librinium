@@ -1,5 +1,5 @@
 import { memo } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const Styled_Icon = styled.span`
   font-size: var(--icon-size);

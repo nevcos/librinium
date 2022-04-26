@@ -85,9 +85,11 @@ const createNote = createAsyncThunk(
 );
 
 const updateNote = createAsyncThunk(`${storeName}/updateNote`, async ({ patch }: { patch: NotePatch }, thunkAPI) => {
+  debugger;
   thunkAPI.dispatch(noteStore.actions.setIsLoading(true));
   try {
     if (patch.folderId) {
+      console.info("Updating note", { patch });
       thunkAPI.dispatch(noteStore.actions.updateNote(patch));
       GitHubApi.updateGist(patch.folderId, convertNotePatchToGistPatch(patch));
     } else {

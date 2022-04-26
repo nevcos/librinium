@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from "styled-components/macro";
 import { sidebarInput } from "./sidebarInput";
 
 export const sidebarButtonLink = css`

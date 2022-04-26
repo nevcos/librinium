@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import { useUserSelector } from "../../hook/useUserSelector";
 import { GITHUB_AUTH_ENDPOINT } from "../../remoteApi/gitHub/gitHubApi";
